@@ -1,0 +1,25 @@
+.logo {
+    width: 100%; 
+    height: auto;
+}
+
+.mobile {
+    mat-toolbar {
+        background-color: red;
+    }
+    
+    .logo {
+        width: 50px; 
+    }
+}
+
+.desktop {
+    // Styles spécifiques pour les desktops (EXEMPLE A MODIFIER)
+    mat-toolbar {
+        background-color: blue;
+    }
+    
+    .logo {
+        width: 80px; 
+    }
+}

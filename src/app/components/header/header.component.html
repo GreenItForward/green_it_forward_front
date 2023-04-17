@@ -1,5 +1,11 @@
-<header>
-    <mat-toolbar color="primary" class="header">
-        <span>GreenItForward</span>
-      </mat-toolbar>      
-</header>
+
+<nav [ngClass]="{'mobile': isPhone, 'desktop': !isPhone}" aria-label="Main navigation">
+    <header>
+        <mat-toolbar color="primary">
+            <div class="logo-container">
+                <img class="logo" src="assets/logo.png" alt="GreenItForward">
+            </div>
+            <span>GreenItForward</span>
+        </mat-toolbar>
+    </header>
+</nav>
