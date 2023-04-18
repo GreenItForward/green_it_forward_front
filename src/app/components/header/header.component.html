@@ -1,11 +1,24 @@
-
-<nav [ngClass]="{'mobile': isPhone, 'desktop': !isPhone}" aria-label="Main navigation">
-    <header>
-        <mat-toolbar color="primary">
-            <div class="logo-container">
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="over">
+      <!-- Contenu de votre sidenav -->
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <nav [ngClass]="{'mobile': isPhone, 'desktop': !isPhone}" aria-label="Main navigation">
+        <header>
+            <mat-toolbar color="primary">
+              <div class="logo-container">
                 <img class="logo" src="assets/logo.png" alt="GreenItForward">
-            </div>
-            <span>GreenItForward</span>
-        </mat-toolbar>
-    </header>
-</nav>
+              </div>
+              <span class="project-name">GreenItForward</span>
+              <div class="spacer"></div>
+              <button mat-icon-button (click)="toggleSidenav()" *ngIf="isPhone">
+                <mat-icon>menu</mat-icon>
+              </button>
+            </mat-toolbar>
+          </header>
+          
+      </nav>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  

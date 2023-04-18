@@ -1,8 +1,13 @@
-<nav>
-    <mat-toolbar color="transparent" class="navbar" role="navigation">
-        <a mat-button routerLink="#">Home</a>
-        <a mat-button routerLink="#">A propos</a>
-        <a mat-button routerLink="#">Projets</a>
-        <a mat-button routerLink="#">Communautés</a>
-      </mat-toolbar>
-</nav>
+<mat-sidenav-container *ngIf="isOpened && isPhone || !isPhone">
+  <mat-sidenav-content>
+    <nav [ngClass]="{'mobile': isPhone, 'desktop': !isPhone}">
+        <mat-toolbar color="transparent" class="navbar" role="navigation">
+            <a mat-button routerLink="#">Home</a>
+            <a mat-button routerLink="#">A propos</a>
+            <a mat-button routerLink="#">Projets</a>
+            <a mat-button routerLink="#">Communautés</a>
+          </mat-toolbar>
+    </nav>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+    

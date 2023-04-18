@@ -5,7 +5,7 @@ import { BreakpointObserver,Breakpoints } from '@angular/cdk/layout';
   selector: 'app-root',
   template: `
     <app-header [isPhone]="isPhone"></app-header>
-    <app-navbar></app-navbar>
+    <app-navbar [isPhone]="isPhone"></app-navbar>
     <router-outlet></router-outlet>
   `,
 })
