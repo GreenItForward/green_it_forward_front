@@ -1,0 +1,48 @@
+.logo {
+    width: 100%; 
+    height: auto;
+}
+
+.mobile {
+    
+    .logo {
+        width: 50px; 
+    }
+
+    .logo-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 1;
+    }
+
+    .spacer {
+        flex: 1 1 auto;
+      }
+    
+    mat-toolbar {
+        height: 100%; /* Hauteur standard pour les appareils mobiles */
+        width: 100%;
+        padding-left: 3vh;
+        padding-right: 0;
+        max-height: 30vh;
+    }
+
+}
+
+.desktop {
+    
+    .logo {
+        width: 70px; 
+    }
+
+    .project-name {
+        font-size: 1.3rem;
+        padding-left: 1vh;
+    }
+
+    mat-toolbar {
+        height: 10vh;
+        padding-left: 20vh;
+    }
+}
