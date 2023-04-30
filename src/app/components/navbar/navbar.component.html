@@ -1,0 +1,28 @@
+<mat-sidenav-container *ngIf="isOpened && isPhone || !isPhone">
+  <mat-sidenav-content>
+    <nav [ngClass]="{'mobile': isPhone, 'desktop': !isPhone}">
+        <mat-toolbar color="transparent" class="navbar" role="navigation">
+            <a mat-button routerLink="#">Home</a>
+            <a mat-button routerLink="#">A propos</a>
+            <a mat-button routerLink="#">Projets</a>
+            <a mat-button routerLink="#">Communautés</a>
+            <div class="spacer"></div>
+            <div class="social-media" *ngIf="!isPhone">
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                  <i class="fa fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                  <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+                  <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                  <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                </a>
+            </div>
+        </mat-toolbar>
+    </nav>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+    
