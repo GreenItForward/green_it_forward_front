@@ -1,28 +1,13 @@
-<mat-sidenav-container *ngIf="isOpened && isPhone || !isPhone">
-  <mat-sidenav-content>
-    <nav [ngClass]="{'mobile': isPhone, 'desktop': !isPhone}">
-        <mat-toolbar color="transparent" class="navbar" role="navigation">
-            <a mat-button routerLink="#">Home</a>
-            <a mat-button routerLink="#">A propos</a>
-            <a mat-button routerLink="#">Projets</a>
-            <a mat-button routerLink="#">Communautés</a>
-            <div class="spacer"></div>
-            <div class="social-media" *ngIf="!isPhone">
-                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-                  <i class="fa fa-instagram" aria-hidden="true"></i>
-                </a>
-                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-                  <i class="fa fa-facebook-square" aria-hidden="true"></i>
-                </a>
-                <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
-                  <i class="fa fa-twitter-square" aria-hidden="true"></i>
-                </a>
-                <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
-                  <i class="fa fa-linkedin-square" aria-hidden="true"></i>
-                </a>
-            </div>
-        </mat-toolbar>
-    </nav>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-    
+<mat-expansion-panel hideToggle class="navbarStyle">
+  <mat-expansion-panel-header class="flex justify-center items-center">
+    <mat-panel-title class="text-white">
+      <div class="text-xl flex items-center justify-center w-full">Home <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="white" d="m12 15.4l-6-6L7.4 8l4.6 4.6L16.6 8L18 9.4l-6 6Z"/></svg></div>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="text-xl text-white text-center">
+    <div class="mt-2" routerLink="/">Home</div>
+    <div class="mt-2" routerLink="/about">About</div>
+    <div class="mt-2" routerLink="/pages">Pages</div>
+    <div class="mt-2" routerLink="/project">Project</div>
+  </div>
+</mat-expansion-panel>

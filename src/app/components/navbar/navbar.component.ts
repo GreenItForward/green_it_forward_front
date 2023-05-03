@@ -1,7 +1,5 @@
-import { NavbarService } from './navbar.service';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { Subscription } from 'rxjs';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatAccordion} from '@angular/material/expansion';
 
 @Component({
   selector: 'app-navbar',
@@ -9,24 +7,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  @Input() isPhone: boolean = false;
-  @Input() isOpened: boolean = false;
-  @ViewChild('sidenav') sidenav!: MatSidenav;
-  @Output() sidenavToggled = new EventEmitter<boolean>();
 
-  private subscription: Subscription = new Subscription();
+  @ViewChild('accordion') accordion: MatAccordion | undefined;
 
-
-  constructor(private navbarService : NavbarService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.subscription = this.navbarService.sidenavState$.subscribe(isOpened => {
-      this.isOpened = isOpened;            
-    });
   }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
 }

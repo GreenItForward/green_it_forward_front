@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -19,16 +20,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     NavbarComponent,
     HeaderComponent,
   ],
-  imports: [
-    BrowserModule,
-    RouterModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSidenavModule,
-  ],
+    imports: [
+        BrowserModule,
+        RouterModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatExpansionModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -4,8 +4,6 @@ import { BreakpointObserver,Breakpoints } from '@angular/cdk/layout';
 @Component({
   selector: 'app-root',
   template: `
-    <app-header [isPhone]="isPhone"></app-header>
-    <app-navbar [isPhone]="isPhone"></app-navbar>
     <router-outlet></router-outlet>
   `,
 })
@@ -14,17 +12,17 @@ export class AppComponent {
   isPhone = false;
 
   constructor(public responsive: BreakpointObserver) {}
-  
+
   ngOnInit() {
-  
+
   this.responsive.observe(Breakpoints.HandsetPortrait)
   .subscribe(result => {
       this.isPhone = false;
-      
+
       if (result.matches) {
       this.isPhone = true;
       }
-  
+
   });
   }
   }
