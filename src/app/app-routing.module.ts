@@ -24,6 +24,10 @@ const routes : Routes = [
     path: 'community',
     component: HomeComponent
   },
+  {
+    path: 'profil',
+    component: HomeComponent
+  },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
