@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Stripe, StripeCardElement, StripeCardElementChangeEvent, StripeCardElementOptions, StripeElements, StripeElementsOptions } from '@stripe/stripe-js';
+import { StripeCardElement, StripeCardElementChangeEvent, StripeCardElementOptions, StripeElements, StripeElementsOptions } from '@stripe/stripe-js';
 import { StripeService } from 'ngx-stripe';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-payment',
@@ -103,6 +102,5 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       this.errorMessage = '';
     }
   }
-  
 
 }
