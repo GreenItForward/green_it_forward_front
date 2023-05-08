@@ -5,6 +5,7 @@ import { StripeCardElement, StripeCardElementChangeEvent, StripeCardElementOptio
 import { StripeService } from 'ngx-stripe';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-payment',
@@ -18,6 +19,9 @@ export class PaymentComponent implements OnInit {
   card?: StripeCardElement;
   errorMessage: string;
   successMessage: string;
+  paidAmount: number | null = null;
+  paidAt: string | null = null;
+  paidBy: string | null = null;
 
 constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient) {
   this.paymentForm = this.fb.group({ });
@@ -85,7 +89,10 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
         if (error) {
           this.errorMessage = error.message ? error.message : '';
         } else if (updatedPaymentIntent && updatedPaymentIntent.status === 'succeeded') {
-          this.successMessage = "Paiement effectué avec succès"
+          this.successMessage = "Paiement effectué avec succès";
+          this.paidAmount = amount;
+          this.paidAt = moment().format('DD/MM/YYYY à HH:mm:ss');
+          this.paidBy = name;
         } else {
           this.errorMessage = updatedPaymentIntent.status;
 
@@ -104,6 +111,40 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       this.errorMessage = '';
       this.successMessage = '';
     }
+  }
+
+  onChange(event: any) {
+    this.errorMessage = '';
+    this.successMessage = '';
+  }
+
+
+  downloadInvoice() {
+    const { name, amount } = this.paymentForm.value;
+
+    if (this.paidAmount !== amount || name !== this.paidBy) {
+      console.error("Payment not done");
+      this.errorMessage = "Paiement non effectué";
+      this.successMessage = '';
+      return;
+    }
+
+    this.http.get(`${environment.apiUrl}/invoice/${name}/${amount}`,{
+      params: {
+        date: this.paidAt ? this.paidAt : moment().format('DD/MM/YYYY à HH:mm:ss'),
+      },
+      responseType: 'blob',
+    }).subscribe(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'recu_wwf_' + moment().format('DD_MM_YYYY') + '.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
   }
 
 }
