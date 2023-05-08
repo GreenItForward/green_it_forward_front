@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { HttpClient } from '@angular/common/http';
 import { StripeCardElement, StripeCardElementChangeEvent, StripeCardElementOptions, StripeElements, StripeElementsOptions } from '@stripe/stripe-js';
 import { StripeService } from 'ngx-stripe';
+import { environment } from 'src/environments/environment';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-payment',
@@ -15,12 +17,14 @@ export class PaymentComponent implements OnInit {
   elementsOptions: StripeElementsOptions;
   card?: StripeCardElement;
   errorMessage: string;
+  successMessage: string;
 
 constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient) {
   this.paymentForm = this.fb.group({ });
   this.cardOptions = { };
   this.elementsOptions = { };
   this.errorMessage = '';
+  this.successMessage = '';
 }
 
   ngOnInit() {    
@@ -30,7 +34,6 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
     });
 
     this.cardOptions = {
-      // personnalisez l'apparence du formulaire de carte ici
       style: {
         base: {
           iconColor: '#666EE8',
@@ -47,7 +50,6 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
     };
 
     this.elementsOptions = {
-      // personnalisez les options des éléments Stripe ici
       locale: 'fr'
     };
 
@@ -64,7 +66,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
     }
 
     const { name, amount } = this.paymentForm.value; 
-    const paymentIntent = await this.http.post<{ clientSecret: string }>('http://127.0.0.1:3000/api/payments/create-payment-intent', { amount }).toPromise();
+    const paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount }));
   
   
     if (!this.card) {
@@ -83,7 +85,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
         if (error) {
           this.errorMessage = error.message ? error.message : '';
         } else if (updatedPaymentIntent && updatedPaymentIntent.status === 'succeeded') {
-          this.errorMessage = updatedPaymentIntent.status;
+          this.successMessage = "Paiement effectué avec succès"
         } else {
           this.errorMessage = updatedPaymentIntent.status;
 
@@ -100,6 +102,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       this.errorMessage = event.error.message;
     } else {
       this.errorMessage = '';
+      this.successMessage = '';
     }
   }
 

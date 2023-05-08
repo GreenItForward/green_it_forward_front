@@ -16,6 +16,9 @@ import { PaymentComponent } from './pages/payment/payment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -33,9 +36,12 @@ import { environment } from 'src/environments/environment';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    MatSidenavModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSidenavModule,
     NgxStripeModule.forRoot(environment.stripePublicKey),
     HttpClientModule
   ],

@@ -1,0 +1,52 @@
+.name-label {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.field {
+    width: 200px; 
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.amount-label {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.form-field-container {
+    display: flex;
+    align-items: center;
+}
+
+.alert {
+    width: 250px; 
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.alert-danger {
+    color: red;
+}
+
+.alert-success {
+    color: green;
+}
+
+#card-element {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+#payment {
+    display: flex;
+    justify-content: center;
+}
