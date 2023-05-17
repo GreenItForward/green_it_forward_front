@@ -83,7 +83,8 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       return;
     }
 
-    const { name, amount } = this.paymentForm.value; 
+    let { name, amount } = this.paymentForm.value; 
+    name = name.trim();
     const paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount }));
   
   
