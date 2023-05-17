@@ -25,6 +25,7 @@ export class PaymentComponent implements OnInit {
   last4: string | undefined;
   name: string | undefined;
   postalCode: string | undefined;
+  brandCard: string | undefined;
   amount: number | undefined;
   currency: string | undefined;
   status: string | undefined;
@@ -41,6 +42,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
   this.last4 = undefined;
   this.name = undefined;
   this.postalCode = undefined;
+  this.brandCard = undefined;
 }
 
   ngOnInit() {    
@@ -116,6 +118,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
             this.last4 = paymentMethod.last4;
             this.name = paymentMethod.name;
             this.postalCode = paymentMethod.address.postal_code;
+            this.brandCard = paymentMethod.brand;
           
             console.log(`Last4: ${this.last4}, Name: ${this.name}, Postal code: ${this.postalCode}`);
           });
@@ -170,6 +173,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       params: {
         date: this.paidAt ? this.paidAt : moment().format('DD/MM/YYYY à HH:mm:ss'),
         last4: this.last4 ? this.last4 : '',
+        brand: this.brandCard ? this.brandCard : '',
       },
       responseType: 'blob',
     }).subscribe(blob => {
