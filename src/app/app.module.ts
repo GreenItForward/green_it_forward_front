@@ -21,6 +21,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { FooterComponent } from './components/footer/footer.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
