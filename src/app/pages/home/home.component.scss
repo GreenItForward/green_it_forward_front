@@ -1,7 +1,24 @@
 .body {
-    background-image: url(../../../assets/background.jpeg);
+    background-image: url('../../../assets/background.jpeg');
 }
 
 .buttonBackground{
   background-image: linear-gradient(to right, rgba(255, 182, 41, 1), rgba(255, 215, 166, 1));
 }
+
+.backgroundSpecialColor{
+  background-image: linear-gradient(to right, rgba(31, 70, 0, 1), rgba(47, 106, 0, 1));
+}
+
+.backgroundSpecialColor2{
+  background-image: linear-gradient(to top, rgba(9, 18, 66, 1),rgba(60, 60, 60, 0.1));
+}
+
+.backgroundImg1{
+  background-image: url('../../../assets/polarbear.png');
+}
+
+.backgroundImg2{
+  background-image: url('../../../assets/manif.png');
+}
+

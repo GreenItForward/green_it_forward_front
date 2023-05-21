@@ -12,6 +12,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     HomeComponent,
     NavbarComponent,
     HeaderComponent,
+    FooterComponent,
   ],
     imports: [
         BrowserModule,
