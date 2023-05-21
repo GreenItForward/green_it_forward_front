@@ -30,7 +30,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     HeaderComponent,
     PaymentComponent,
     FooterComponent,
-  ],
+  ], 
   imports: [
     BrowserModule,
     RouterModule,
