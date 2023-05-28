@@ -12,17 +12,17 @@ export class AppComponent {
   isPhone = false;
 
   constructor(public responsive: BreakpointObserver) {}
-  
+
   ngOnInit() {
-  
+
   this.responsive.observe(Breakpoints.HandsetPortrait)
   .subscribe(result => {
       this.isPhone = false;
-      
+
       if (result.matches) {
       this.isPhone = true;
       }
-  
+
   });
   }
   }

@@ -7,7 +7,27 @@ import { PaymentComponent } from './pages/payment/payment.component';
 const routes : Routes = [
   {
     path: '',
-    component: PaymentComponent
+    component: HomeComponent
+  },
+  {
+    path: 'about',
+    component: HomeComponent
+  },
+  {
+    path: 'pages',
+    component: HomeComponent
+  },
+  {
+    path: 'project',
+    component: HomeComponent
+  },
+  {
+    path: 'community',
+    component: HomeComponent
+  },
+  {
+    path: 'profil',
+    component: HomeComponent
   },
   {
     path: 'payment',
