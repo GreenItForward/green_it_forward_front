@@ -19,6 +19,8 @@ import { environment } from 'src/environments/environment';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { FooterComponent } from './components/footer/footer.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { MatInputModule } from '@angular/material/input';
     NavbarComponent,
     HeaderComponent,
     PaymentComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,8 +46,10 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     ReactiveFormsModule,
     NgxStripeModule.forRoot(environment.stripePublicKey),
-    HttpClientModule
+    HttpClientModule,
+    MatExpansionModule
   ],
+
   providers: [],
   bootstrap: [AppComponent]
 })

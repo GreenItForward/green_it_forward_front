@@ -10,6 +10,26 @@ const routes : Routes = [
     component: HomeComponent
   },
   {
+    path: 'about',
+    component: HomeComponent
+  },
+  {
+    path: 'pages',
+    component: HomeComponent
+  },
+  {
+    path: 'project',
+    component: HomeComponent
+  },
+  {
+    path: 'community',
+    component: HomeComponent
+  },
+  {
+    path: 'profil',
+    component: HomeComponent
+  },
+  {
     path: 'payment',
     component: PaymentComponent
   }
