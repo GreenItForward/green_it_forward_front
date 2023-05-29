@@ -1,13 +1,16 @@
 {
+  "npmScope": "gif",
+  "projects": {
+    "green_it_forward_front": {
+      "tags": []
+    }
+  },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "test"
-        ],
-        "accessToken": "YmIyZDdiMzktNmRkMS00MDQxLTg0NmEtNjQzNGZlMmUwMjE1fHJlYWQtd3JpdGU="
+        "cacheableOperations": [],
+        "accessToken": "MWM1YzI4NjYtMjUzMS00MWY3LTk3N2UtY2IxMzkzZTZkMzE4fHJlYWQtd3JpdGU="
       }
     }
   },
@@ -42,5 +45,8 @@
         "{workspaceRoot}/karma.conf.js"
       ]
     }
+  },
+  "affected": {
+    "defaultBase": "main"
   }
 }

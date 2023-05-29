@@ -16,6 +16,7 @@
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "options": {
+        "project": "green_it_forward_front/package.json",
         "outputPath": "dist/green_it_forward_front",
         "index": "src/index.html",
         "main": "src/main.ts",

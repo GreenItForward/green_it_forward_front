@@ -21,6 +21,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { FooterComponent } from './components/footer/footer.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { AdminComponent } from './pages/admin/index/index.component'; 
+import { SidebarComponent } from './components/admin/sidebar/sidebar.component';
+import { GestionComponent } from './pages/admin/gestion/gestion.component';
+import { StatsComponent } from './pages/admin/stats/stats.component';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { AdminHeaderComponent } from './components/admin/header/header.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +35,12 @@ import {MatExpansionModule} from "@angular/material/expansion";
     NavbarComponent,
     HeaderComponent,
     PaymentComponent,
-    FooterComponent,
+    FooterComponent, 
+    AdminComponent, 
+    SidebarComponent, 
+    GestionComponent,
+    StatsComponent, 
+    AdminHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +58,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
     ReactiveFormsModule,
     NgxStripeModule.forRoot(environment.stripePublicKey),
     HttpClientModule,
-    MatExpansionModule
+    MatExpansionModule,
+    HighchartsChartModule
   ],
 
   providers: [],
