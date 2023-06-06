@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { PaymentComponent } from './pages/payment/payment.component';
+import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
 
 
 const routes : Routes = [
@@ -32,7 +33,11 @@ const routes : Routes = [
   {
     path: 'payment',
     component: PaymentComponent
-  }
+  },
+  {
+    path: 'reset-pwd',
+    component: ResetPwdComponent
+  },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -21,6 +21,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { FooterComponent } from './components/footer/footer.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     HeaderComponent,
     PaymentComponent,
     FooterComponent,
+    ResetPwdComponent,
   ], 
   imports: [
     BrowserModule,
