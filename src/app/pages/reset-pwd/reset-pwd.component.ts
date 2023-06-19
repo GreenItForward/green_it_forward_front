@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ResetPwdService } from 'src/app/services/reset-pwd.service';
 
 @Component({
   selector: 'app-reset-pwd',
@@ -10,17 +11,29 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class ResetPwdComponent {
 
   resetPwdForm: FormGroup;
+  message: string;
 
-  constructor() {
+  constructor(private resetPwdService: ResetPwdService) {
     this.resetPwdForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email])
     });
+
+    this.message = '';
+    
   }
 
   onSubmit() {
     if (this.resetPwdForm.valid) {
-      // TODO: Insert service call here to handle password reset
+      this.resetPwdService.resetPwd(this.resetPwdForm.value.email).subscribe({
+        next: response => {
+          this.message = response.message;
+          this.resetPwdForm.reset();
+        },
+        error: () => {
+          this.message = 'An error occurred';
+        }
+      });
     }
   }
-
+  
 }
