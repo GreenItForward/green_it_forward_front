@@ -6,10 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { HeaderComponent } from './components/header/header.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgxStripeModule } from 'ngx-stripe';
 import { PaymentComponent } from './pages/payment/payment.component';
@@ -19,20 +16,18 @@ import { environment } from 'src/environments/environment';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { FooterComponent } from './components/footer/footer.component';
-import {MatExpansionModule} from "@angular/material/expansion";
+import { HomeModule } from './pages/home/home.module';
+import { SharedModule } from './shared.module';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    NavbarComponent,
-    HeaderComponent,
     PaymentComponent,
-    FooterComponent,
   ], 
   imports: [
     BrowserModule,
+    SharedModule,
     RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -47,7 +42,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
     ReactiveFormsModule,
     NgxStripeModule.forRoot(environment.stripePublicKey),
     HttpClientModule,
-    MatExpansionModule
+    HomeModule,
+    SlickCarouselModule
   ],
 
   providers: [],
