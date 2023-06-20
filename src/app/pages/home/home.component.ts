@@ -15,7 +15,10 @@ export class HomeComponent implements OnInit {
     { background: 'backgroundImg2', title: 'Slide 2', price: '1800 / 2000 €' },
   ];
   slideConfig = { slidesToShow: 4, slidesToScroll: 4 };
-  
+
+  nbProjects = 1292;
+  nbUsers = 3594;
+
   slickInit(e: any) {
   }
   breakpoint(e: any) {
