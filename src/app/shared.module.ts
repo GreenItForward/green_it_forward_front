@@ -4,6 +4,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
   ],
   imports: [
     CommonModule,
-    MatExpansionModule
+    MatExpansionModule,
+    RouterModule
   ],
   exports: [
     HeaderComponent,

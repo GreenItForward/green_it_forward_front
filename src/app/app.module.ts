@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HomeModule } from './pages/home/home.module';
 import { SharedModule } from './shared.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { ProjectsModule } from './pages/projects/projects.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,6 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
   imports: [
     BrowserModule,
     SharedModule,
-    RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -45,6 +45,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     HttpClientModule,
     HomeModule,
     NotFoundModule,
+    ProjectsModule,
     SlickCarouselModule
   ],
 
