@@ -1,3 +1,4 @@
+import { NotFoundModule } from './pages/not-found/not-found.module';
 import { MatButtonModule } from '@angular/material/button';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,6 +44,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     NgxStripeModule.forRoot(environment.stripePublicKey),
     HttpClientModule,
     HomeModule,
+    NotFoundModule,
     SlickCarouselModule
   ],
 
