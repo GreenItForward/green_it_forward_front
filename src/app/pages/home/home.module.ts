@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { HomeComponent } from './home.component';
 import { SharedModule } from 'src/app/shared.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [ HomeComponent ],
   imports: [
     CommonModule,
+    RouterModule,
     SharedModule,
     SlickCarouselModule
   ]
