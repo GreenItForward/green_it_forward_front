@@ -21,12 +21,25 @@ import { HomeModule } from './pages/home/home.module';
 import { SharedModule } from './shared.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ProjectsModule } from './pages/projects/projects.module';
+import { FooterComponent } from './components/footer/footer.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import { AdminComponent } from './pages/admin/index/index.component'; 
+import { SidebarComponent } from './components/admin/sidebar/sidebar.component';
+import { GestionComponent } from './pages/admin/gestion/gestion.component';
+import { StatsComponent } from './pages/admin/stats/stats.component';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { AdminHeaderComponent } from './components/admin/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PaymentComponent,
-  ], 
+    AdminComponent, 
+    SidebarComponent, 
+    GestionComponent,
+    StatsComponent, 
+    AdminHeaderComponent
+  ],
   imports: [
     BrowserModule,
     SharedModule,
@@ -43,6 +56,8 @@ import { ProjectsModule } from './pages/projects/projects.module';
     ReactiveFormsModule,
     NgxStripeModule.forRoot(environment.stripePublicKey),
     HttpClientModule,
+    MatExpansionModule,
+    HighchartsChartModule,
     HomeModule,
     NotFoundModule,
     ProjectsModule,
