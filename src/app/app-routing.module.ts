@@ -7,12 +7,17 @@ import { GestionComponent } from './pages/admin/gestion/gestion.component';
 import { StatsComponent } from './pages/admin/stats/stats.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
+import { AuthComponent } from './pages/auth/auth.component';
 
 
 const routes : Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'auth',
+    component: AuthComponent
   },
   {
     path: 'about',
