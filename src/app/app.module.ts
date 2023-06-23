@@ -2,18 +2,14 @@ import { NotFoundModule } from './pages/not-found/not-found.module';
 import { MatButtonModule } from '@angular/material/button';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { NgxStripeModule } from 'ngx-stripe';
-import { PaymentComponent } from './pages/payment/payment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -23,12 +19,12 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ProjectsModule } from './pages/projects/projects.module';
 import {MatExpansionModule} from "@angular/material/expansion";
 import { AdminModule } from './pages/admin/admin.module';
+import { PaymentModule } from './pages/payment/payment.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PaymentComponent
-  ],
+    AppComponent
+    ],
   imports: [
     BrowserModule,
     SharedModule,
@@ -42,14 +38,13 @@ import { AdminModule } from './pages/admin/admin.module';
     MatInputModule,
     MatCardModule,
     FormsModule,
-    ReactiveFormsModule,
-    NgxStripeModule.forRoot(environment.stripePublicKey),
     HttpClientModule,
     MatExpansionModule,
     HomeModule,
     NotFoundModule,
     ProjectsModule,
     AdminModule,
+    PaymentModule,
     SlickCarouselModule
   ],
 
