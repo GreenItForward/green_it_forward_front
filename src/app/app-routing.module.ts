@@ -8,6 +8,7 @@ import { StatsComponent } from './pages/admin/stats/stats.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { AuthComponent } from './pages/auth/auth.component';
+import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
 
 
 const routes : Routes = [
@@ -57,9 +58,15 @@ const routes : Routes = [
     component: StatsComponent
   },
   {
+    path: 'reset-pwd',
+    component: ResetPwdComponent
+  },
+  /* LAST ROUTE */
+  {
     path: '**',
     component: NotFoundComponent
   }
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -21,11 +21,14 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { AdminModule } from './pages/admin/admin.module';
 import { PaymentModule } from './pages/payment/payment.module';
 import { AuthModule } from './pages/auth/auth.module';
+import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
-    ],
+    AppComponent,
+    ResetPwdComponent
+  ],
   imports: [
     BrowserModule,
     SharedModule,
@@ -47,7 +50,8 @@ import { AuthModule } from './pages/auth/auth.module';
     AdminModule,
     PaymentModule,
     AuthModule,
-    SlickCarouselModule
+    SlickCarouselModule,
+    ReactiveFormsModule
   ],
 
   providers: [],
