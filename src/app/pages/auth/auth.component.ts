@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-auth',
@@ -13,7 +14,7 @@ export class AuthComponent {
   isLoading = false;
   error: string|null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private commonService: CommonService) {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -42,27 +43,36 @@ export class AuthComponent {
     this.isLoading = true;
     if (this.isLoginMode) {
       this.authService.login(email, password).subscribe(
-        responseData => {
+
+        
+        (response:any) => {},
+        (errorMessage:any) => {
+          if(errorMessage.status === 201) {
+            this.isLoading = false;
+            localStorage.setItem('token', errorMessage.error.text);
+            this.commonService.navigate('/project');
+            return;
+          }
+
           this.isLoading = false;
-          // Navigate to the main page, or do something else
-        },
-        errorMessage => {
-          this.error = errorMessage;
-          this.isLoading = false;
+          this.error = errorMessage.error.message;
         }
       );
-    } else {
-      console.log("odo", this.isLoading);
-      
+    } else {      
       this.authService.register(user).subscribe(
-        responseData => {
+        (response:any) => {},
+        (errorMessage:any) => {
+          if(errorMessage.status === 201) {
+            this.isLoading = false;
+            localStorage.setItem('token', errorMessage.error.text);
+            this.commonService.navigate('/project');
+            return;
+          }
+
           this.isLoading = false;
-          // Navigate to the main page, or do something else
-        },
-        errorMessage => {
-          this.error = errorMessage;
-          this.isLoading = false;
+          this.error = errorMessage.error.message;
         }
+
       );
     }
 

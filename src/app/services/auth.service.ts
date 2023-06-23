@@ -6,7 +6,7 @@ import { create } from 'domain';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = `${environment.apiUrl}/api/auth`;
+  private apiUrl = `${environment.apiUrl}/auth`;
 
   constructor(private http: HttpClient) {}
 
@@ -19,7 +19,14 @@ export class AuthService {
 
   register(user: User) {
     return this.http.post(`${this.apiUrl}/register`, {
-      user
+      email: user.email,
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName,
     });
+  }
+
+  setUserData(responseData: String) {
+    localStorage.setItem('userData', JSON.stringify(responseData));
   }
 }
