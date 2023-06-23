@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { PaymentComponent } from './pages/payment/payment.component';
-import { AdminComponent } from './pages/admin/index/index.component';
+import { AdminComponent } from './pages/admin/dashboard/dashboard.component';
 import { GestionComponent } from './pages/admin/gestion/gestion.component';
 import { StatsComponent } from './pages/admin/stats/stats.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
