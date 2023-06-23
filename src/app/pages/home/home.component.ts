@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-home',
@@ -7,14 +8,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  slides = [
-    { background: 'backgroundImg1', title: 'Slide 1', price: '1000 / 25000 €' },
-    { background: 'backgroundImg2', title: 'Slide 2', price: '130 / 1000 €' },
-    { background: 'backgroundImg1', title: 'Slide 1', price: '1000 / 1200 €' },
-    { background: 'backgroundImg2', title: 'Slide 2', price: '280 / 300 €' },
-    { background: 'backgroundImg1', title: 'Slide 1', price: '167 / 200 €' },
-    { background: 'backgroundImg2', title: 'Slide 2', price: '1800 / 2000 €' },
-  ];
+  constructor(private router: Router, private commonService: CommonService) {}
+
+  projects = this.commonService.getProjects();
+  
+  slides:{background:string, title:string, price:string}[] = [];
+
+  addSlides(projects: any[]) {
+    projects.forEach((project: any) => {
+      this.slides.push({
+        background: project.id % 2 === 0 ? 'backgroundImg1' : 'backgroundImg2',
+        title: project.title,
+        price: `${project.amountRaised} / ${project.totalAmount} €`,
+      });
+    });
+  }
+
   slideConfig = { slidesToShow: 4, slidesToScroll: 4 };
 
   nbProjects = 1292;
@@ -28,6 +37,7 @@ export class HomeComponent implements OnInit {
   }
   beforeChange(e: any) {
   }
-  constructor(private router: Router) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.addSlides(this.projects);
+  }
 }  
