@@ -1,6 +1,8 @@
 <div class="flex items-center justify-center h-screen bg-gray-100">
   <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
     <h1 class="text-3xl font-bold mb-4 text-indigo-500 text-center">Paiement</h1>
+    <h2 class="text-3xl font-bold mb-4 text-indigo-500 text-center">Don à {{ project?.name || "undefined" }}</h2>
+
     <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="space-y-6">
       <div>
         <label class="block text-sm font-medium text-gray-700">Nom sur la carte</label>

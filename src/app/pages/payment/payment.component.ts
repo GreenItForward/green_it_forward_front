@@ -1,3 +1,4 @@
+import { CommonService } from 'src/app/services/common.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -6,6 +7,9 @@ import { StripeService } from 'ngx-stripe';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
 import * as moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
+import { ProjectService } from 'src/app/services/project.service';
+import { Project } from 'src/app/models/project.model';
 
 @Component({
   selector: 'app-payment',
@@ -29,13 +33,16 @@ export class PaymentComponent implements OnInit {
   amount: number | undefined;
   currency: string | undefined;
   status: string | undefined;
+  project: Project | undefined;
+  id: string;
 
-constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient) {
+constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient, 
+  private route: ActivatedRoute, private projectService: ProjectService, private commonService: CommonService) {
   this.paymentForm = this.fb.group({ });
   this.cardOptions = { };
   this.elementsOptions = { };
   this.errorMessage = '';
-  this.successMessage = '';
+  this.successMessage = ''; 
   this.paidAmount = null;
   this.paidAt = null;
   this.paidBy = null;
@@ -45,7 +52,16 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
   this.brandCard = undefined;
 }
 
-  ngOnInit() {    
+  async ngOnInit() {    
+    const routeId = this.route.snapshot.paramMap.get('id'); 
+    try {
+      this.project = await this.projectService.getProject(routeId);
+    } catch (error) {
+      this.errorMessage = error instanceof Error ? error.message : "An unexpected error occurred.";
+      this.commonService.navigate("/not-found");
+      return;
+    }
+
     this.paymentForm = new FormGroup({
       name: new FormControl('', Validators.required),
       amount: new FormControl(10, [Validators.required, Validators.min(1)]),

@@ -7,15 +7,15 @@ import { Project } from '../models/project.model';
 })
 export class CommonService {
 
-  //mock of projects 
+  //mock of projects  - will be replaced by API call
   projects:Project[] = [
-    new Project('1', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "James"),
-    new Project('2', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Ronan"),
-    new Project('3', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Charles"),
-    new Project('4', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "James"),
-    new Project('5', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Ronan"),
-    new Project('6', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Charles"),
-    new Project('7', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "James"),
+    new Project('2f009e72-5f7d-454b-9790-70ab23ee739a', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "James"),
+    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Ronan"),
+    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Charles"),
+    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "James"),
+    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Ronan"),
+    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Charles"),
+    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "James"),
   ];
 
 
@@ -26,16 +26,25 @@ export class CommonService {
   }
 
   navigate(page: string) {
-    if (page.charAt(0) === '/' && page.length > 1) {
+    if (page.startsWith('/') && page.length > 1) {
       page = page.substring(1);
     }
 
     this.Router.navigate([page]);
   }
 
-  // get projects
   getProjects() {
     return this.projects;
+  }
+
+  // generate random uuid (from https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid)
+  generateUUID() {
+     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        let r = Math.random() * 16 | 0,
+          v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      }
+    );
   }
 
 
