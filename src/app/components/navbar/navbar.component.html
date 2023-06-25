@@ -8,8 +8,8 @@
     <div class="text-xl text-white text-center">
       <div class="mt-2" routerLink="/about">About</div>
       <div class="mt-2" routerLink="/pages">Pages</div>
-      <div class="mt-2" routerLink="/project">Project</div>
-      <div class="mt-2" routerLink="/community">Community</div>
+      <div class="mt-2" routerLink="/project" *ngIf="this.userService.isLoggedIn$ | async">Project</div>
+      <div class="mt-2" routerLink="/community" *ngIf="this.userService.isLoggedIn$ | async">Community</div>
       <div class="mt-2" routerLink="/admin">Admin</div>
     </div>
   </mat-expansion-panel>
@@ -27,9 +27,13 @@
          [ngClass]="{'underline underline-offset-8': router.url === '/pages'}">Pages</div>
     <div routerLink="/project" 
          class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8"
-         [ngClass]="{'underline underline-offset-8': router.url === '/project'}">Project</div>
+         [ngClass]="{'underline underline-offset-8': router.url === '/project'}" *ngIf="this.userService.isLoggedIn$ | async">Project</div>
     <div routerLink="/community" 
          class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8"
-         [ngClass]="{'underline underline-offset-8': router.url === '/community'}">Community</div>
+         [ngClass]="{'underline underline-offset-8': router.url === '/community'}" *ngIf="this.userService.isLoggedIn$ | async">Community</div>
+    <div routerLink="/admin" 
+         class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8"
+         [ngClass]="{'underline underline-offset-8': router.url === '/admin'}" *ngIf="this.userService.isAdmin">Admin
+    </div>
   </div>
 </div>

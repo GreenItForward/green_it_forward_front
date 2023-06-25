@@ -6,7 +6,6 @@ import { Project } from '../models/project.model';
   providedIn: 'root'
 })
 export class CommonService {
-
   //mock of projects  - will be replaced by API call
   projects:Project[] = [
     new Project('2f009e72-5f7d-454b-9790-70ab23ee739a', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "James"),
@@ -46,6 +45,5 @@ export class CommonService {
       }
     );
   }
-
 
 }

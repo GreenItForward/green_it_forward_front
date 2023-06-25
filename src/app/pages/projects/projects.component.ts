@@ -15,7 +15,6 @@ export class ProjectsComponent implements OnInit {
 
     projects: Project[] = this.commonService.getProjects();
 
-  
     ngOnInit() {
 
     }

@@ -5,6 +5,6 @@
     </div>
     <div class="w-10 flex items-center justify-center lg:w-16">
       <img routerLink="{{link}}" src="assets/profil-logo.png" alt="profil-logo.png" class="nw-full cursor-pointer" id="profil-logo">
-      <img routerLink="{{link}}" src="assets/logout.png" alt="logout.png" class="invisible nw-full cursor-pointer" id="logout" (click)="logout()">
+      <img routerLink="{{link}}" src="assets/logout.png" alt="logout.png" class="invisible nw-full cursor-pointer" id="logout" (click)="this.userService.logout()">
   </div>
-</div>
+</div> 

@@ -43,14 +43,12 @@ export class AuthComponent {
     this.isLoading = true;
     if (this.isLoginMode) {
       this.authService.login(email, password).subscribe(
-
-        
         (response:any) => {},
         (errorMessage:any) => {
           if(errorMessage.status === 201) {
             this.isLoading = false;
             localStorage.setItem('token', errorMessage.error.text);
-            this.commonService.navigate('/project');
+            this.commonService.navigate('/');
             return;
           }
 
