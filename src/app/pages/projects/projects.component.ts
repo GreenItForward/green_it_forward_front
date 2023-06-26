@@ -1,7 +1,8 @@
-import { CommonService } from 'src/app/services/common.service';
 import { Component, OnInit } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { ProjectService } from 'src/app/services/project.service';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-projects',
@@ -11,11 +12,13 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 export class ProjectsComponent implements OnInit {
     projectName: string = '';
 
-    constructor(private commonService: CommonService, private router: Router) {}
+    constructor(private projectService: ProjectService, private commonService:CommonService, private router: Router) {}
 
-    projects: Project[] = this.commonService.getProjects();
-
+    projects: Project[]; 
     ngOnInit() {
+      this.projectService.getProjects().then(projects => {
+        this.projects = projects;
+      });
 
     }
 

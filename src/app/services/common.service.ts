@@ -1,24 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { Project } from '../models/project.model';
+import { ProjectService } from './project.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
-  //mock of projects  - will be replaced by API call
-  projects:Project[] = [
-    new Project('2f009e72-5f7d-454b-9790-70ab23ee739a', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "James"),
-    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Ronan"),
-    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Charles"),
-    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "James"),
-    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Ronan"),
-    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Charles"),
-    new Project(this.generateUUID(), 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "James"),
-  ];
+  projects: Project[] = [];
+  private _projectService: ProjectService;
 
-
-  constructor(private Router: Router) { }
+  constructor(private router: Router, private injector: Injector) { 
+    setTimeout(() => this._projectService = injector.get(ProjectService));
+  }
 
   public getLocalStorageItem(key: string) {
     return localStorage.getItem(key);
@@ -29,11 +23,7 @@ export class CommonService {
       page = page.substring(1);
     }
 
-    this.Router.navigate([page]);
-  }
-
-  getProjects() {
-    return this.projects;
+    this.router.navigate([page]);
   }
 
   // generate random uuid (from https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid)
@@ -46,4 +36,15 @@ export class CommonService {
     );
   }
 
+  async getProjectIci() : Promise<Project[]> {
+    await new Promise(resolve => setTimeout(resolve)); // Attendre la prochaine boucle d'événements
+  
+    if (!this._projectService) {
+      throw new Error('ProjectService is not defined');
+    }
+  
+    this.projects = await this._projectService.getProjects();
+    return this.projects;
+  }
+  
 }

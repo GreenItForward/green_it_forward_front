@@ -32,7 +32,11 @@ export class ProjectService {
     
     return project;
   }
-  
-  
 
+
+  async getProjects() : Promise<Project[]> {
+    const projects = await lastValueFrom(this.http.get<Project[]>(`${this.apiUrl}`, this.options));
+    return projects ? projects : [];
+  }
+  
 }

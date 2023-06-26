@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Project } from 'src/app/models/project.model';
 import { CommonService } from 'src/app/services/common.service';
 
 @Component({
@@ -10,15 +11,16 @@ import { CommonService } from 'src/app/services/common.service';
 export class HomeComponent implements OnInit {
   constructor(private router: Router, private commonService: CommonService) {}
 
-  projects = this.commonService.getProjects();
+  projects:Project[];
   
-  slides:{background:string, title:string, price:string}[] = [];
+  slides: { name: string; background: string; title: string; price: string; }[] = [];
 
-  addSlides(projects: any[]) {
-    projects.forEach((project: any) => {
+  addSlides(projects: Project[]) {
+    projects.forEach((project: Project) => {
       this.slides.push({
-        background: project.id % 2 === 0 ? 'backgroundImg1' : 'backgroundImg2',
-        title: project.title,
+        name: project.name,
+        background: Math.random() > 0.5 ? 'backgroundImg1' : 'backgroundImg2',
+        title: project.name,
         price: `${project.amountRaised} / ${project.totalAmount} €`,
       });
     });
@@ -38,6 +40,11 @@ export class HomeComponent implements OnInit {
   beforeChange(e: any) {
   }
   ngOnInit(): void {
-    this.addSlides(this.projects);
+    this.commonService.getProjectIci().then(projects => {
+      this.projects = projects;
+      this.addSlides(this.projects);
+    }).catch(error => {
+      // Gérez l'erreur ici
+    });
   }
 }  
