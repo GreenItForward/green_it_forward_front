@@ -4,7 +4,7 @@
       <img src="assets/GIF-logo.png" alt="GIF-logo.png" class="w-full">
     </div>
     <div class="w-10 flex items-center justify-center lg:w-16">
-      <img routerLink="/profil" src="assets/profil-logo.png" alt="profil-logo.png" class="w-full cursor-pointer">
-    </div>
+      <img routerLink="{{link}}" src="assets/profil-logo.png" alt="profil-logo.png" class="nw-full cursor-pointer" id="profil-logo">
+      <img routerLink="{{link}}" src="assets/logout.png" alt="logout.png" class="invisible nw-full cursor-pointer" id="logout" (click)="logout()">
   </div>
 </div>

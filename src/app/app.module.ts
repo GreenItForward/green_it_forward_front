@@ -1,41 +1,37 @@
+import { NotFoundModule } from './pages/not-found/not-found.module';
 import { MatButtonModule } from '@angular/material/button';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { HeaderComponent } from './components/header/header.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { NgxStripeModule } from 'ngx-stripe';
-import { PaymentComponent } from './pages/payment/payment.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { FooterComponent } from './components/footer/footer.component';
+import { HomeModule } from './pages/home/home.module';
+import { SharedModule } from './shared.module';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { ProjectsModule } from './pages/projects/projects.module';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { AdminModule } from './pages/admin/admin.module';
+import { PaymentModule } from './pages/payment/payment.module';
+import { AuthModule } from './pages/auth/auth.module';
 import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    NavbarComponent,
-    HeaderComponent,
-    PaymentComponent,
-    FooterComponent,
-    ResetPwdComponent,
-  ], 
+    ResetPwdComponent
+  ],
   imports: [
     BrowserModule,
-    RouterModule,
+    SharedModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -46,10 +42,16 @@ import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
     MatInputModule,
     MatCardModule,
     FormsModule,
-    ReactiveFormsModule,
-    NgxStripeModule.forRoot(environment.stripePublicKey),
     HttpClientModule,
-    MatExpansionModule
+    MatExpansionModule,
+    HomeModule,
+    NotFoundModule,
+    ProjectsModule,
+    AdminModule,
+    PaymentModule,
+    AuthModule,
+    SlickCarouselModule,
+    ReactiveFormsModule
   ],
 
   providers: [],

@@ -1,0 +1,48 @@
+<app-header></app-header>
+<app-navbar></app-navbar>
+
+<div class="container mx-auto px-4 py-5">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div
+      *ngFor="let project of projects"
+      class="flex flex-col items-center rounded overflow-hidden shadow-lg bg-darkgreen-500 text-white"
+    >
+      <div class="flex justify-center items-center h-64 w-full">
+        <img
+          [src]="project.imageUrl"
+          class="w-64 h-64 object-cover"
+          alt="{{ project.name }}"
+        />
+      </div>
+      <div class="px-6 py-4">
+        <div class="font-bold text-black text-center text-xl mb-2">
+          {{ project.name }}
+        </div>
+        <p class="text-base text-black text-center">
+          {{ project.description }}
+        </p>
+      </div>
+      <div class="px-6 pt-4 pb-2">
+        <span
+          class="inline-block bg-darkgreen-700 rounded-full px-3 py-1 text-sm font-semibold text-black mr-2 mb-2"
+        >
+          {{ project.amountRaised }}€ / {{ project.totalAmount }}€
+        </span>
+      </div>
+      <div class="px-6 pt-4 pb-2">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          En savoir plus
+        </button>
+        <button
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
+        >
+          Faire un dons
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

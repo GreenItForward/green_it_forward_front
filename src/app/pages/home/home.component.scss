@@ -1,3 +1,7 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
+
 .body {
     background-image: url('../../../assets/background.jpeg');
 }
@@ -20,4 +24,16 @@
 
 .backgroundImg2{
   background-image: url('../../../assets/manif.png');
+}
+
+.slick-slider {
+  width: 88%;
+  margin: auto;
+}
+
+body .slick-prev, 
+body .slick-next {
+  height: 45px;
+  width: 40px;
+  z-index: 100;
 }

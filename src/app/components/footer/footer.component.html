@@ -1,6 +1,6 @@
 <div class="specialBackgroundColor2">
-  <div class="specialBackgroundColor1 flex justify-center">
-    <div class="w-2/3 flex">
+  <div class="specialBackgroundColor1 flex justify-center px-4 md:px-0">
+    <div class="flex flex-col md:w-2/3 md:flex-row">
       <div class="cursor-pointer specialBackgroundColor2 p-6 mr-10"><img src="assets/logo2.png" class="w-52"></div>
       <div class="cursor-pointer p-6 mr-10 text-white font-bold text-lg">Pages</div>
       <div class="cursor-pointer p-6 mr-10 text-white font-bold text-lg">Utility</div>
@@ -8,25 +8,33 @@
     </div>
   </div>
 
-  <div class="text-white w-8/12 p-8 m-auto flex">
-    <div class="w-1/4 flex flex-col justify-between mr-12">
+  <div class="text-white w-full p-8 m-auto flex flex-col md:flex-row md:w-8/12">
+    <div class="w-full md:w-1/4 flex flex-col justify-between mb-6 md:mb-0 mr-12">
       <div class="mb-6">Mauris lacinia porttitor hendrerit. Pellentesque vulputate rhoncus nisl, sed tincidunt sem ullamcorper in. Aliquam erat volutpat.</div>
       <div class="mb-6 flex items-center">
-        <div class="mr-2"><img src="assets/email.png" class="w-14 cursor-pointer"></div>
+        <div class="mr-2">
+          <a href="mailto:{{ourMailContact}}">
+            <img src="assets/email.png" class="w-14 cursor-pointer">
+          </a>
+        </div>
         <div>
           Email<br>
-          contact@logistics.com
+          {{ourMailContact}}
         </div>
       </div>
       <div class="flex items-center">
-        <div class="mr-2"><img src="assets/phone.png" class="w-14 cursor-pointer"></div>
+        <div class="mr-2">
+          <a href = "tel:{{ourPhoneContact}}">
+            <img src="assets/phone.png" class="w-14 cursor-pointer">
+          </a>
+        </div>
         <div>
           Call us<br>
-          (00) 112 365 489
+          {{ourPhoneContact}}
         </div>
       </div>
     </div>
-    <div class="w-1/4 flex mr-10">
+    <div class="w-full md:w-1/4 flex flex-col md:flex-row">
       <div class="mr-16">About Us<br><br>
         Our Team<br><br>
         Our Project<br><br>
@@ -39,14 +47,16 @@
         Not Found</div>
     </div>
     <div>
-      <div class="mb-4 border border-2 border-gray-100/20 p-4 pr-36 text-gray-100/50">Email here*</div>
+      <div class="mb-4 border border-2 border-gray-100/20 p-4 pr-36 text-gray-100/50">
+        <input type="text" class="w-full bg-transparent border-none outline-none text-gray-100/50" placeholder="Email here*" id="email">
+      </div>
       <div class="buttonBackground cursor-pointer w-fit text-black bg-amber-400 py-4 px-8">Send Now</div>
     </div>
   </div>
 
-  <div class="m-auto flex justify-between w-full py-4 px-60 border border-y-gray-100/10 border-x-0">
-    <div class="text-white">Copyright © TransitFlow | Designed by VictorFlow - Powered by Webflow.</div>
-    <div class="flex">
+  <div class="m-auto flex flex-col md:flex-row justify-between w-full py-4 px-4 md:px-60 border border-y-gray-100/10 border-x-0">
+    <div class="text-white mb-2 md:mb-0">Copyright © {{currentYear}} | Designed by VictorFlow</div>
+    <div class="flex flex-wrap">
       <div class="mr-2 text-xs text-gray-500">Style Guide</div>
       <div class="mr-2 text-xs text-gray-500">Licenses</div>
       <div class="mr-2 text-xs text-gray-500">Changelog</div>
