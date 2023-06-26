@@ -108,7 +108,7 @@
         <div ngxSlickItem *ngFor="let slide of slides" class="slide">
           <div class="{{slide.background}} bg-cover w-52 h-72 flex flex-col justify-end">
             <div class="backgroundSpecialColor2 p-4">
-              <div class="text-white font-bold mb-2">Lorem Ipsum</div>
+              <div class="text-white font-bold mb-2">{{slide.name}}</div>
               <div class="p-1 bg-white rounded-2xl text-center" style="box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);">
                 {{ slide.price }}
               </div>
@@ -116,7 +116,7 @@
           </div>
         </div>
       </ngx-slick-carousel>
-    <div class="buttonBackground cursor-pointer w-fit text-xs text-black bg-amber-400 py-4 px-8 mt-10">More Projects</div>
+    <div class="buttonBackground cursor-pointer w-fit text-xs text-black bg-amber-400 py-4 px-8 mt-10" routerlink="/project">More Projects</div>
   </div>
   
 

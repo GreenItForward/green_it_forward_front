@@ -41,7 +41,7 @@ const routes : Routes = [
     component: HomeComponent
   },
   {
-    path: 'payment',
+    path: 'payment/:id',
     component: PaymentComponent
   },
   // admin routes

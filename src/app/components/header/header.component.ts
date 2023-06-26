@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit  } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -7,26 +8,19 @@ import { Component, OnInit  } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  link:string = "auth";
+  link:string = "/auth";
  
-  constructor(private Router: Router) { }
+  constructor(private Router: Router, public userService: UserService) { }
 
   ngOnInit(): void {
 
     if(localStorage.getItem('token')) {
       document.getElementById('logout')?.classList.remove('invisible');
-      this.link = "profile";
+      this.link = "/profile";
     }
 
-    if(localStorage.getItem('token') && localStorage.getItem('role') === 'admin') {
-      document.getElementById('admin')?.classList.remove('d-none');
-    }
 
   }
 
-  logout() {  
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    this.Router.navigate(['/auth']);
-  }
+
 }

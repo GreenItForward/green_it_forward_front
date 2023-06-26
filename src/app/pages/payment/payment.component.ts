@@ -1,11 +1,15 @@
+import { CommonService } from 'src/app/services/common.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StripeCardElement, StripeCardElementChangeEvent, StripeCardElementOptions, StripeElements, StripeElementsOptions } from '@stripe/stripe-js';
 import { StripeService } from 'ngx-stripe';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
 import * as moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
+import { ProjectService } from 'src/app/services/project.service';
+import { Project } from 'src/app/models/project.model';
 
 @Component({
   selector: 'app-payment',
@@ -29,13 +33,21 @@ export class PaymentComponent implements OnInit {
   amount: number | undefined;
   currency: string | undefined;
   status: string | undefined;
+  project: Project | undefined;
+  id: string;
+  token: string | null = null;
+  headers: HttpHeaders | null = null;
+  options: {headers: HttpHeaders};
 
-constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient) {
+  
+
+constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient, 
+  private route: ActivatedRoute, private projectService: ProjectService, private commonService: CommonService) {
   this.paymentForm = this.fb.group({ });
   this.cardOptions = { };
   this.elementsOptions = { };
   this.errorMessage = '';
-  this.successMessage = '';
+  this.successMessage = ''; 
   this.paidAmount = null;
   this.paidAt = null;
   this.paidBy = null;
@@ -43,9 +55,12 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
   this.name = undefined;
   this.postalCode = undefined;
   this.brandCard = undefined;
+  this.token = this.commonService.getLocalStorageItem('token');
+  this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+  this.options = { headers: this.headers };
 }
 
-  ngOnInit() {    
+  async ngOnInit() {    
     this.paymentForm = new FormGroup({
       name: new FormControl('', Validators.required),
       amount: new FormControl(10, [Validators.required, Validators.min(1)]),
@@ -76,6 +91,16 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       this.card.mount('#card-element');
       this.card.on('change', this.cardHandler.bind(this));
     });
+
+    const routeId = this.route.snapshot.paramMap.get('id'); 
+    try {
+      this.project = await this.projectService.getProject(routeId);
+    } catch (error) {
+      this.errorMessage = error instanceof Error ? error.message : "An unexpected error occurred.";
+      this.commonService.navigate("/not-found");
+      return;
+    }
+
   }
 
   async onSubmit() {
@@ -85,9 +110,9 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
 
     let { name, amount } = this.paymentForm.value; 
     name = name.trim();
-    const paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount }));
+    const paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount }, this.options));
   
-  
+    
     if (!this.card) {
       console.error("Card not initialized");
       return;
@@ -111,7 +136,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
   
           const paymentMethodId = updatedPaymentIntent.payment_method as string;
           const headers = {
-            'Authorization': `Bearer ${environment.stripePublicKey}`,
+            'Authorization': `Bearer ${this.token}`,
             'Content-Type': 'application/json'
           };
           
@@ -170,12 +195,15 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       return;
     }
 
-    this.http.get(`${environment.apiUrl}/invoice/${this.name}/${amount}`,{
+    this.http.get(`${environment.apiUrl}/invoice/${this.name}/${amount}`, {
+      ...this.options,
       params: {
         date: this.paidAt ? this.paidAt : moment().format('DD/MM/YYYY à HH:mm:ss'),
         last4: this.last4 ? this.last4 : '',
         brand: this.brandCard ? this.brandCard : '',
+        project: this.project ? this.project.name : '',
       },
+
       responseType: 'blob',
     }).subscribe(blob => {
       const url = URL.createObjectURL(blob);

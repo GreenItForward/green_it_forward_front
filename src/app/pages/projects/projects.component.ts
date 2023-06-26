@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
+import { Router } from '@angular/router';
+import { ProjectService } from 'src/app/services/project.service';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-projects',
@@ -7,13 +10,19 @@ import { Project } from 'src/app/models/project.model';
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
-    projects: Project[] = [
-      new Project('1', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "James"),
-      new Project('2', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Ronan"),
-      new Project('3', 'Project Green', 'This is a green project...', 'assets/manif.png', 1000, 10000, new Date(), new Date(), "Charles"),
-    ];
-  
-    constructor() { }
-  
-    ngOnInit(): void { }
+    projectName: string = '';
+
+    constructor(private projectService: ProjectService, private commonService:CommonService, private router: Router) {}
+
+    projects: Project[]; 
+    ngOnInit() {
+      this.projectService.getProjects().then(projects => {
+        this.projects = projects;
+      });
+
+    }
+
+    payNow(project: Project) {
+      this.commonService.navigate(`/payment/${project.id}`);
+    }
 }
