@@ -12,6 +12,9 @@
         <div class="text-darkgreen-900">Goal: €{{ project.totalAmount }}</div>
         <div class="text-darkgreen-900">Start Date: {{ project.startDate | date }}</div>
         <div class="text-darkgreen-900">End Date: {{ project.endDate | date }}</div>
+
+        <button class="mt-4 bg-darkgreen-800 hover:bg-darkgreen-900 text-green-600 font-bold py-2 px-4 rounded-lg" (click)="payNow(project)">Pay Now</button>
+        
       </div>
     </div>
     <div class="w-full text-right mt-4 md:mt-0">

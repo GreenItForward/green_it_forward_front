@@ -2,6 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
 import { Location } from '@angular/common';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-project',
@@ -11,7 +12,8 @@ import { Location } from '@angular/common';
 export class ProjectComponent {
   project:Project;
 
-  constructor(private activatedRoute: ActivatedRoute, private location: Location) {}
+
+  constructor(private activatedRoute: ActivatedRoute, private location: Location, protected commonService: CommonService) {}
 
   ngOnInit(): void {
     const data = this.activatedRoute.snapshot.data as RouteData;
@@ -21,6 +23,10 @@ export class ProjectComponent {
 
   onBack(): void {
     this.location.back();
+  }
+
+  payNow(project: Project) {
+    this.commonService.navigate(`/payment/${project.id}`);
   }
 }
 
