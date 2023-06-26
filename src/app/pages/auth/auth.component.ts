@@ -63,7 +63,7 @@ export class AuthComponent {
           if(errorMessage.status === 201) {
             this.isLoading = false;
             localStorage.setItem('token', errorMessage.error.text);
-            this.commonService.navigate('/project');
+            this.commonService.navigate('/projects');
             return;
           }
 
