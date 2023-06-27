@@ -16,13 +16,14 @@ import { MatInputModule } from '@angular/material/input';
 import { HomeModule } from './pages/home/home.module';
 import { SharedModule } from './shared.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { ProjectsModule } from './pages/projects/projects.module';
 import {MatExpansionModule} from "@angular/material/expansion";
 import { AdminModule } from './pages/admin/admin.module';
 import { PaymentModule } from './pages/payment/payment.module';
 import { AuthModule } from './pages/auth/auth.module';
 import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProjectsModule } from './pages/projects/projects/projects.module';
+import { ProjectModule } from './pages/projects/project/project.module';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeModule,
     NotFoundModule,
     ProjectsModule,
+    ProjectModule,
     AdminModule,
     PaymentModule,
     AuthModule,

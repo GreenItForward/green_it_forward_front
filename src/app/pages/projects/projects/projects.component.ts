@@ -25,4 +25,8 @@ export class ProjectsComponent implements OnInit {
     payNow(project: Project) {
       this.commonService.navigate(`/payment/${project.id}`);
     }
+
+    goToProject(projectId: string) {
+      this.commonService.navigate(`/project/${projectId}`);
+    }
 }
