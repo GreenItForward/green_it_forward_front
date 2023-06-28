@@ -27,7 +27,10 @@ export class StatsService {
       return await lastValueFrom(this.httpClient.get<number>(`${this.apiUrl}/total-projects`, this.options));
     }
 
-    async getUsersPerMonth(year: number): Promise<{[key: string]: number}> {
-      return await lastValueFrom(this.httpClient.get<{[key: string]: number}>(`${this.apiUrl}/users-per-month/${year}`, this.options));
+    async getUsersPerMonth(year: number): Promise<{name: string, value: number}[]> {
+      const response = await lastValueFrom(this.httpClient.get<{[key: string]: number}>(`${this.apiUrl}/users-per-month/${year}`, this.options));
+      const userData = Object.entries(response).map(([name, value]) => ({name, value}));
+      return userData;
     }
+    
 }
