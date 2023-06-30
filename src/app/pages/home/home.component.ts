@@ -10,7 +10,7 @@ import { StatsService } from 'src/app/services/stats.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router, private commonService: CommonService, private statsService: StatsService) { }
+  constructor(protected router: Router, private commonService: CommonService, private statsService: StatsService) { }
 
   projects:Project[];
   nbProjects: number;
