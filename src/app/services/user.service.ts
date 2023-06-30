@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CommonService } from './common.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { log } from 'console';
 
 @Injectable({
   providedIn: 'root'

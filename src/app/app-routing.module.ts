@@ -51,22 +51,13 @@ const routes : Routes = [
     path: 'payment/:id',
     component: PaymentComponent
   },
-  // admin routes
-  {
-    path: 'admin',
-    component: AdminComponent
-  },
-  {
-    path: 'admin/gestion',
-    component: GestionComponent
-  },
-  {
-    path: 'admin/statistics',
-    component: StatsComponent
-  },
   {
     path: 'reset-pwd',
     component: ResetPwdComponent
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin-routing.module').then(m => m.AdminRoutingModule)
   },
   /* LAST ROUTE */
   {

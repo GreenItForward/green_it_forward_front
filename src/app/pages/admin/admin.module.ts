@@ -7,6 +7,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { SidebarComponent } from 'src/app/components/admin/sidebar/sidebar.component';
 import { AdminHeaderComponent } from 'src/app/components/admin/header/header.component';
 import { RouterModule } from '@angular/router';
+import { AdminRoutingModule } from './admin-routing.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     HighchartsChartModule,
-    RouterModule
+    RouterModule,
+    AdminRoutingModule
   ]
 })
 export class AdminModule { }
