@@ -10,20 +10,25 @@ export class UserService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
   
-  constructor(private commonService: CommonService, private Router: Router) { }
-
+  constructor(private commonService: CommonService, private Router: Router) {
+    this.emitLoginStatus();
+  }
   private hasToken(): boolean {
     return !!this.commonService.getLocalStorageItem('token');
   }
+  private emitLoginStatus(): void {
+    this.isLoggedInSubject.next(this.hasToken());
+  }
 
   login() {
-    this.isLoggedInSubject.next(true);
+    this.emitLoginStatus();
   }
 
   logout() {  
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     this.Router.navigate(['/auth']);
+    this.emitLoginStatus();
   }
 
   isAdmin(): boolean {
