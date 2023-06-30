@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonService } from 'src/app/services/common.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-auth',
@@ -14,7 +15,7 @@ export class AuthComponent {
   isLoading = false;
   error: string|null = null;
 
-  constructor(private authService: AuthService, private commonService: CommonService) {}
+  constructor(private authService: AuthService, private commonService: CommonService, private userService: UserService) {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -43,36 +44,37 @@ export class AuthComponent {
     this.isLoading = true;
     if (this.isLoginMode) {
       this.authService.login(email, password).subscribe(
-        (response:any) => {},
-        (errorMessage:any) => {
-          if(errorMessage.status === 201) {
-            this.isLoading = false;
-            localStorage.setItem('token', errorMessage.error.text);
-            this.commonService.navigate('/');
-            return;
-          }
+        (response:any) => {
+          this.isLoading = false;
+          localStorage.setItem('token', response.token);
+          this.userService.login();
+          this.commonService.navigate('/');
 
+        },
+        (errorMessage:any) => {
+          console.error('Login response: ', errorMessage);
           this.isLoading = false;
           this.error = errorMessage.error.message;
         }
       );
     } else {      
       this.authService.register(user).subscribe(
-        (response:any) => {},
+        (response:any) => {
+          this.isLoading = false;
+          localStorage.setItem('token', response.token);
+          this.userService.login();
+          this.commonService.navigate('/');
+        },
         (errorMessage:any) => {
-          if(errorMessage.status === 201) {
-            this.isLoading = false;
-            localStorage.setItem('token', errorMessage.error.text);
-            this.commonService.navigate('/projects');
-            return;
-          }
-
+          console.error('Register response: ', errorMessage);
           this.isLoading = false;
           this.error = errorMessage.error.message;
         }
 
       );
     }
+
+
 
     authForm.reset();
   }

@@ -46,7 +46,6 @@ export class StatsComponent implements OnInit {
           }]
         };
      });
-      console.log(this.userData);
     } catch (error) {
       console.error(error);
     }

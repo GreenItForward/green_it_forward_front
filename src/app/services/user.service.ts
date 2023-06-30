@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CommonService } from './common.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,26 +9,28 @@ import { BehaviorSubject } from 'rxjs';
 export class UserService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
-  
-  constructor(private commonService: CommonService, private Router: Router) {
-    this.emitLoginStatus();
-  }
+
+  authStatusChanged = new Subject<boolean>();
+
+  constructor(private commonService: CommonService, private Router: Router) { }
+
   private hasToken(): boolean {
-    return !!this.commonService.getLocalStorageItem('token');
-  }
-  private emitLoginStatus(): void {
-    this.isLoggedInSubject.next(this.hasToken());
+    const hasToken = !!this.commonService.getLocalStorageItem('token');
+    return hasToken;  
   }
 
   login() {
-    this.emitLoginStatus();
+    this.isLoggedInSubject.next(true);
+    this.authStatusChanged.next(this.isLoggedInSubject.value);
+    
   }
 
   logout() {  
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    this.isLoggedInSubject.next(false);
+    this.authStatusChanged.next(this.isLoggedInSubject.value);
     this.Router.navigate(['/auth']);
-    this.emitLoginStatus();
   }
 
   isAdmin(): boolean {
