@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-not-found',
@@ -7,5 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./not-found.component.scss'],
 })
 export class NotFoundComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  description = this.route.snapshot.queryParams['description'] || "Désolé, nous ne pouvons pas trouver la page que vous recherchez."
+
 }

@@ -26,6 +26,10 @@ export class CommonService {
     this.router.navigate([page]);
   }
 
+  navigateToErrorPage(description: string) {
+    this.router.navigate(['/error'], { queryParams: { description: description } });
+  }
+
   // generate random uuid (from https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid)
   generateUUID() {
      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -37,7 +41,7 @@ export class CommonService {
   }
 
   async getProjectIci() : Promise<Project[]> {
-    await new Promise(resolve => setTimeout(resolve)); // Attendre la prochaine boucle d'événements
+    await new Promise(resolve => setTimeout(resolve)); 
   
     if (!this._projectService) {
       throw new Error('ProjectService is not defined');

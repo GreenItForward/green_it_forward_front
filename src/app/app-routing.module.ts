@@ -11,6 +11,7 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
 import { ProjectComponent } from './pages/projects/project/project.component';
 import { ProjectResolver } from './services/project-resolver.service';
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 
 
 const routes : Routes = [
@@ -54,6 +55,10 @@ const routes : Routes = [
   {
     path: 'reset-pwd',
     component: ResetPwdComponent
+  },
+  {
+    path: 'auth/confirm',
+    component: ConfirmationComponent
   },
   {
     path: 'admin',

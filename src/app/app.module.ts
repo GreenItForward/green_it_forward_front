@@ -24,6 +24,7 @@ import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProjectsModule } from './pages/projects/projects/projects.module';
 import { ProjectModule } from './pages/projects/project/project.module';
+import { ConfirmationModule } from './pages/confirmation/confirmation.module';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ProjectModule } from './pages/projects/project/project.module';
     PaymentModule,
     AuthModule,
     SlickCarouselModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ConfirmationModule
   ],
 
   providers: [],
