@@ -1,27 +1,79 @@
-# GreenItForwardFront
+# GreenItForward Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
+![version](https://img.shields.io/badge/version-1.0.3-blue)
 
-## Development server
+This repository contains the frontend for the GreenItForward project. It is built with Angular and other various dependencies. This project requires a [backend](https://github.com/GreenItForward/green_it_forward_back) built with NestJS to fully function.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Contributors
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- James ABIB
+- Ronan KIELT
+- Charles CRETOIS
 
-## Build
+## Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-## Running unit tests
+### Prerequisites
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+You need to have the following installed:
+- Node.js
+- Angular CLI
 
-## Running end-to-end tests
+### Installation
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+1. Clone the repository
 
-## Further help
+    ```
+    git clone https://github.com/GreenItForward/green_it_forward-front.git
+    ```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+2. Navigate into the project directory
+
+    ```
+    cd green-it-forward-front
+    ```
+
+3. Install the dependencies
+
+    ```
+    npm install
+    ```
+
+## Running the App
+
+- To run the app in the development mode, use the command:
+
+    ```
+    npm run start
+    ```
+
+- To build the app for production, use the command:
+
+    ```
+    npm run build
+    ```
+
+## Testing
+
+Run the tests using the following command:
+
+```
+npm run test
+```
+
+## Built With
+
+- Angular
+- Stripe
+- Highcharts
+- And other various packages...
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/GreenItForward/green-it-forward-front/tags).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
