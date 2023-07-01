@@ -37,4 +37,5 @@ export class UserService {
   isAdmin(): boolean {
     return this.hasToken() && this.commonService.getLocalStorageItem('role') === 'admin';
   }
+  
 }
