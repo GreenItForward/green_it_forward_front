@@ -25,6 +25,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProjectsModule } from './pages/projects/projects/projects.module';
 import { ProjectModule } from './pages/projects/project/project.module';
 import { ConfirmationModule } from './pages/confirmation/confirmation.module';
+import {CommunityComponent} from "./pages/community/community/community.component";
+import {CommunityModule} from "./pages/community/community/community.module";
+import {CommunitiesModule} from "./pages/community/communities/communities.module";
+import {CommunityCardModule} from "./components/community-card/community-card.module";
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -35,6 +40,7 @@ import { ConfirmationModule } from './pages/confirmation/confirmation.module';
     BrowserModule,
     SharedModule,
     AppRoutingModule,
+    CommonModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -55,6 +61,9 @@ import { ConfirmationModule } from './pages/confirmation/confirmation.module';
     AuthModule,
     SlickCarouselModule,
     ReactiveFormsModule,
+    CommunityModule,
+    CommunitiesModule,
+    CommunityCardModule,
     ConfirmationModule
   ],
 

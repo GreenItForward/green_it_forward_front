@@ -12,6 +12,9 @@ import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
 import { ProjectComponent } from './pages/projects/project/project.component';
 import { ProjectResolver } from './services/project-resolver.service';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
+import {CommunityComponent} from "./pages/community/community/community.component";
+import {CommunitiesComponent} from "./pages/community/communities/communities.component";
+import {CommunityResolver} from "./services/community-resolver.service";
 
 
 const routes : Routes = [
@@ -42,7 +45,12 @@ const routes : Routes = [
   },
   {
     path: 'community',
-    component: HomeComponent
+    component: CommunitiesComponent
+  },
+  {
+    path: 'community/:id',
+    component: CommunityComponent,
+    resolve: { community: CommunityResolver },
   },
   {
     path: 'profil',

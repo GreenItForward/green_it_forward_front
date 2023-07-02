@@ -1,0 +1,14 @@
+<div class="bg-gradient-to-r from-green-600 to-green-800 h-full w-full bg-no-repeat bg-cover bg-center">
+  <app-header></app-header>
+  <app-navbar></app-navbar>
+  <div class="w-11/12 m-auto mt-10 mb-10 flex flex-col items-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10">
+    <h1>{{community.name}}</h1>
+    <h3>Description : {{community.description}}</h3>
+    <h2>Followers :</h2>
+    <ng-container *ngFor="let follower of community.followers">
+      {{follower.firstName}}
+    </ng-container>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,17 @@
+<div class="bg-gradient-to-r from-green-600 to-green-800 bg-top w-full bg-no-repeat bg-cover bg-center pb-10">
+  <app-header></app-header>
+  <app-navbar></app-navbar>
+  <div>
+    <div class="w-11/12 m-auto mt-10 flex flex-col items-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10">
+      <h1>Toutes les communautés :</h1>
+      <input type="text" placeholder="Rechercher une communauté">
+      <div class="flex justify-start flex-wrap">
+        <ng-container *ngFor="let community of communities">
+          <app-community-card class="w-1/4 ml-16 mt-10" [community]="community"></app-community-card>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
