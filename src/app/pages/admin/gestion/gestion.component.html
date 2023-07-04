@@ -1,6 +1,6 @@
 <div class="flex h-screen bg-gray-200">
     <app-sidebar></app-sidebar>
-  
+
     <div class="flex-1 flex flex-col overflow-hidden">
       <app-admin-header></app-admin-header>
       <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
@@ -16,21 +16,22 @@
                         <tr>
                           <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
                           <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adresse email</th>
+                          <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rôle</th>
                           <th class="px-6 py-3 bg-gray-50"></th>
                         </tr>
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
-                        <!-- *ngFor quand on aura les données -->
-                        <tr>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">John Doe</td>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">john.doe@example.com</td>
+                        <tr *ngFor="let user of users">
+                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.firstName }} {{ user.lastName }}</td>
+                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email }}</td>
+                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.role }}</td>
                           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" class="text-blue-600 hover:text-blue-900 mr-4">Envoyer un mail</a>
                             <a href="#" class="text-blue-600 hover:text-blue-900 mr-4">Réinitialiser le mot de passe</a>
-                            <a href="#" class="text-red-600 hover:text-red-900">Bannir</a>
+                            <a href="/admin/gestion" class="text-red-600 hover:text-red-900" *ngIf="user.role != 'BANNIS'">Bannir</a>
+                            <a href="/admin/gestion" class="text-red-600 hover:text-red-900" *ngIf="user.role == 'BANNIS'">Débannir</a>
                           </td>
                         </tr>
-                        <!-- fin *ngFor -->
                       </tbody>
                     </table>
                   </div>

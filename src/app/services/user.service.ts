@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CommonService } from './common.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { log } from 'console';
+import {BehaviorSubject, lastValueFrom, Subject} from 'rxjs';
+import {User} from "../models/user.model";
+import {environment} from "../../environments/environment";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +15,28 @@ export class UserService {
 
   authStatusChanged = new Subject<boolean>();
 
-  constructor(private commonService: CommonService, private Router: Router) { }
+  private apiUrl = `${environment.apiUrl}/user`;
+  token: string | null = null;
+  headers: HttpHeaders | null = null;
+  options: {headers: HttpHeaders};
+
+  constructor(private commonService: CommonService, private Router: Router, private http: HttpClient) {
+    this.token = this.commonService.getLocalStorageItem('token');
+    this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    this.options = { headers: this.headers };
+  }
 
   private hasToken(): boolean {
     const hasToken = !!this.commonService.getLocalStorageItem('token');
-    return hasToken;  
+    return hasToken;
   }
 
   login() {
     this.isLoggedInSubject.next(true);
     this.authStatusChanged.next(this.isLoggedInSubject.value);
-    
   }
 
-  logout() {  
+  logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     this.isLoggedInSubject.next(false);
@@ -35,7 +45,11 @@ export class UserService {
   }
 
   isAdmin(): boolean {
-    return this.hasToken() && this.commonService.getLocalStorageItem('role') === 'admin';
+    console.log(this.hasToken() && this.commonService.getLocalStorageItem('role') === 'ADMINISTRATEUR')
+    return this.hasToken() && this.commonService.getLocalStorageItem('role') === 'ADMINISTRATEUR';
   }
-  
+
+  async getMe(): Promise<User> {
+    return await lastValueFrom(this.http.get<User>(`${this.apiUrl}/me`, this.options));
+  }
 }
