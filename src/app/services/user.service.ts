@@ -45,11 +45,15 @@ export class UserService {
   }
 
   isAdmin(): boolean {
-    console.log(this.hasToken() && this.commonService.getLocalStorageItem('role') === 'ADMINISTRATEUR')
     return this.hasToken() && this.commonService.getLocalStorageItem('role') === 'ADMINISTRATEUR';
   }
 
   async getMe(): Promise<User> {
+    console.log("getMe", this.options);
     return await lastValueFrom(this.http.get<User>(`${this.apiUrl}/me`, this.options));
+  }
+
+  async getRole(): Promise<string> {
+    return await lastValueFrom(this.http.get<string>(`${this.apiUrl}/role`, this.options));
   }
 }

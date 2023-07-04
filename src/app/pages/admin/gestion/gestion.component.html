@@ -28,8 +28,8 @@
                           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" class="text-blue-600 hover:text-blue-900 mr-4">Envoyer un mail</a>
                             <a href="#" class="text-blue-600 hover:text-blue-900 mr-4">Réinitialiser le mot de passe</a>
-                            <a href="/admin/gestion" class="text-red-600 hover:text-red-900" *ngIf="user.role != 'BANNIS'">Bannir</a>
-                            <a href="/admin/gestion" class="text-red-600 hover:text-red-900" *ngIf="user.role == 'BANNIS'">Débannir</a>
+                            <button type="button" class="text-red-600 hover:text-red-900" (click)="this.adminService.ban(user.id)" *ngIf="user.role != 'BANNIS'">Bannir</button>
+                            <button type="button" class="text-red-600 hover:text-red-900" (click)="this.adminService.unban(user.id)" *ngIf="user.role == 'BANNIS'">Débannir</button>
                           </td>
                         </tr>
                       </tbody>

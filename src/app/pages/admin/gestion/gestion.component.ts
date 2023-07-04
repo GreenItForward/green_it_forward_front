@@ -10,7 +10,7 @@ import {AdminService} from "../../../services/admin.service";
 export class GestionComponent {
   users: User[]
 
-  constructor(private adminService: AdminService) {}
+  constructor(protected adminService: AdminService) {}
 
   async ngOnInit() {
     this.users = await this.adminService.getUsers();

@@ -13,7 +13,7 @@ export class AdminService {
   headers: HttpHeaders | null = null;
   options: {headers: HttpHeaders};
 
-  constructor(private http: HttpClient, private commonService: CommonService) {
+  constructor(protected http: HttpClient, private commonService: CommonService) {
     this.token = this.commonService.getLocalStorageItem('token');
     this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     this.options = { headers: this.headers };
@@ -24,14 +24,22 @@ export class AdminService {
     return users ? users : [];
   }
 
-  async ban(userId: number) {
+  async ban(userId: number | null) {
+    if (!userId) {
+      return;
+    }
+    console.log(userId);
     return this.http.post(`${environment.apiUrl}/role/change-role`, {
       userId,
       role: "BANNIS"
     }, this.options);
   }
 
-  async unban(userId: number) {
+  async unban(userId: number | null) {
+    if (!userId) {
+      return;
+    }
+    console.log(userId);
     return this.http.post(`${environment.apiUrl}/role/change-role`, {
       userId,
       role: "MEMBRE"
