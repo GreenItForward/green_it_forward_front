@@ -30,12 +30,12 @@ export class AuthComponent {
     const password = authForm.value.password;
 
     const user : User= {
-      id: null,
+      id: 0,
       firstName: authForm.value.firstName,
       lastName: authForm.value.lastName,
       email: authForm.value.email,
       password: authForm.value.password,
-      role: 'user',
+      role: authForm.value.role,
       imageUrl: null,
       createdAt: new Date(),
       updatedAt: null
@@ -57,7 +57,7 @@ export class AuthComponent {
           this.error = errorMessage.error.message;
         }
       );
-    } else {      
+    } else {
       this.authService.register(user).subscribe(
         (response:any) => {
           this.isLoading = false;

@@ -24,23 +24,17 @@ export class AdminService {
     return users ? users : [];
   }
 
-  async ban(userId: number | null) {
-    if (!userId) {
-      return;
-    }
+  ban(userId: number | null) {
     console.log(userId);
-    return this.http.post(`${environment.apiUrl}/role/change-role`, {
+    return this.http.put(`${environment.apiUrl}/role/change-role`, {
       userId,
       role: "BANNIS"
     }, this.options);
   }
 
-  async unban(userId: number | null) {
-    if (!userId) {
-      return;
-    }
+  unban(userId: number | null) {
     console.log(userId);
-    return this.http.post(`${environment.apiUrl}/role/change-role`, {
+    return this.http.put(`${environment.apiUrl}/role/change-role`, {
       userId,
       role: "MEMBRE"
     }, this.options);

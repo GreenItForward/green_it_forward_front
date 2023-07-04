@@ -28,12 +28,13 @@
                           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" class="text-blue-600 hover:text-blue-900 mr-4">Envoyer un mail</a>
                             <a href="#" class="text-blue-600 hover:text-blue-900 mr-4">Réinitialiser le mot de passe</a>
-                            <button type="button" class="text-red-600 hover:text-red-900" (click)="this.adminService.ban(user.id)" *ngIf="user.role != 'BANNIS'">Bannir</button>
-                            <button type="button" class="text-red-600 hover:text-red-900" (click)="this.adminService.unban(user.id)" *ngIf="user.role == 'BANNIS'">Débannir</button>
+                            <button type="button" class="text-red-600 hover:text-red-900" (click)="ban(user)" *ngIf="user.role != 'BANNIS'">Bannir</button>
+                            <button type="button" class="text-red-600 hover:text-red-900" (click)="unban(user)" *ngIf="user.role == 'BANNIS'">Débannir</button>
                           </td>
                         </tr>
                       </tbody>
                     </table>
+                    <div class="text-red-600" *ngIf="errorMessage">{{ errorMessage }}</div>
                   </div>
                 </div>
               </div>

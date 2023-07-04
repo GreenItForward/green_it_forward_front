@@ -44,8 +44,12 @@ export class UserService {
     this.Router.navigate(['/auth']);
   }
 
-  isAdmin(): boolean {
-    return this.hasToken() && this.commonService.getLocalStorageItem('role') === 'ADMINISTRATEUR';
+  async isAdmin(): Promise<boolean> {
+    if (!this.hasToken()) {
+      return false;
+    }
+    const role: string = await this.getRole();
+    return role === 'ADMINISTRATEUR';
   }
 
   async getMe(): Promise<User> {
@@ -54,6 +58,6 @@ export class UserService {
   }
 
   async getRole(): Promise<string> {
-    return await lastValueFrom(this.http.get<string>(`${this.apiUrl}/role`, this.options));
+    return await lastValueFrom(this.http.get<string>(`${environment.apiUrl}/role/user`, this.options));
   }
 }

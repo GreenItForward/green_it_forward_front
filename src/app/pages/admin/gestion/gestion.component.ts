@@ -9,10 +9,37 @@ import {AdminService} from "../../../services/admin.service";
 })
 export class GestionComponent {
   users: User[]
+  errorMessage: string = "";
 
   constructor(protected adminService: AdminService) {}
 
   async ngOnInit() {
     this.users = await this.adminService.getUsers();
+  }
+
+  ban(user: User) {
+    this.adminService.ban(user.id).subscribe(
+      async response => {
+        console.log(response);
+        this.users = await this.adminService.getUsers();
+      },
+      error => {
+        console.error(error);
+        this.errorMessage = error.error.message;
+      }
+    );
+  }
+
+  unban(user: User) {
+    this.adminService.unban(user.id).subscribe(
+      async response => {
+        console.log(response);
+        this.users = await this.adminService.getUsers();
+      },
+      error => {
+        console.error(error);
+        this.errorMessage = error.error.message;
+      }
+    );
   }
 }
