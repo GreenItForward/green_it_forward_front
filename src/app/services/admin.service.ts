@@ -37,4 +37,11 @@ export class AdminService {
       role: "MEMBRE"
     }, this.options);
   }
+
+  changeRole(userId: number | null, role: string) {
+    return this.http.put(`${environment.apiUrl}/role/change-role`, {
+      userId,
+      role
+    }, this.options);
+  }
 }

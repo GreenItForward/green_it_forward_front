@@ -25,15 +25,21 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.firstName }} {{ user.lastName }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          <select [(ngModel)]="user.role">
+                          <span *ngIf="currentUser?.email === user.email" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            {{ user.role }}
+                          </span>
+                          <span *ngIf="user.role == 'BANNIS'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                            {{ user.role }}
+                          </span>
+                          <select *ngIf="user.role != 'BANNIS' && currentUser?.email != user.email" [(ngModel)]="user.role" (ngModelChange)="changeRole(user, $event)">
                             <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
                           </select>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <a href="#" class="text-blue-600 hover:text-blue-900 mr-4">Envoyer un mail</a>
                           <a href="#" class="text-blue-600 hover:text-blue-900 mr-4">Réinitialiser le mot de passe</a>
-                          <button type="button" class="text-red-600 hover:text-red-900" (click)="ban(user)" *ngIf="user.role != 'BANNIS'">Bannir</button>
-                          <button type="button" class="text-red-600 hover:text-red-900" (click)="unban(user)" *ngIf="user.role == 'BANNIS'">Débannir</button>
+                          <button type="button" class="text-red-600 hover:text-red-900" (click)="ban(user)" *ngIf="user.role != 'BANNIS' && currentUser?.email != user.email">Bannir</button>
+                          <button type="button" class="text-red-600 hover:text-red-900" (click)="unban(user)" *ngIf="user.role == 'BANNIS' && currentUser?.email != user.email">Débannir</button>
                         </td>
                       </tr>
                     </tbody>
