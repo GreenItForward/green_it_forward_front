@@ -13,7 +13,7 @@ export class CommunityCardComponent {
   constructor(protected commonService: CommonService) {}
 
   ngOnInit() {
-    if(this.community.imgUrl === undefined) this.community.imgUrl = "background.jpeg"
+    if(this.community.imgUrl === undefined || this.community.imgUrl === "") this.community.imgUrl = "background.jpeg"
   }
 
 

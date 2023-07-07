@@ -4,7 +4,9 @@ import {Location} from "@angular/common";
 import {CommonService} from "../../../services/common.service";
 import {Community} from "../../../interfaces/community.entity";
 import {Project} from "../../../models/project.model";
-import {User} from "../../../models/user.model";
+import {User} from "../../../interfaces/user.entity";
+import {Post} from "../../../interfaces/post.entity";
+import {PostService} from "../../../services/post.service";
 
 @Component({
   selector: 'app-community',
@@ -14,14 +16,21 @@ import {User} from "../../../models/user.model";
 export class CommunityComponent {
 
   community: Community
-  followers: User[]
+  noFollowers: boolean
+  noPosts: boolean
+  posts: Post[]
 
-  constructor(private activatedRoute: ActivatedRoute, protected commonService: CommonService, private communityService:CommonService) {}
+  constructor(private activatedRoute: ActivatedRoute, protected commonService: CommonService, private postService:PostService) {}
 
   ngOnInit(): void {
     const data = this.activatedRoute.snapshot.data as RouteData;
     this.community = data.community;
-    console.log(this.community)
+    this.noFollowers = this.community.followers.length === 0;
+
+    this.postService.getPostsByCommunity(this.community.id).then(posts => {
+      this.posts = posts;
+      this.noPosts = this.posts.length === 0;
+    });
   }
 
 }

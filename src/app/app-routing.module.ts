@@ -15,6 +15,8 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
 import {CommunityComponent} from "./pages/community/community/community.component";
 import {CommunitiesComponent} from "./pages/community/communities/communities.component";
 import {CommunityResolver} from "./services/community-resolver.service";
+import {PostComponent} from "./pages/community/post/post.component";
+import {PostResolver} from "./services/post-resolver.service";
 
 
 const routes : Routes = [
@@ -51,6 +53,11 @@ const routes : Routes = [
     path: 'community/:id',
     component: CommunityComponent,
     resolve: { community: CommunityResolver },
+  },
+  {
+    path: 'post/:id',
+    component: PostComponent,
+    resolve: { post: PostResolver },
   },
   {
     path: 'profil',

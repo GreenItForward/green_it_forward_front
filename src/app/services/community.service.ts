@@ -47,6 +47,7 @@ export class CommunityService {
 
   async getCommunities() : Promise<Community[]> {
     const communities = await lastValueFrom(this.http.get<Community[]>(`${this.apiUrl}all`, this.options));
+    console.log(communities)
     return communities ? communities : [];
   }
 

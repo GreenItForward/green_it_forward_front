@@ -30,6 +30,12 @@ import {CommunityModule} from "./pages/community/community/community.module";
 import {CommunitiesModule} from "./pages/community/communities/communities.module";
 import {CommunityCardModule} from "./components/community-card/community-card.module";
 import { CommonModule } from '@angular/common';
+import {PostModule} from "./pages/community/post/post.module";
+import {PostDisplayModule} from "./components/post-display/post-display.module";
+import {UserDisplayComponent} from "./components/user-display/user-display.component";
+import {UserDisplayModule} from "./components/user-display/user-display.module";
+import {SearchBarModule} from "./components/search-bar/search-bar.module";
+import {DisplayMessageModule} from "./components/display-message/display-message.module";
 
 @NgModule({
   declarations: [
@@ -41,6 +47,11 @@ import { CommonModule } from '@angular/common';
     SharedModule,
     AppRoutingModule,
     CommonModule,
+    SearchBarModule,
+    DisplayMessageModule,
+    PostModule,
+    PostDisplayModule,
+    UserDisplayModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,

@@ -4,10 +4,16 @@
   <div>
     <div class="w-11/12 m-auto mt-10 flex flex-col items-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10">
       <h1>Toutes les communautés :</h1>
-      <input type="text" placeholder="Rechercher une communauté">
-      <div class="flex justify-start flex-wrap">
+      <input class="w-10/12 p-2 rounded" placeholder="Rechercher...">
+      <div class="w-10/12 mt-10 flex justify-end">
+        <div class="flex items-center w-fit bg-green-700 rounded p-2 cursor-pointer">
+          <div class="mr-2">Créer une communauté</div>
+          <div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#ebc621" d="M11 19v-6H5v-2h6V5h2v6h6v2h-6v6h-2Z"/></svg></div>
+        </div>
+      </div>
+      <div class="w-full flex justify-start flex-wrap">
         <ng-container *ngFor="let community of communities">
-          <app-community-card class="w-1/4 ml-16 mt-10" [community]="community"></app-community-card>
+          <app-community-card class="w-1/4 ml-16 mt-6" [community]="community"></app-community-card>
         </ng-container>
       </div>
     </div>

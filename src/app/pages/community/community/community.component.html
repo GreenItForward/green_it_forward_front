@@ -1,14 +1,55 @@
-<div class="bg-gradient-to-r from-green-600 to-green-800 h-full w-full bg-no-repeat bg-cover bg-center">
+<div class="bg-gradient-to-r from-green-600 to-green-800 h-fit w-full bg-no-repeat bg-cover bg-center">
   <app-header></app-header>
   <app-navbar></app-navbar>
   <div class="w-11/12 m-auto mt-10 mb-10 flex flex-col items-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10">
     <h1>{{community.name}}</h1>
     <h3>Description : {{community.description}}</h3>
-    <h2>Followers :</h2>
-    <ng-container *ngFor="let follower of community.followers">
-      {{follower.firstName}}
-    </ng-container>
+
   </div>
+  <div class="w-11/12 m-auto mt-10 mb-10 flex justify-between bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10">
+    <div class="flex flex-col items-center w-3/5 m-10 bg-gradient-to-r from-green-700 to-green-800 p-4 rounded">
+      <h2 class="w-full text-center">Derniers posts de la communauté :</h2>
+      <div class="w-11/12 flex flex-col mb-4">
+        <app-search-bar class="w-full mb-6"></app-search-bar>
+        <div class="w-full flex justify-end items-center p-1">
+          <div class="px-4 py-2 flex items-center rounded hover:bg-green-900/20 cursor-pointer">
+            <div class="mr-2">
+              Créer un nouveau post
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="#c4a400" d="M32 14h-4v-4h-2v4h-4v2h4v4h2v-4h4v-2zM12 4a5 5 0 1 1-5 5a5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7a7 7 0 0 0-7-7zm10 28h-2v-5a5 5 0 0 0-5-5H9a5 5 0 0 0-5 5v5H2v-5a7 7 0 0 1 7-7h6a7 7 0 0 1 7 7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="w-11/12" *ngIf="!noPosts">
+        <ng-container *ngFor="let post of posts">
+          <app-post-display class="w-11/12 mb-2" [post]="post"></app-post-display>
+        </ng-container>
+      </div>
+      <div *ngIf="noPosts">Il n'y a aucun post</div>
+    </div>
+    <div class="flex flex-col items-center w-2/5 m-10 bg-gradient-to-r from-green-700 to-green-800 p-4 rounded">
+      <h2 class="w-full text-center">Followers :</h2>
+      <div class="w-11/12 flex flex-col mb-4">
+        <app-search-bar class="w-full mb-6"></app-search-bar>
+        <div class="w-full flex justify-end items-center p-1">
+          <div class="px-4 py-2 flex items-center rounded hover:bg-green-900/20 cursor-pointer">
+            <div class="mr-2">
+              Rejoindre cette communauté
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="#c4a400" d="M32 14h-4v-4h-2v4h-4v2h4v4h2v-4h4v-2zM12 4a5 5 0 1 1-5 5a5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7a7 7 0 0 0-7-7zm10 28h-2v-5a5 5 0 0 0-5-5H9a5 5 0 0 0-5 5v5H2v-5a7 7 0 0 1 7-7h6a7 7 0 0 1 7 7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="w-11/12" *ngIf="!noFollowers">
+        <ng-container  *ngFor="let follower of community.followers">
+          <app-user-display class="w-11/12 mb-2" [follower]="follower" [creator]="community.user"></app-user-display>
+        </ng-container>
+      </div>
+      <div *ngIf="noFollowers">Il n'y a aucun follower</div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
 </div>
 
-<app-footer></app-footer>
+
