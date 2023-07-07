@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HomeModule } from './pages/home/home.module';
 import { SharedModule } from './shared.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import {MatExpansionModule} from "@angular/material/expansion";
+import { MatExpansionModule } from "@angular/material/expansion";
 import { AdminModule } from './pages/admin/admin.module';
 import { PaymentModule } from './pages/payment/payment.module';
 import { AuthModule } from './pages/auth/auth.module';

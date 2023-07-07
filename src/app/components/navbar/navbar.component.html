@@ -10,30 +10,29 @@
       <div class="mt-2" routerLink="/pages">Pages</div>
       <div class="mt-2" routerLink="/projects" *ngIf="this.userService.isLoggedIn$ | async">Projects</div>
       <div class="mt-2" routerLink="/community" *ngIf="this.userService.isLoggedIn$ | async">Community</div>
-      <div class="mt-2" routerLink="/admin">Admin</div>
+      <div class="mt-2" routerLink="/admin" *ngIf="this.userService.isAdmin$ | async">Admin</div>
     </div>
   </mat-expansion-panel>
 </div>
 <div class="hidden text-white noBorders navbarStyle h-14 lg:block">
   <div class="flex m-auto w-3/4 h-full items-center">
-    <div routerLink="/" 
-        class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8" 
+    <div routerLink="/"
+        class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8"
         [ngClass]="{'underline underline-offset-8': router.url === '/'}">Home</div>
-    <div routerLink="/about" 
-        class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8" 
+    <div routerLink="/about"
+        class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8"
         [ngClass]="{'underline underline-offset-8': router.url === '/about'}">About</div>
-    <div routerLink="/pages" 
-    class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8" 
+    <div routerLink="/pages"
+    class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8"
          [ngClass]="{'underline underline-offset-8': router.url === '/pages'}">Pages</div>
-    <div routerLink="/projects" 
+    <div routerLink="/projects"
          class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8"
          [ngClass]="{'underline underline-offset-8': router.url === '/projects'}" *ngIf="this.userService.isLoggedIn$ | async">Projects</div>
-    <div routerLink="/community" 
+    <div routerLink="/community"
          class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8"
          [ngClass]="{'underline underline-offset-8': router.url === '/community'}" *ngIf="this.userService.isLoggedIn$ | async">Community</div>
-    <div routerLink="/admin" 
+    <div routerLink="/admin"
          class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8"
-         [ngClass]="{'underline underline-offset-8': router.url === '/admin'}" *ngIf="this.userService.isAdmin">Admin
-    </div>
+         [ngClass]="{'underline underline-offset-8': router.url === '/admin'}" *ngIf="this.userService.isAdmin$ | async">Admin</div>
   </div>
 </div>

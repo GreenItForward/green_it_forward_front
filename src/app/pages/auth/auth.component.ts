@@ -30,12 +30,12 @@ export class AuthComponent {
     const password = authForm.value.password;
 
     const user : User= {
-      id: null,
+      id: 0,
       firstName: authForm.value.firstName,
       lastName: authForm.value.lastName,
       email: authForm.value.email,
       password: authForm.value.password,
-      role: 'user',
+      role: "MEMBRE",
       imageUrl: null,
       createdAt: new Date(),
       updatedAt: null
@@ -49,7 +49,6 @@ export class AuthComponent {
           localStorage.setItem('token', response.token);
           this.userService.login();
           this.commonService.navigate('/');
-
         },
         (errorMessage:any) => {
           console.error('Login response: ', errorMessage);
@@ -57,7 +56,7 @@ export class AuthComponent {
           this.error = errorMessage.error.message;
         }
       );
-    } else {      
+    } else {
       this.authService.register(user).subscribe(
         (response:any) => {
           this.isLoading = false;
