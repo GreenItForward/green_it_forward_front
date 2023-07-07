@@ -10,7 +10,7 @@
       <div class="mt-2" routerLink="/pages">Pages</div>
       <div class="mt-2" routerLink="/projects" *ngIf="this.userService.isLoggedIn$ | async">Projects</div>
       <div class="mt-2" routerLink="/community" *ngIf="this.userService.isLoggedIn$ | async">Community</div>
-      <div class="mt-2" routerLink="/admin" *ngIf="this.userService.isAdmin()">Admin</div>
+      <div class="mt-2" routerLink="/admin" *ngIf="this.userService.isAdmin$ | async">Admin</div>
     </div>
   </mat-expansion-panel>
 </div>
@@ -33,6 +33,6 @@
          [ngClass]="{'underline underline-offset-8': router.url === '/community'}" *ngIf="this.userService.isLoggedIn$ | async">Community</div>
     <div routerLink="/admin"
          class="cursor-pointer px-5 border border-x-zinc-100/40 border-y-0 hover:underline hover:underline-offset-8"
-         [ngClass]="{'underline underline-offset-8': router.url === '/admin'}" *ngIf="this.userService.isAdmin()">Admin</div>
+         [ngClass]="{'underline underline-offset-8': router.url === '/admin'}" *ngIf="this.userService.isAdmin$ | async">Admin</div>
   </div>
 </div>
