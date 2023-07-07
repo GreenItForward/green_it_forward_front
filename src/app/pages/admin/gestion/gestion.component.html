@@ -24,7 +24,11 @@
                       <tr *ngFor="let user of users">
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.firstName }} {{ user.lastName }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.role }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <select [(ngModel)]="user.role">
+                            <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+                          </select>
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <a href="#" class="text-blue-600 hover:text-blue-900 mr-4">Envoyer un mail</a>
                           <a href="#" class="text-blue-600 hover:text-blue-900 mr-4">Réinitialiser le mot de passe</a>

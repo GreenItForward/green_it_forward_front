@@ -71,4 +71,8 @@ export class UserService {
   async getRole(): Promise<any> {
     return await lastValueFrom(this.http.get(`${environment.apiUrl}/role/user`, this.options));
   }
+
+  async getEveryRoles(): Promise<Array<string>> {
+    return await lastValueFrom(this.http.get<Array<string>>(`${environment.apiUrl}/role/all`, this.options));
+  }
 }

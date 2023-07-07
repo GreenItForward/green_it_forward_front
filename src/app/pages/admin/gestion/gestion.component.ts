@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {User} from "../../../models/user.model";
 import {AdminService} from "../../../services/admin.service";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-gestion',
@@ -10,11 +11,13 @@ import {AdminService} from "../../../services/admin.service";
 export class GestionComponent {
   users: User[]
   errorMessage: string = "";
+  roles: string[]
 
-  constructor(protected adminService: AdminService) {}
+  constructor(protected adminService: AdminService, protected userService: UserService) {}
 
   async ngOnInit() {
     this.users = await this.adminService.getUsers();
+    this.roles = await this.userService.getEveryRoles();
   }
 
   ban(user: User) {
