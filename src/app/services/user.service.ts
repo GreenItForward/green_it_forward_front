@@ -44,16 +44,11 @@ export class UserService {
     this.Router.navigate(['/auth']);
   }
 
-  async isAdmin(): Promise<boolean> {
-    if (!this.hasToken()) {
-      return false;
-    }
-    const role: string = await this.getRole();
-    return role === 'ADMINISTRATEUR';
+  isAdmin(): boolean {
+    return this.hasToken() && this.commonService.getLocalStorageItem('role') === 'ADMINISTRATEUR';
   }
 
   async getMe(): Promise<User> {
-    console.log("getMe", this.options);
     return await lastValueFrom(this.http.get<User>(`${this.apiUrl}/me`, this.options));
   }
 

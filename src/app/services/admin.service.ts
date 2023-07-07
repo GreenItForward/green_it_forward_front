@@ -25,7 +25,6 @@ export class AdminService {
   }
 
   ban(userId: number | null) {
-    console.log(userId);
     return this.http.put(`${environment.apiUrl}/role/change-role`, {
       userId,
       role: "BANNIS"
@@ -33,7 +32,6 @@ export class AdminService {
   }
 
   unban(userId: number | null) {
-    console.log(userId);
     return this.http.put(`${environment.apiUrl}/role/change-role`, {
       userId,
       role: "MEMBRE"

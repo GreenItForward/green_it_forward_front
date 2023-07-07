@@ -35,7 +35,7 @@ export class AuthComponent {
       lastName: authForm.value.lastName,
       email: authForm.value.email,
       password: authForm.value.password,
-      role: authForm.value.role,
+      role: "MEMBRE",
       imageUrl: null,
       createdAt: new Date(),
       updatedAt: null
@@ -49,7 +49,6 @@ export class AuthComponent {
           localStorage.setItem('token', response.token);
           this.userService.login();
           this.commonService.navigate('/');
-
         },
         (errorMessage:any) => {
           console.error('Login response: ', errorMessage);

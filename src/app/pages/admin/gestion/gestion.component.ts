@@ -19,12 +19,10 @@ export class GestionComponent {
 
   ban(user: User) {
     this.adminService.ban(user.id).subscribe(
-      async response => {
-        console.log(response);
-        this.users = await this.adminService.getUsers();
+      async (response:any) => {
+        user.role = response.role;
       },
       error => {
-        console.error(error);
         this.errorMessage = error.error.message;
       }
     );
@@ -32,12 +30,10 @@ export class GestionComponent {
 
   unban(user: User) {
     this.adminService.unban(user.id).subscribe(
-      async response => {
-        console.log(response);
-        this.users = await this.adminService.getUsers();
+      async (response:any) => {
+        user.role = response.role;
       },
       error => {
-        console.error(error);
         this.errorMessage = error.error.message;
       }
     );
