@@ -109,9 +109,9 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
     }
 
     let { name, amount } = this.paymentForm.value; 
+
     name = name.trim();
     const paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount }, this.options));
-  
     
     if (!this.card) {
       console.error("Card not initialized");
@@ -195,7 +195,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       return;
     }
 
-    this.http.get(`${environment.apiUrl}/invoice/${this.name}/${amount}`, {
+    this.http.get(`${environment.apiUrl}/invoice/create-payment-intent/${this.name}/${amount}`, {
       ...this.options,
       params: {
         date: this.paidAt ? this.paidAt : moment().format('DD/MM/YYYY à HH:mm:ss'),
