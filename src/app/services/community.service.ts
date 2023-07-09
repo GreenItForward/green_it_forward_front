@@ -51,12 +51,28 @@ export class CommunityService {
     return communities ? communities : [];
   }
 
-  async createCommunity(newCommunity: NewCommunity): Promise<void> {
+  async createCommunity(newCommunity: NewCommunity): Promise<Community> {
     const community = await lastValueFrom(this.http.post<Community>(`${this.apiUrl}`, newCommunity, this.options));
     if (!community) {
       throw new Error('Failed to create community');
     }
+    return community
   }
 
+  async followCommunity(id: string): Promise<void> {
+    console.log("here : ",this.options)
+    const community = await lastValueFrom(this.http.post<Community>(`${this.apiUrl}community/${id}/follow`, null, this.options));
+    if (!community) {
+      throw new Error('Failed to follow community');
+    }
+  }
+
+  async unFollowCommunity(id: string): Promise<void> {
+    console.log("here : ",this.options)
+    const community = await lastValueFrom(this.http.post<Community>(`${this.apiUrl}community/${id}/unfollow`, null, this.options));
+    if (!community) {
+      throw new Error('Failed to unfollow community');
+    }
+  }
 
 }

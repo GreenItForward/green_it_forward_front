@@ -1,7 +1,7 @@
 <div class="bg-gradient-to-r from-green-600 to-green-800 h-fit w-full bg-no-repeat bg-cover bg-center">
   <app-header></app-header>
   <app-navbar></app-navbar>
-  <div *ngIf="!isLoading && !isSubmited" class="w-11/12 m-auto mt-10 mb-10 flex flex-col items-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10">
+  <div *ngIf="!isLoading" class="w-11/12 m-auto mt-10 mb-10 flex flex-col items-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10">
     <h1>Créer votre propre communauté au sein de GreenItForward !</h1>
     <form class="w-11/12 mt-4 flex flex-col items-center" (ngSubmit)="beforeSubmit()">
       <div *ngIf="errorMessages.length != 0" class="p-2 border-2 mb-4 border-red-700 rounded text-red-700">
@@ -25,15 +25,11 @@
     </form>
 
   </div>
-  <div *ngIf="isLoading && !isSubmited" class="flex items-center m-auto mt-10 mb-10 w-11/12 justify-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10" >
+  <div *ngIf="isLoading" class="flex items-center m-auto mt-10 mb-10 w-11/12 justify-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10" >
     <div class="text-xl font-bold mr-2">
       Loading
     </div>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#ebc621" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity=".5"/><path fill="#ebc621" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate"/></path></svg>
-  </div>
-  <div *ngIf="isSubmited && !isLoading" class="flex flex-col items-center m-auto mt-10 mb-10 w-11/12 bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10" >
-    <div class="mb-2">Votre communauté a bien été créé !</div>
-    <div routerLink="/community" class="w-fit p-2 bg-green-700 rounded cursor-pointer">Revenir aux communautés</div>
   </div>
   <app-footer></app-footer>
 </div>

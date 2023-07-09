@@ -5,6 +5,9 @@ import {lastValueFrom} from 'rxjs';
 import {CommonService} from './common.service';
 import {User} from "../models/user.model";
 import {Post} from "../interfaces/post.entity";
+import {NewCommunity} from "../interfaces/new-community.entity";
+import {Community} from "../interfaces/community.entity";
+import {NewPost} from "../interfaces/new-post.entity";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +37,14 @@ export class PostService {
     return post;
   }
 
+  async createPost(newPost: NewPost): Promise<Post> {
+    console.log(newPost)
+    const post = await lastValueFrom(this.http.post<Post>(`${this.apiUrl}`, newPost, this.options));
+    if (!post) {
+      throw new Error('Failed to create post');
+    }
+    return post
+  }
 
   async getPosts() : Promise<Post[]> {
     const posts = await lastValueFrom(this.http.get<Post[]>(`${this.apiUrl}all`, this.options));

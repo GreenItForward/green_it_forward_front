@@ -3,6 +3,7 @@ import {NewCommunity} from "../../../interfaces/new-community.entity";
 import {CommunityService} from "../../../services/community.service";
 import {Community} from "../../../interfaces/community.entity";
 import {UploadService} from "../../../services/upload.service";
+import {CommonService} from "../../../services/common.service";
 
 @Component({
   selector: 'app-community',
@@ -14,11 +15,10 @@ export class CommunityFormComponent {
   file: File | null;
   formIsValid:boolean = false
   isLoading:boolean = false
-  isSubmited:boolean = false
   communities:Community[] = []
   errorMessages:string[] = []
 
-  constructor(private communityService:CommunityService, private uploadService:UploadService) {
+  constructor(private commonService:CommonService, private communityService:CommunityService, private uploadService:UploadService) {
   }
 
   onFileChange(event: any) {
@@ -41,10 +41,10 @@ export class CommunityFormComponent {
     if (await this.checkIfValid()) {
       this.isLoading = true
 
-      this.communityService.createCommunity(this.newCommunity).then(r => {
-        console.log(r)
-        this.isSubmited = true
+      this.communityService.createCommunity(this.newCommunity).then(community => {
+        console.log(community)
         this.isLoading = false
+        this.commonService.navigate(`/community/${community.id}`);
       })
     }
   }

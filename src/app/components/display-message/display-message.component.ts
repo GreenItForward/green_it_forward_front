@@ -13,7 +13,7 @@ import {User} from "../../interfaces/user.entity";
 export class DisplayMessageComponent {
  @Input() message:Message
 
-  author:User = {id:"", firstName:"", lastName:"", role:"", imageUrl:"", password:"", email:"", createdAt:new Date(), updatedAt:new Date()}
+  author:User = {id:null, firstName:"", lastName:"", role:"", imageUrl:"", password:"", email:"", createdAt:new Date(), updatedAt:new Date()}
 
   constructor(private messageService: MessageService) {}
 

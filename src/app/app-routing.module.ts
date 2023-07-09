@@ -16,7 +16,6 @@ import {PostComponent} from "./pages/community/post/post.component";
 import {PostResolver} from "./services/post-resolver.service";
 import {CommunityFormComponent} from "./pages/community/community-form/community-form.component";
 
-
 const routes : Routes = [
   {
     path: '',
