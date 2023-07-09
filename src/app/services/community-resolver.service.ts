@@ -11,7 +11,6 @@ export class CommunityResolver implements Resolve<Community> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Community> | Promise<Community> | Community {
     const id = route.paramMap.get('id');
-    console.log(id)
     return this.communityService.getCommunity(id);
   }
 }

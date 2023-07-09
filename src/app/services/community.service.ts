@@ -5,6 +5,7 @@ import {lastValueFrom} from 'rxjs';
 import {CommonService} from './common.service';
 import {Community} from "../interfaces/community.entity";
 import {User} from "../models/user.model";
+import {NewCommunity} from "../interfaces/new-community.entity";
 
 @Injectable({
   providedIn: 'root'
@@ -47,8 +48,15 @@ export class CommunityService {
 
   async getCommunities() : Promise<Community[]> {
     const communities = await lastValueFrom(this.http.get<Community[]>(`${this.apiUrl}all`, this.options));
-    console.log(communities)
     return communities ? communities : [];
   }
+
+  async createCommunity(newCommunity: NewCommunity): Promise<void> {
+    const community = await lastValueFrom(this.http.post<Community>(`${this.apiUrl}`, newCommunity, this.options));
+    if (!community) {
+      throw new Error('Failed to create community');
+    }
+  }
+
 
 }

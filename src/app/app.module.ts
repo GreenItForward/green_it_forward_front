@@ -36,6 +36,7 @@ import {UserDisplayComponent} from "./components/user-display/user-display.compo
 import {UserDisplayModule} from "./components/user-display/user-display.module";
 import {SearchBarModule} from "./components/search-bar/search-bar.module";
 import {DisplayMessageModule} from "./components/display-message/display-message.module";
+import {CommunityFormModule} from "./pages/community/community-form/community-form.module";
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {DisplayMessageModule} from "./components/display-message/display-message
     CommonModule,
     SearchBarModule,
     DisplayMessageModule,
+    CommunityFormModule,
     PostModule,
     PostDisplayModule,
     UserDisplayModule,

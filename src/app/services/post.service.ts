@@ -37,13 +37,11 @@ export class PostService {
 
   async getPosts() : Promise<Post[]> {
     const posts = await lastValueFrom(this.http.get<Post[]>(`${this.apiUrl}all`, this.options));
-    console.log(posts)
     return posts ? posts : [];
   }
 
   async getPostsByCommunity(communityId: string) : Promise<Post[]> {
     const posts = await lastValueFrom(this.http.get<Post[]>(`${this.apiUrl}community/${communityId}`, this.options));
-    console.log(posts)
     return posts ? posts : [];
   }
 

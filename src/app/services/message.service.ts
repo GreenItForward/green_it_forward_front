@@ -38,13 +38,11 @@ export class MessageService {
 
   async getMessages() : Promise<Message[]> {
     const messages = await lastValueFrom(this.http.get<Message[]>(`${this.apiUrl}all`, this.options));
-    console.log(messages)
     return messages ? messages : [];
   }
 
   async getMessagesByPost(postId: string) : Promise<Message[]> {
     const messages = await lastValueFrom(this.http.get<Message[]>(`${this.apiUrl}post/${postId}`, this.options));
-    console.log(messages)
     return messages ? messages : [];
   }
 

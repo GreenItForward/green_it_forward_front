@@ -1,6 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Community} from "../../interfaces/community.entity";
 import {CommonService} from "../../services/common.service";
+import {UploadService} from "../../services/upload.service";
 
 @Component({
   selector: 'app-community-card',
@@ -9,13 +10,31 @@ import {CommonService} from "../../services/common.service";
 })
 export class CommunityCardComponent {
   @Input() community: Community;
+  noImage:boolean = true
+  imageFile:File
+  imageSrc: string;
 
-  constructor(protected commonService: CommonService) {}
+  constructor(protected commonService: CommonService, private uploadService:UploadService) {}
 
-  ngOnInit() {
-    if(this.community.imgUrl === undefined || this.community.imgUrl === "") this.community.imgUrl = "background.jpeg"
+  async ngOnInit() {
+    await this.loadImage();
+
+    if (!this.community.imgUrl) {
+      this.community.imgUrl = 'background.jpeg';
+    }
   }
 
+  async loadImage() {
+    if (this.community.imgUrl !== '') {
+      try {
+        this.imageFile = await this.uploadService.getImage(this.community.imgUrl);
+        this.imageSrc = URL.createObjectURL(this.imageFile);
+        this.noImage = false
+      } catch (error) {
+        console.error('Failed to load image:', error);
+      }
+    }
+  }
 
   goToCommunity(communityId: string) {
     this.commonService.navigate(`/community/${communityId}`);

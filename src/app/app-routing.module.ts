@@ -17,6 +17,7 @@ import {CommunitiesComponent} from "./pages/community/communities/communities.co
 import {CommunityResolver} from "./services/community-resolver.service";
 import {PostComponent} from "./pages/community/post/post.component";
 import {PostResolver} from "./services/post-resolver.service";
+import {CommunityFormComponent} from "./pages/community/community-form/community-form.component";
 
 
 const routes : Routes = [
@@ -48,6 +49,10 @@ const routes : Routes = [
   {
     path: 'community',
     component: CommunitiesComponent
+  },
+  {
+    path: 'community/create',
+    component: CommunityFormComponent
   },
   {
     path: 'community/:id',
