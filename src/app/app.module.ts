@@ -25,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProjectsModule } from './pages/projects/projects/projects.module';
 import { ProjectModule } from './pages/projects/project/project.module';
 import { ConfirmationModule } from './pages/confirmation/confirmation.module';
+import { ProfilModule } from './pages/profil/profil.module';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ConfirmationModule } from './pages/confirmation/confirmation.module';
     AuthModule,
     SlickCarouselModule,
     ReactiveFormsModule,
-    ConfirmationModule
+    ConfirmationModule,
+    ProfilModule
   ],
 
   providers: [],

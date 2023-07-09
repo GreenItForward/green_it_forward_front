@@ -41,7 +41,11 @@ export class AuthComponent {
       role: "MEMBRE",
       imageUrl: null,
       createdAt: new Date(),
-      updatedAt: null
+      updatedAt: null,
+      isVerified: false,
+      ipAddress: null,
+      isBanned: false,
+      confirmationToken: null
     }
 
     this.isLoading = true;

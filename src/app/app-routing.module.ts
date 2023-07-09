@@ -9,6 +9,7 @@ import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
 import { ProjectComponent } from './pages/projects/project/project.component';
 import { ProjectResolver } from './services/project-resolver.service';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
+import { ProfilComponent } from './pages/profil/profil.component';
 
 
 const routes : Routes = [
@@ -57,6 +58,12 @@ const routes : Routes = [
     path: 'auth/confirm',
     component: ConfirmationComponent
   },
+  /* USER ROUTES */
+  {
+    path: 'user/profile',
+    component: ProfilComponent
+  },
+  /* ADMIN ROUTES */
   {
     path: 'admin',
     loadChildren: () => import('./pages/admin/admin-routing.module').then(m => m.AdminRoutingModule)

@@ -1,0 +1,30 @@
+.viewport {
+  height: 400px;
+  width: 100%;
+  border: 1px solid lightgrey;
+}
+
+.item {
+  height: 100px;
+}
+
+.viewport::-webkit-scrollbar {
+  width: 10px;
+}
+
+.viewport::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.viewport::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.viewport::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.viewport {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
