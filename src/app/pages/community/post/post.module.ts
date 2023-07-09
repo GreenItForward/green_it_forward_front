@@ -5,6 +5,7 @@ import { SharedModule } from 'src/app/shared.module';
 import { RouterModule } from '@angular/router';
 import {PostComponent} from "./post.component";
 import {DisplayMessageModule} from "../../../components/display-message/display-message.module";
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ PostComponent ],
@@ -13,6 +14,7 @@ import {DisplayMessageModule} from "../../../components/display-message/display-
         RouterModule,
         SharedModule,
         SlickCarouselModule,
+        FormsModule,
         DisplayMessageModule
     ]
 })

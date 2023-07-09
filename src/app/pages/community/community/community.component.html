@@ -5,6 +5,8 @@
     <div class="w-1/3 m-4 flex flex-col items-center">
       <h1 class="text-yellow-500">{{community.name}}</h1>
       <h3>Description : {{community.description}}</h3>
+      <br>
+      <div class="text-gray-500/50">Cette communauté a été créé {{creationDate.toLowerCase()}}</div>
     </div>
     <div class="w-1/3 m-4 flex justify-center items-center">
       <img class="h-40 m-4 object-cover" *ngIf="noImage" [src]="'./assets/' + community.imgUrl">

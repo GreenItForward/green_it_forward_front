@@ -6,6 +6,8 @@ import {CommonService} from './common.service';
 import {User} from "../models/user.model";
 import {Post} from "../interfaces/post.entity";
 import {Message} from "../interfaces/message.entity";
+import {NewPost} from "../interfaces/new-post.entity";
+import {NewMessage} from "../interfaces/new-message.entity";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +37,14 @@ export class MessageService {
     return message;
   }
 
+  async createMessage(newMessage: NewMessage): Promise<Message> {
+    console.log(newMessage)
+    const message = await lastValueFrom(this.http.post<Message>(`${this.apiUrl}`, newMessage, this.options));
+    if (!message) {
+      throw new Error('Failed to create post');
+    }
+    return message
+  }
 
   async getMessages() : Promise<Message[]> {
     const messages = await lastValueFrom(this.http.get<Message[]>(`${this.apiUrl}all`, this.options));

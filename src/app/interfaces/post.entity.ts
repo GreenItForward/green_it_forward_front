@@ -9,6 +9,5 @@ export interface Post {
   user: User;
   community: Community;
   messages: Message[];
-  createdAt: Date;
-  updatedAt: Date|null;
+  creationDate: Date;
 }

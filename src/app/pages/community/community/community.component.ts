@@ -12,6 +12,7 @@ import {CommunityService} from "../../../services/community.service";
 import { PostCreateModalComponent } from '../../../components/post-create-modal/post-create-modal.component';
 import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../../../services/user.service";
+import {DateService} from "../../../services/date.service";
 
 @Component({
   selector: 'app-community',
@@ -28,8 +29,9 @@ export class CommunityComponent {
   imageFile:File
   imageSrc: string;
   communityNotFollowed:boolean = true
+  creationDate:string
 
-  constructor(private userService:UserService, public dialog: MatDialog, private activatedRoute: ActivatedRoute, protected commonService: CommonService,private communityService:CommunityService, private postService:PostService, private uploadService:UploadService) {}
+  constructor(private dateService:DateService, private userService:UserService, public dialog: MatDialog, private activatedRoute: ActivatedRoute, protected commonService: CommonService,private communityService:CommunityService, private postService:PostService, private uploadService:UploadService) {}
 
   openModal(): void {
     const dialogRef = this.dialog.open(PostCreateModalComponent, {
@@ -62,6 +64,8 @@ export class CommunityComponent {
     const me = await this.userService.getMe()
     const isUserAlreadyFollowed = this.community.followers.some((follower) => follower.email === me.email);
     this.communityNotFollowed = !isUserAlreadyFollowed;
+
+    this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate)
   }
 
   async loadImage() {

@@ -6,6 +6,8 @@ import {CommonService} from "../../../services/common.service";
 import {PostService} from "../../../services/post.service";
 import {Message} from "../../../interfaces/message.entity";
 import {MessageService} from "../../../services/message.service";
+import {NewMessage} from "../../../interfaces/new-message.entity";
+import {DateService} from "../../../services/date.service";
 
 @Component({
   selector: 'app-community',
@@ -17,10 +19,14 @@ export class PostComponent {
   @Input() community: Community
 
   post: Post
+
+  newMessage:NewMessage = {text:"",post:null}
   messages: Message[]
   noMessages: boolean
 
-  constructor(private activatedRoute: ActivatedRoute, protected commonService: CommonService, private messageService: MessageService) {}
+  creationDate:string
+
+  constructor(private dateService:DateService,private activatedRoute: ActivatedRoute, protected commonService: CommonService, private messageService: MessageService) {}
 
   ngOnInit(): void {
     const data = this.activatedRoute.snapshot.data as RouteData;
@@ -30,9 +36,25 @@ export class PostComponent {
       this.messages = messages;
       this.noMessages = this.messages.length === 0;
     });
+
+    this.creationDate = this.dateService.formatRelativeTime(this.post.creationDate)
+
   }
 
+  submitForm(){
+    if(this.checkIfValid()){
+      this.newMessage.text = this.newMessage.text.trim()
+      this.newMessage.post = this.post
+      this.messageService.createMessage(this.newMessage).then(r => {
+        console.log(r)
+        location.reload();
+      })
+    }
+  }
 
+  checkIfValid():boolean{
+    return !(!this.newMessage.text.trim() || this.newMessage.text.trim() === "");
+  }
 
 }
 

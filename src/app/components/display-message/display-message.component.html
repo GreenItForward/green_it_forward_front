@@ -2,13 +2,13 @@
   <div class="px-2">{{author.firstName}} {{author.lastName}}</div>
   <div class="flex justify-between mb-2 bg-white text-black p-2 rounded w-fit">
     <p class="m-auto">{{message.text}}</p>
-    <div class="text-gray-500/70 text-xs ml-6 self-end">Il y a 2h</div>
+    <div class="text-gray-500/70 text-xs ml-6 self-end">{{creationDate}}</div>
   </div>
   <div>
 
   </div>
   <div class="w-full flex justify-between items-center">
-    <input class="w-full mr-4 border border-gray-950/30 rounded p-2 bg-gray-950/0" placeholder="Envoyer une réponse"/>
+    <input class="w-full mr-4 border border-gray-950/30 rounded p-2 bg-gray-950/0" placeholder="Répondre à ce message..."/>
     <div class="w-fit rounded p-2 bg-green-900"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#ebc621" d="M3 20v-6l8-2l-8-2V4l19 8l-19 8Z"/></svg></div>
   </div>
 </div>

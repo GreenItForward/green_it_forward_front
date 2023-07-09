@@ -7,4 +7,5 @@ export interface Community {
   followers: User[];
   user: User;
   imgUrl: string;
+  creationDate:Date;
 }
