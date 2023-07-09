@@ -14,10 +14,13 @@ export class AuthComponent {
   isLoginMode = true;
   isLoading = false;
   error: string|null = null;
+  success: string|null = null;
 
   constructor(private authService: AuthService, private commonService: CommonService, private userService: UserService) {}
 
   onSwitchMode() {
+    this.error = null;
+    this.success = null;
     this.isLoginMode = !this.isLoginMode;
   }
 
@@ -60,9 +63,7 @@ export class AuthComponent {
       this.authService.register(user).subscribe(
         (response:any) => {
           this.isLoading = false;
-          localStorage.setItem('token', response.token);
-          this.userService.login();
-          this.commonService.navigate('/');
+          this.success = "Votre compte a été créé avec succès. Veuillez vérifier votre boîte de réception pour confirmer votre compte.";
         },
         (errorMessage:any) => {
           console.error('Register response: ', errorMessage);

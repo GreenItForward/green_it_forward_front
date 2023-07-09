@@ -41,6 +41,9 @@
       <div *ngIf="error" class="mb-4">
         <p class="text-red-500 text-xs italic">{{error}}</p>
       </div>
+      <div *ngIf="success" class="mb-4">
+        <p class="text-green-500 text-xs italic">{{success}}</p>
+      </div>
       <div class="flex items-center justify-between">
         <button class="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         type="submit" [disabled]="isLoading">
