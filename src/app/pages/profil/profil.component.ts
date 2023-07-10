@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profil',
@@ -7,6 +8,15 @@ import { User } from 'src/app/models/user.model';
   styleUrls: ['./profil.component.scss'],
 })
 export class ProfilComponent {
+  currentUser: User;
+
+  constructor(private userService: UserService) {}
+
+  async ngOnInit(): Promise<void> {
+    this.currentUser = await this.userService.getMe();
+
+  }
+
   user: User = {
     id: 1,
     email: 'user@example.com',
@@ -19,8 +29,8 @@ export class ProfilComponent {
     confirmationToken: null,
     isBanned: false,
     imageUrl: 'https://i.pravatar.cc/300',
-    createdAt: new Date(),
-    updatedAt: null,
+    firstLoginAt: new Date(),
+    lastLoginAt: null,
   };
 
   activities = [
@@ -68,7 +78,5 @@ export class ProfilComponent {
     },
   ];
 
-  constructor() {}
 
-  ngOnInit(): void {}
 }

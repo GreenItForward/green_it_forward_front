@@ -10,6 +10,6 @@ export interface User {
     confirmationToken: string | null;
     isBanned: boolean;
     imageUrl: string | null;
-    createdAt: Date;
-    updatedAt: Date | null;
+    firstLoginAt: Date;
+    lastLoginAt: Date | null;
   }
