@@ -13,8 +13,12 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/login`, userFormData);
   }
 
-  register(userFormData: FormData) {
+  register(userFormData: RegisterData) {
     return this.http.post(`${this.apiUrl}/register`, userFormData);
+  }
+
+  registerImage(userFormData: FormData) {
+    return this.http.post(`${this.apiUrl}/register-image`, userFormData);
   }
 
   setUserData(responseData: String) {

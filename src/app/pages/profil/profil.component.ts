@@ -80,7 +80,7 @@ export class ProfilComponent {
   ];
 
   openDialog() {
-    //open a modal angular
+    //TODO: a modal angular
     console.log('openDialog');
   }
 

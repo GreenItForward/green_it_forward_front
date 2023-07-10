@@ -3,7 +3,6 @@ export interface RegisterData {
     password: string;
     firstName: string;
     lastName: string;
-    file: File | null;
   }
 
 export interface LoginData {

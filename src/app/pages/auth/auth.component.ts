@@ -60,31 +60,49 @@ export class AuthComponent {
         }
       );
     } else {
-      console.log('selectedFile: ', this.selectedFile);
+      if(!this.selectedFile) {
+        const registerData: RegisterData = {
+          email: authForm.value.email,
+          password: authForm.value.password,
+          firstName: authForm.value.firstName,
+          lastName: authForm.value.lastName,
+        };
 
-      const registerData = new FormData();
-      registerData.append('email', authForm.value.email);
-      registerData.append('password', authForm.value.password);
-      registerData.append('firstName', authForm.value.firstName);
-      registerData.append('lastName', authForm.value.lastName);
+        this.authService.register(registerData).subscribe(
+          (response:any) => {
+            this.isLoading = false;
+            this.success = "Votre compte a été créé avec succès. Veuillez vérifier votre boîte de réception pour confirmer votre compte.";
+          },
+          (errorMessage:any) => {
+            console.error('Register response: ', errorMessage);
+            this.isLoading = false;
+            this.error = errorMessage.error.message;
+          }
+        );
+      } else {
+        const registerImageData = new FormData();
+        registerImageData.append('email', authForm.value.email);
+        registerImageData.append('password', authForm.value.password);
+        registerImageData.append('firstName', authForm.value.firstName);
+        registerImageData.append('lastName', authForm.value.lastName);
   
-      // Only add the file to the FormData if one was selected
-      if (this.selectedFile) {
-        registerData.append('image', this.selectedFile, this.selectedFile.name);
-      }
-
-      this.authService.register(registerData).subscribe(
-        (response:any) => {
-          this.isLoading = false;
-          this.success = "Votre compte a été créé avec succès. Veuillez vérifier votre boîte de réception pour confirmer votre compte.";
-        },
-        (errorMessage:any) => {
-          console.error('Register response: ', errorMessage);
-          this.isLoading = false;
-          this.error = errorMessage.error.message;
+        if(this.selectedFile) {
+          registerImageData.append('image', this.selectedFile, this.selectedFile.name);
         }
-
-      );
+  
+        this.authService.registerImage(registerImageData).subscribe(
+          (response:any) => {
+            this.isLoading = false;
+            this.success = "Votre compte a été créé avec succès. Veuillez vérifier votre boîte de réception pour confirmer votre compte.";
+          },
+          (errorMessage:any) => {
+            console.error('Register response: ', errorMessage);
+            this.isLoading = false;
+            this.error = errorMessage.error.message;
+          }
+        );
+      }
+      
     }
 
     authForm.reset();
