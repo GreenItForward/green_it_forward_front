@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { EditProfileDialogComponent } from 'src/app/components/edit-profile-dialog/edit-profile-dialog.component';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profil',
@@ -10,12 +12,15 @@ import { UserService } from 'src/app/services/user.service';
 export class ProfilComponent {
   currentUser: User;
   defaultImage = 'https://www.gravatar.com/avatar/94d093eda664addd6e450d7e9881bcad?s=300&d=identicon&r=PG';
+  @ViewChild('imageUpload') imageUpload: ElementRef;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+    public dialog: MatDialog) {
+    
+  }
 
   async ngOnInit(): Promise<void> {
     this.currentUser = await this.userService.getMe();
-
   }
 
   user: User = {
@@ -79,10 +84,32 @@ export class ProfilComponent {
     },
   ];
 
-  openDialog() {
-    //TODO: a modal angular
-    console.log('openDialog');
+  openEditDialog(): void {
+    const dialogRef = this.dialog.open(EditProfileDialogComponent, {
+      width: '350px',
+      data: this.currentUser
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.currentUser = result;
+        this.updateProfil();
+      }
+    });
   }
 
+  updateProfil() {
+    this.userService.updateUser(this.currentUser);
+  }
+
+  async onFileSelected(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+      const file = target.files[0];
+      this.userService.updateImage(file);
+      this.currentUser = await this.userService.getMe();
+    }
+
+  }
 
 }

@@ -5,16 +5,17 @@
       <mat-card class="mb-4 flex flex-col items-center">
         <mat-card-header class="flex flex-col items-center mb-10">
           <div *ngIf="currentUser.imageUrl" class="flex justify-center">
-            <img mat-card-image [src]="'data:image/jpeg;base64,' + currentUser.imageUrl" alt="User image" class="w-64 h-64 object-cover mx-auto hover:opacity-75 hover:cursor-pointer" (click)="openDialog()">
+            <img mat-card-image [src]="'data:image/jpeg;base64,' + currentUser.imageUrl" alt="User image" class="w-64 h-64 object-cover mx-auto hover:opacity-75 hover:cursor-pointer" (click)="imageUpload.click()">
           </div>
           <div *ngIf="!currentUser.imageUrl" class="flex justify-center">
-            <img mat-card-image [src]="defaultImage" alt="User image" class="w-64 h-64 object-cover mx-auto hover:opacity-75 hover:cursor-pointer" (click)="openDialog()">
+            <img mat-card-image [src]="defaultImage" alt="User image" class="w-64 h-64 object-cover mx-auto hover:opacity-75 hover:cursor-pointer" (click)="imageUpload.click()">
           </div>
+          <input type="file" #imageUpload style="display: none;" (change)="onFileSelected($event)"/>
         </mat-card-header>
         <mat-card-content>
           <h2 mat-card-title class="text-center">{{ currentUser.firstName }} {{ currentUser.lastName }}</h2>
           <p mat-card-subtitle>Inscrit(e) depuis le {{ currentUser.firstLoginAt | date }}</p>
-          <button mat-button color="primary" [routerLink]="['/edit-profile']" class="text-center">
+          <button mat-button color="primary" (click)="openEditDialog()" class="text-center cursor-pointer">
             <mat-icon class="mr-2">
                 edit
             </mat-icon>

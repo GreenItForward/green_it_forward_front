@@ -75,4 +75,15 @@ export class UserService {
   async getEveryRoles(): Promise<Array<string>> {
     return await lastValueFrom(this.http.get<Array<string>>(`${environment.apiUrl}/role/all`, this.options));
   }
+
+  async updateUser(user: User): Promise<User> {
+    return await lastValueFrom(this.http.put<User>(`${this.apiUrl}/edit`, user, this.options));
+  }
+
+  async updateImage(image: File): Promise<User> {
+    const formData = new FormData();
+    formData.append('image', image);
+    return await lastValueFrom(this.http.put<User>(`${this.apiUrl}/edit-image`, formData, this.options));
+  }
+
 }
