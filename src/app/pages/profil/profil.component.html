@@ -11,6 +11,13 @@
             <img mat-card-image [src]="defaultImage" alt="User image" class="w-64 h-64 object-cover mx-auto hover:opacity-75 hover:cursor-pointer" (click)="imageUpload.click()">
           </div>
           <input type="file" #imageUpload style="display: none;" (change)="onFileSelected($event)"/>
+          <div *ngIf="loading" class="flex justify-center items-center">
+            <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+          </div>
         </mat-card-header>
         <mat-card-content>
           <h2 mat-card-title class="text-center">{{ currentUser.firstName }} {{ currentUser.lastName }}</h2>

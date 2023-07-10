@@ -13,7 +13,7 @@ export class ProfilComponent {
   currentUser: User;
   defaultImage = 'https://www.gravatar.com/avatar/94d093eda664addd6e450d7e9881bcad?s=300&d=identicon&r=PG';
   @ViewChild('imageUpload') imageUpload: ElementRef;
-
+  loading = false;
   constructor(private userService: UserService,
     public dialog: MatDialog) {
     
@@ -92,6 +92,7 @@ export class ProfilComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        result.imageUrl = this.currentUser.imageUrl;
         this.currentUser = result;
         this.updateProfil();
       }
@@ -107,6 +108,10 @@ export class ProfilComponent {
     if (target.files && target.files.length > 0) {
       const file = target.files[0];
       this.userService.updateImage(file);
+      this.loading = true;
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      this.loading = false;
+      this.imageUpload.nativeElement.value = '';
       this.currentUser = await this.userService.getMe();
     }
 
