@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProfilComponent {
   currentUser: User;
+  defaultImage = 'https://www.gravatar.com/avatar/94d093eda664addd6e450d7e9881bcad?s=300&d=identicon&r=PG';
 
   constructor(private userService: UserService) {}
 
@@ -77,6 +78,11 @@ export class ProfilComponent {
       createdAt: new Date(),
     },
   ];
+
+  openDialog() {
+    //open a modal angular
+    console.log('openDialog');
+  }
 
 
 }

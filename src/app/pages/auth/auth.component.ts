@@ -4,6 +4,7 @@ import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonService } from 'src/app/services/common.service';
 import { UserService } from 'src/app/services/user.service';
+import { LoginData, RegisterData } from 'src/app/interfaces/auth.interface';
 
 @Component({
   selector: 'app-auth',
@@ -15,6 +16,7 @@ export class AuthComponent {
   isLoading = false;
   error: string|null = null;
   success: string|null = null;
+  selectedFile: File | null = null;  
 
   constructor(private authService: AuthService, private commonService: CommonService, private userService: UserService) {}
 
@@ -23,34 +25,28 @@ export class AuthComponent {
     this.success = null;
     this.isLoginMode = !this.isLoginMode;
   }
+  
+  onFileSelect(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
 
   onSubmit(authForm: NgForm) {
-    if (authForm.invalid) {
+    if (!authForm.valid) {
+      console.log('Invalid form');
       return;
     }
 
-    const email = authForm.value.email;
-    const password = authForm.value.password;
-
-    const user : User= {
-      id: 0,
-      firstName: authForm.value.firstName,
-      lastName: authForm.value.lastName,
-      email: authForm.value.email,
-      password: authForm.value.password,
-      role: "MEMBRE",
-      imageUrl: null,
-      firstLoginAt: new Date(),
-      lastLoginAt: null,
-      isVerified: false,
-      ipAddress: null,
-      isBanned: false,
-      confirmationToken: null
-    }
-
+    
     this.isLoading = true;
     if (this.isLoginMode) {
-      this.authService.login(email, password).subscribe(
+      const loginData: LoginData = {
+        email: authForm.value.email,
+        password: authForm.value.password,
+      };
+
+      this.authService.login(loginData).subscribe(
         (response:any) => {
           this.isLoading = false;
           localStorage.setItem('token', response.token);
@@ -64,7 +60,20 @@ export class AuthComponent {
         }
       );
     } else {
-      this.authService.register(user).subscribe(
+      console.log('selectedFile: ', this.selectedFile);
+
+      const registerData = new FormData();
+      registerData.append('email', authForm.value.email);
+      registerData.append('password', authForm.value.password);
+      registerData.append('firstName', authForm.value.firstName);
+      registerData.append('lastName', authForm.value.lastName);
+  
+      // Only add the file to the FormData if one was selected
+      if (this.selectedFile) {
+        registerData.append('image', this.selectedFile, this.selectedFile.name);
+      }
+
+      this.authService.register(registerData).subscribe(
         (response:any) => {
           this.isLoading = false;
           this.success = "Votre compte a été créé avec succès. Veuillez vérifier votre boîte de réception pour confirmer votre compte.";
@@ -78,8 +87,8 @@ export class AuthComponent {
       );
     }
 
-
-
     authForm.reset();
+    this.selectedFile = null;
   }
 }
+
