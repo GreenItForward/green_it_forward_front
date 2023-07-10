@@ -9,7 +9,12 @@ import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
 import { ProjectComponent } from './pages/projects/project/project.component';
 import { ProjectResolver } from './services/project-resolver.service';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
-
+import {CommunityComponent} from "./pages/community/community/community.component";
+import {CommunitiesComponent} from "./pages/community/communities/communities.component";
+import {CommunityResolver} from "./services/community-resolver.service";
+import {PostComponent} from "./pages/community/post/post.component";
+import {PostResolver} from "./services/post-resolver.service";
+import {CommunityFormComponent} from "./pages/community/community-form/community-form.component";
 
 const routes : Routes = [
   {
@@ -39,7 +44,21 @@ const routes : Routes = [
   },
   {
     path: 'community',
-    component: HomeComponent
+    component: CommunitiesComponent
+  },
+  {
+    path: 'community/create',
+    component: CommunityFormComponent
+  },
+  {
+    path: 'community/:id',
+    component: CommunityComponent,
+    resolve: { community: CommunityResolver },
+  },
+  {
+    path: 'post/:id',
+    component: PostComponent,
+    resolve: { post: PostResolver },
   },
   {
     path: 'profil',
