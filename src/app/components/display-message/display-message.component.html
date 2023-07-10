@@ -1,0 +1,19 @@
+<div class="flex flex-col p-2 rounded bg-green-700 mb-4">
+  <div class="px-2">{{author.firstName}} {{author.lastName}}</div>
+  <div class="flex justify-between mb-2 bg-white text-black p-2 rounded w-fit">
+    <p class="m-auto">{{message.text}}</p>
+    <div class="text-gray-500/70 text-xs ml-6 self-end">{{creationDate}}</div>
+  </div>
+  <div>
+    <ng-container *ngFor="let response of responses">
+      <app-display-response [response]="response"></app-display-response>
+    </ng-container>
+  </div>
+  <div class="w-full flex justify-between items-center">
+    <form (ngSubmit)="submitForm()" class="w-full flex justify-between items-center">
+      <input name="text" [(ngModel)]="newResponse.text" (change)="checkIfValid()" class="w-full mr-4 border-2 border-green-900 rounded p-2 bg-green-700" placeholder="Envoyer une réponse"/>
+      <button *ngIf="!checkIfValid()" disabled class="cursor-not-allowed w-fit rounded p-2 bg-green-900"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#ebc621" d="M3 20v-6l8-2l-8-2V4l19 8l-19 8Z"/></svg></button>
+      <button *ngIf="checkIfValid()" class="cursor-pointer w-fit rounded p-2 bg-green-900"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#ebc621" d="M3 20v-6l8-2l-8-2V4l19 8l-19 8Z"/></svg></button>
+    </form>
+  </div>
+</div>
