@@ -4,6 +4,8 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { SharedModule } from 'src/app/shared.module';
 import { RouterModule } from '@angular/router';
 import {DisplayMessageComponent} from "./display-message.component";
+import {DisplayResponseModule} from "../display-response/display-response.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [DisplayMessageComponent],
@@ -14,7 +16,9 @@ import {DisplayMessageComponent} from "./display-message.component";
     CommonModule,
     RouterModule,
     SharedModule,
-    SlickCarouselModule
+    FormsModule,
+    SlickCarouselModule,
+    DisplayResponseModule
   ]
 })
 export class DisplayMessageModule { }

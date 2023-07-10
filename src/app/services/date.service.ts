@@ -24,5 +24,4 @@ export class DateService {
       return `Il y a ${days} jour${days > 1 ? 's' : ''}`;
     }
   }
-
 }
