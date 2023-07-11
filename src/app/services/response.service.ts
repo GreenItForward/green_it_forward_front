@@ -54,4 +54,10 @@ export class ResponseService {
   }
 
 
+  async getResponsesByUser() : Promise<ResponseEntity[]> {
+    const responses = await lastValueFrom(this.http.get<ResponseEntity[]>(`${this.apiUrl}user`, this.options));
+    return responses ? responses : [];
+  }
+
+
 }

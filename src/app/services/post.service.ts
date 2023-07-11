@@ -53,4 +53,10 @@ export class PostService {
     return posts ? posts : [];
   }
 
+  async getPostsByUser() : Promise<Post[]> {
+    const posts = await lastValueFrom(this.http.get<Post[]>(`${this.apiUrl}user`, this.options));
+    return posts ? posts : [];
+  }
+
+
 }

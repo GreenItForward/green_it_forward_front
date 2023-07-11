@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/services/user.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
@@ -60,7 +61,6 @@ export class CommunityService {
   }
 
   async followCommunity(id: string): Promise<void> {
-    console.log("here : ",this.options)
     const community = await lastValueFrom(this.http.post<Community>(`${this.apiUrl}community/${id}/follow`, null, this.options));
     if (!community) {
       throw new Error('Failed to follow community');
@@ -68,11 +68,15 @@ export class CommunityService {
   }
 
   async unFollowCommunity(id: string): Promise<void> {
-    console.log("here : ",this.options)
     const community = await lastValueFrom(this.http.post<Community>(`${this.apiUrl}community/${id}/unfollow`, null, this.options));
     if (!community) {
       throw new Error('Failed to unfollow community');
     }
+  }
+
+  async getCommunitiesByUser(user: User): Promise<Community[]> {
+    const communities = await lastValueFrom(this.http.get<Community[]>(`${this.apiUrl}user/${user.id}/communities`, this.options));
+    return communities ? communities : [];
   }
 
 }

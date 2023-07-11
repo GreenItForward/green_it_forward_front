@@ -42,29 +42,31 @@
     </div>
     <div class="md:w-2/3 p-4">
         <div class="flex justify-between items-center">
-            <h2 class="text-2xl">Mes activités</h2>
+            <h2 class="text-2xl">Mes Posts</h2>
             <button mat-raised-button color="primary" [routerLink]="['/community']" class="text-green-500 font-bold hover:text-green-600 ">Aller dans l'onglet communauté</button>
         </div>
         <cdk-virtual-scroll-viewport itemSize="100" class="viewport">
-            <mat-card *cdkVirtualFor="let activitie of activities" class="mb-6 example-item cursor-pointer" [routerLink]="['/community']">
-                <table>
-                <tr>
-                  <td class="w-1/2 pl-9">
-                    <img mat-card-image [src]="activitie.imageUrl" alt="Activitie image" class="w-64 h-64 object-cover">
-                  </td>
-                  <td class="w-1/2 pl-4">
-                    <h2 mat-card-title>{{ activitie.name }}</h2>
-                    <p>{{ activitie.description }}</p>
-                    <p>{{ activitie.createdAt | date }}</p>
-                    <mat-card-actions>
-                      <button mat-button [routerLink]="">Voir plus</button>
-                    </mat-card-actions>
-                  </td>
-                </tr>
-                </table>
-                <hr class="mt-4" *ngIf="activitie !== activities[activities.length - 1]">
-            </mat-card>
+          <mat-card *cdkVirtualFor="let activity of activities" class="mb-6 example-item cursor-pointer" [routerLink]="['/post', activity.id]">
+            <table>
+              <tr>
+                <td class="w-1/2 pl-9">
+                 <img mat-card-image [src]="activity.imageUrl ? activity.imageUrl : defaultActivityImage" alt="User image" class="w-64 h-64 object-cover mx-auto hover:opacity-75 hover:cursor-pointer">
+                </td>
+                <td class="w-1/2 pl-4">
+                  <h2 mat-card-title>{{ activity.subject }}</h2>
+                  <p>{{ activity.text }}</p>
+                  <p>{{ this.dateService.formatRelativeTime(activity.creationDate,"") }}</p>
+                  <mat-card-actions>
+                    <button mat-button [routerLink]="">Voir plus</button>
+                  </mat-card-actions>
+                </td>
+              </tr>
+            </table>
+            <hr class="mt-4" *ngIf="activity !== activities[activities.length - 1]">
+          </mat-card>
         </cdk-virtual-scroll-viewport>
+        
+        
       </div>
   </div>
 <app-footer></app-footer>

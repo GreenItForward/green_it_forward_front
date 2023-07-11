@@ -4,6 +4,15 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DateService } from 'src/app/services/date.service';
+import { Message } from 'src/app/interfaces/message.entity';
+import { ResponseEntity } from 'src/app/interfaces/response.entity';
+import { Community } from 'src/app/interfaces/community.entity';
+import { Post } from 'src/app/interfaces/post.entity';
+
+export interface Activity {
+  posts ?: Post[];
+}
+
 
 @Component({
   selector: 'app-profil',
@@ -15,63 +24,24 @@ export class ProfilComponent {
   tempUser: User;
   error: string;
   creationDate: string;
+  activities: Post[] = [];
+
   defaultImage = 'https://www.gravatar.com/avatar/94d093eda664addd6e450d7e9881bcad?s=300&d=identicon&r=PG';
+  defaultActivityImage = 'assets/background.jpeg';
+  
   @ViewChild('imageUpload') imageUpload: ElementRef;
   loading = false;
+  
   constructor(private userService: UserService,
-    public dialog: MatDialog, public dateService: DateService) {
-    
-  }
+    public dialog: MatDialog, public dateService: DateService) { }
+  
 
   async ngOnInit(): Promise<void> {
     this.currentUser = await this.userService.getMe();
     this.creationDate = this.dateService.formatRelativeTime(this.currentUser.firstLoginAt, "depuis");
+    const posts = (await this.userService.getActivitiesUser()).posts;
+    this.activities = posts;
   }
-
-  activities = [
-    {
-      id: 1,
-      name: 'Les pingouins',
-      description: 'Lorem ipsum dolor sit amet',
-      imageUrl: 'https://loremflickr.com/320/240/paris,girl/all',
-      createdAt: new Date(),
-    },
-    {
-      id: 2,
-      name: 'Prévention des incendies',
-      description: 'Lorem ipsum dolor sit amet',
-      imageUrl: 'https://loremflickr.com/320/240/brazil,rio',
-      createdAt: new Date(),
-    },
-    {
-      id: 3,
-      name: 'Atelier de cuisine verte',
-      description: 'Lorem ipsum dolor sit amet',
-      imageUrl: 'https://loremflickr.com/g/320/240/paris',
-      createdAt: new Date(),
-    },
-    {
-      id: 4,
-      name: 'Opération nettoyage',
-      description: 'Lorem ipsum dolor sit amet',
-      imageUrl: 'https://loremflickr.com/320/240/dog',
-      createdAt: new Date(),
-    },
-    {
-      id: 5,
-      name: 'Sauvons les abeilles',
-      description: 'Lorem ipsum dolor sit amet',
-      imageUrl: 'https://loremflickr.com/320/240',
-      createdAt: new Date(),
-    },
-    {
-      id: 6,
-      name: 'Promenons-nous dans les bois',
-      description: 'Lorem ipsum dolor sit amet',
-      imageUrl: 'https://loremflickr.com/320/240',
-      createdAt: new Date(),
-    },
-  ];
 
   openEditDialog(): void {
     const dialogRef = this.dialog.open(EditProfileDialogComponent, {
