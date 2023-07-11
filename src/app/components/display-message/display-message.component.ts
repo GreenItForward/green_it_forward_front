@@ -27,11 +27,11 @@ export class DisplayMessageComponent {
 
   async ngOnInit(): Promise<void> {
     this.messageService.getMessage(this.message.id).then(message => {
-      this.author = message.user
+      this.author = message.user;
     });
 
-    this.creationDate = this.dateService.formatRelativeTime(this.message.creationDate)
-    this.responses = await this.responseService.getResponsesByMessage(this.message.id)
+    this.creationDate = this.dateService.formatRelativeTime(this.message.creationDate, "");
+    this.responses = await this.responseService.getResponsesByMessage(this.message.id);
   }
 
   submitForm(){

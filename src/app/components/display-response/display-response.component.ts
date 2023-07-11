@@ -24,6 +24,6 @@ export class DisplayResponseComponent {
       this.author = response.user
     });
 
-    this.creationDate = this.dateService.formatRelativeTime(this.response.creationDate)
+    this.creationDate = this.dateService.formatRelativeTime(this.response.creationDate, "");
   }
 }

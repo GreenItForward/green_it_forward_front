@@ -62,7 +62,7 @@ export class CommunityComponent {
     const isUserAlreadyFollowed = this.community.followers.some((follower) => follower.email === me.email);
     this.communityNotFollowed = !isUserAlreadyFollowed;
 
-    this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate)
+    this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate, "")
   }
 
   async loadImage() {

@@ -77,8 +77,15 @@ export class UserService {
   }
 
   async updateUser(user: User): Promise<User> {
-    return await lastValueFrom(this.http.put<User>(`${this.apiUrl}/edit`, user, this.options));
+    const response = await this.http.put<User>(`${this.apiUrl}/edit`, user, this.options).toPromise();
+  
+    if (!response) {
+      throw new Error('Server response was undefined');
+    }
+  
+    return response;
   }
+
 
   async updateImage(image: File): Promise<User> {
     const formData = new FormData();
@@ -87,3 +94,4 @@ export class UserService {
   }
 
 }
+ 

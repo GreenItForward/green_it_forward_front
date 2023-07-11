@@ -3,6 +3,7 @@ import { EditProfileDialogComponent } from 'src/app/components/edit-profile-dial
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
+import { DateService } from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-profil',
@@ -12,33 +13,20 @@ import { MatDialog } from '@angular/material/dialog';
 export class ProfilComponent {
   currentUser: User;
   tempUser: User;
+  error: string;
+  creationDate: string;
   defaultImage = 'https://www.gravatar.com/avatar/94d093eda664addd6e450d7e9881bcad?s=300&d=identicon&r=PG';
   @ViewChild('imageUpload') imageUpload: ElementRef;
   loading = false;
   constructor(private userService: UserService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog, public dateService: DateService) {
     
   }
 
   async ngOnInit(): Promise<void> {
     this.currentUser = await this.userService.getMe();
+    this.creationDate = this.dateService.formatRelativeTime(this.currentUser.firstLoginAt, "depuis");
   }
-
-  user: User = {
-    id: 1,
-    email: 'user@example.com',
-    password: 'password',
-    firstName: 'John',
-    lastName: 'Doe',
-    role: 'User',
-    ipAddress: null,
-    isVerified: true,
-    confirmationToken: null,
-    isBanned: false,
-    imageUrl: 'https://i.pravatar.cc/300',
-    firstLoginAt: new Date(),
-    lastLoginAt: null,
-  };
 
   activities = [
     {
@@ -93,6 +81,14 @@ export class ProfilComponent {
 
     dialogRef.afterClosed().subscribe(async result => {
       if (result) {
+        if (result.firstName === "") {
+          this.error = "Le prénom ne peut pas être vide";
+          return;
+        } else if (result.lastName === "") {
+          this.error = "Le nom ne peut pas être vide";
+          return;
+        }
+
         this.currentUser.firstName = result.firstName;
         this.currentUser.lastName = result.lastName;
         this.currentUser.imageUrl = "";
@@ -101,14 +97,23 @@ export class ProfilComponent {
         await new Promise(resolve => setTimeout(resolve, 1000));
         this.currentUser = await this.userService.getMe();
         this.loading = false;
+
+        this.error = "";
       }
     
     });
   }
 
-  updateProfil() {
-    this.userService.updateUser(this.currentUser);
+  async updateProfil() {
+    try {
+      const data = await this.userService.updateUser(this.currentUser);
+      console.log(data);
+      
+    } catch (error:any) {
+      this.error = error.error.message;
+    }
   }
+  
 
   async onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;
