@@ -4,7 +4,9 @@
   <div class="w-11/12 m-auto mt-10 mb-10 flex justify-center items-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-4">
     <div class="flex flex-wrap justify-between items-start">
       <div class="w-full md:w-1/2">
-        <img [src]="project.imageUrl" class="w-full h-auto object-cover rounded-md" alt="Project Image">
+      <img *ngIf="noImage" [src]="'./assets/' + project.imageUrl" class="w-full h-auto object-cover rounded-md" alt="Project Image">
+      <img
+      *ngIf="imageSrc" [src]="imageSrc" class="w-full h-auto object-cover rounded-md" alt="Project Image">
       </div>
       <div class="w-full md:w-1/2 md:pl-4">
         <h1 class="text-2xl text-yellow-500">{{ project.name }}</h1>
