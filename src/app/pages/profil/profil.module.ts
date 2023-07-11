@@ -10,13 +10,15 @@ import { EditProfileDialogComponent } from 'src/app/components/edit-profile-dial
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SettingProfileDialogComponent } from 'src/app/components/setting-profile-dialog/setting-profile-dialog.component';
 
 
 
 @NgModule({
   declarations: [
     ProfilComponent,
-    EditProfileDialogComponent
+    EditProfileDialogComponent,
+    SettingProfileDialogComponent
   ],
   imports: [
     CommonModule,

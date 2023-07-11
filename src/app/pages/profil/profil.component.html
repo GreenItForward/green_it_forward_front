@@ -23,20 +23,26 @@
         <mat-card-content class="flex flex-col items-center justify-center text-center">
           <h2 mat-card-title class="text-center">{{ currentUser.firstName }} {{ currentUser.lastName }}</h2>
           <p mat-card-subtitle class="text-center">Inscrit(e) {{creationDate}}</p>
-          <button mat-button color="primary" (click)="openEditDialog()" class="text-center cursor-pointer flex items-center justify-center">
-            <mat-icon class="mr-2 text-center">
+          <button mat-button color="primary" (click)="openEditDialog()" class="text-center cursor-pointer flex items-center justify-center hover:text-green-600">
+            <mat-icon class="mr-2 text-center mb-5">
               edit
             </mat-icon>
             Éditer le profil
+          </button>
+          <button mat-button color="primary" (click)="openSettingDialog()" class="text-center cursor-pointer flex items-center justify-center hover:text-green-600">
+            <mat-icon class="mr-2 text-center">
+              settings
+            </mat-icon>
+            Paramètres
           </button>
         </mat-card-content>
       </mat-card>
       <mat-card class="mb-4 flex flex-col items-center">
         <mat-card-content class="flex flex-col items-center justify-center">
           <h2 mat-card-title>Statistiques</h2>
-          <p><mat-icon>comment</mat-icon> 43 commentaires</p>
-          <p><mat-icon>emoji_emotions</mat-icon> 5 réactions</p>
-          <p><mat-icon>reply</mat-icon> 10 réponses</p>
+          <p><mat-icon>comment</mat-icon> {{nbMessages}} commentaires</p>
+          <p><mat-icon>emoji_emotions</mat-icon> {{nbCommunities}} communautés rejointes</p>
+          <p><mat-icon>reply</mat-icon> {{nbResponses}} réponses</p>
         </mat-card-content>
       </mat-card>
     </div>

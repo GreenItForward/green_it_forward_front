@@ -8,6 +8,7 @@ import { Message } from 'src/app/interfaces/message.entity';
 import { ResponseEntity } from 'src/app/interfaces/response.entity';
 import { Community } from 'src/app/interfaces/community.entity';
 import { Post } from 'src/app/interfaces/post.entity';
+import { SettingProfileDialogComponent } from 'src/app/components/setting-profile-dialog/setting-profile-dialog.component';
 
 export interface Activity {
   posts ?: Post[];
@@ -25,6 +26,9 @@ export class ProfilComponent {
   error: string;
   creationDate: string;
   activities: Post[] = [];
+  nbMessages: number;
+  nbResponses: number;
+  nbCommunities: number;
 
   defaultImage = 'https://www.gravatar.com/avatar/94d093eda664addd6e450d7e9881bcad?s=300&d=identicon&r=PG';
   defaultActivityImage = 'assets/background.jpeg';
@@ -40,6 +44,14 @@ export class ProfilComponent {
     this.currentUser = await this.userService.getMe();
     this.creationDate = this.dateService.formatRelativeTime(this.currentUser.firstLoginAt, "depuis");
     const posts = (await this.userService.getActivitiesUser()).posts;
+    const messages = (await this.userService.getActivitiesUser()).messages;
+    const responses = (await this.userService.getActivitiesUser()).responses;
+    const communities = (await this.userService.getActivitiesUser()).communities;
+
+    this.nbMessages = messages.length;
+    this.nbResponses = responses.length;
+    this.nbCommunities = communities.length;
+
     this.activities = posts;
   }
 
@@ -74,11 +86,44 @@ export class ProfilComponent {
     });
   }
 
+  openSettingDialog(): void {
+    const dialogRef = this.dialog.open(SettingProfileDialogComponent, {
+      width: '350px',
+      data: this.currentUser
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        if (result.email === "") {
+          this.error = "L'email ne peut pas être vide";
+          return;
+        } else if (result.password === "") {
+          this.error = "Le mot de passe ne peut pas être vide";
+          return;
+        } else if (result.password.length < 6) {
+          this.error = "Le mot de passe doit contenir au moins 6 caractères";
+          return;
+        }
+
+        if (result.password !== result.confirmPassword) {
+          this.error = "Les mots de passe ne sont pas identiques";
+          return;
+        }
+
+        this.loading = true;
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        this.currentUser = await this.userService.getMe();
+        this.loading = false;
+
+        this.error = "";
+      }
+    });
+  }
+
+
   async updateProfil() {
     try {
-      const data = await this.userService.updateUser(this.currentUser);
-      console.log(data);
-      
+      const data = await this.userService.updateUser(this.currentUser);      
     } catch (error:any) {
       this.error = error.error.message;
     }

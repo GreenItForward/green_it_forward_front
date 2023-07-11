@@ -10,8 +10,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class EditProfileDialogComponent {
   profileForm = new FormGroup({
-    firstName: new FormControl(this.data.firstName, Validators.required),
-    lastName: new FormControl(this.data.lastName, Validators.required),
+    firstName: new FormControl(this.data.firstName, [Validators.required, Validators.minLength(6)]),
+    lastName: new FormControl(this.data.lastName, [Validators.required, Validators.minLength(6)]),
   });
 
   constructor(
