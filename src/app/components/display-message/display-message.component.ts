@@ -3,7 +3,7 @@ import {Message} from "../../interfaces/message.entity";
 import {ActivatedRoute} from "@angular/router";
 import {CommonService} from "../../services/common.service";
 import {MessageService} from "../../services/message.service";
-import {User} from "../../interfaces/user.entity";
+import { User } from 'src/app/models/user.model';
 import {DateService} from "../../services/date.service";
 import {ResponseEntity} from "../../interfaces/response.entity";
 import {ResponseService} from "../../services/response.service";
@@ -17,7 +17,7 @@ import {NewResponse} from "../../interfaces/new-response.entity";
 })
 export class DisplayMessageComponent {
  @Input() message:Message
-  author:User = {id:null, firstName:"", lastName:"", role:"", imageUrl:"", password:"", email:"", createdAt:new Date(), updatedAt:new Date()}
+  author:User;
 
   newResponse:NewResponse = {text:"",message:null}
   responses:ResponseEntity[]
@@ -31,9 +31,7 @@ export class DisplayMessageComponent {
     });
 
     this.creationDate = this.dateService.formatRelativeTime(this.message.creationDate)
-
     this.responses = await this.responseService.getResponsesByMessage(this.message.id)
-    console.log(this.responses)
   }
 
   submitForm(){

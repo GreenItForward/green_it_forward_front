@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {CommonService} from "../../services/common.service";
 import {Post} from "../../interfaces/post.entity";
-import {User} from "../../interfaces/user.entity";
+import { User } from 'src/app/models/user.model';
 import {Message} from "../../interfaces/message.entity";
 import {MessageService} from "../../services/message.service";
 import {DateService} from "../../services/date.service";

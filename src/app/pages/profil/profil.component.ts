@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ProfilComponent {
   currentUser: User;
+  tempUser: User;
   defaultImage = 'https://www.gravatar.com/avatar/94d093eda664addd6e450d7e9881bcad?s=300&d=identicon&r=PG';
   @ViewChild('imageUpload') imageUpload: ElementRef;
   loading = false;
@@ -90,12 +91,18 @@ export class ProfilComponent {
       data: this.currentUser
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result) {
-        result.imageUrl = this.currentUser.imageUrl;
-        this.currentUser = result;
+        this.currentUser.firstName = result.firstName;
+        this.currentUser.lastName = result.lastName;
+        this.currentUser.imageUrl = "";
         this.updateProfil();
+        this.loading = true;
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        this.currentUser = await this.userService.getMe();
+        this.loading = false;
       }
+    
     });
   }
 

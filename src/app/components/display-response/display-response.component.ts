@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ResponseEntity} from "../../interfaces/response.entity";
-import {User} from "../../interfaces/user.entity";
+import { User } from 'src/app/models/user.model';
 import {ResponseService} from "../../services/response.service";
 import {DateService} from "../../services/date.service";
 import {MessageService} from "../../services/message.service";
@@ -13,7 +13,7 @@ import {MessageService} from "../../services/message.service";
 export class DisplayResponseComponent {
   @Input() response:ResponseEntity
 
-  author:User = {id:null, firstName:"", lastName:"", role:"", imageUrl:"", password:"", email:"", createdAt:new Date(), updatedAt:new Date()}
+  author:User;
   creationDate:string
 
   constructor(private responseService:ResponseService, private dateService:DateService) {}

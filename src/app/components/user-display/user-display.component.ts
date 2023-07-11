@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Post} from "../../interfaces/post.entity";
 import {CommonService} from "../../services/common.service";
-import {User} from "../../interfaces/user.entity";
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-user-display',

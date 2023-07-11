@@ -6,7 +6,7 @@ import { LoginData, RegisterData } from '../interfaces/auth.interface';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
-
+ 
   constructor(private http: HttpClient) {}
 
   login(userFormData: LoginData) {
