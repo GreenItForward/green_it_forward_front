@@ -5,6 +5,7 @@ import { SharedModule } from 'src/app/shared.module';
 import { RouterModule } from '@angular/router';
 import {CommunitiesComponent} from "./communities.component";
 import {CommunityCardModule} from "../../../components/community-card/community-card.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [ CommunitiesComponent ],
@@ -12,6 +13,7 @@ import {CommunityCardModule} from "../../../components/community-card/community-
     CommonModule,
     RouterModule,
     SharedModule,
+    FormsModule,
     SlickCarouselModule,
     CommunityCardModule
   ]

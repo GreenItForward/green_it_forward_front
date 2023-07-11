@@ -25,11 +25,16 @@ export class CommunityComponent {
   noFollowers: boolean
   noPosts: boolean
   posts: Post[]
+  followers: User[]
   noImage:boolean = true
   imageFile:File
   imageSrc: string;
   communityNotFollowed:boolean = true
   creationDate:string
+  basePosts: Post[] = []
+  baseFollowers: User[] = []
+  searchText:string = ""
+  searchUser:string = ""
 
   constructor(private dateService:DateService, private userService:UserService, public dialog: MatDialog, private activatedRoute: ActivatedRoute, protected commonService: CommonService,private communityService:CommunityService, private postService:PostService, private uploadService:UploadService) {}
 
@@ -49,9 +54,12 @@ export class CommunityComponent {
     const data = this.activatedRoute.snapshot.data as RouteData;
     this.community = data.community;
     this.noFollowers = this.community.followers.length === 0;
+    this.followers = this.community.followers
+    this.baseFollowers = this.community.followers
 
     this.postService.getPostsByCommunity(this.community.id).then(posts => {
       this.posts = posts;
+      console.log(posts)
       this.noPosts = this.posts.length === 0;
     });
 
@@ -92,6 +100,28 @@ export class CommunityComponent {
       console.log(r)
       location.reload();
     })
+  }
+
+  async searchPosts() {
+    if(this.searchText.trim() !== ""){
+      this.posts = await this.postService.searchPosts(this.searchText,parseInt(this.community.id))
+      console.log(this.posts)
+    }
+    else{
+      this.posts = this.basePosts
+    }
+  }
+
+  searchFollowers() {
+    if (this.searchUser.trim() !== "") {
+      this.followers = this.baseFollowers.filter(follower =>
+        (follower.firstName && follower.firstName.toLowerCase().includes(this.searchUser.toLowerCase())) ||
+        (follower.lastName && follower.lastName.toLowerCase().includes(this.searchUser.toLowerCase())) ||
+        (follower.email && follower.email.toLowerCase().includes(this.searchUser.toLowerCase()))
+      );
+    } else {
+      this.followers = [...this.baseFollowers];
+    }
   }
 
 }

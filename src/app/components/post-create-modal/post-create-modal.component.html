@@ -11,7 +11,7 @@
     <input name="subject" [(ngModel)]="newPost.subject" (change)="checkIfValid()" type="text" class="w-3/4 p-2 text-black rounded mb-2" placeholder="sujet du post...">
     <textarea name="text" [(ngModel)]="newPost.text" (change)="checkIfValid()" class="w-3/4 p-2 text-black rounded mb-2" placeholder="text du post..."></textarea>
     <div class="w-full mt-2 flex justify-center">
-      <button (click)="closeModal()" class="cursor-pointer w-1/5 text-center rounded text-lg mr-2 px-4 py-2 bg-green-900" disabled>Annuler</button>
+      <div (click)="closeModal()" class="cursor-pointer w-1/5 text-center rounded text-lg mr-2 px-4 py-2 bg-green-900">Annuler</div>
       <button *ngIf="formIsValid" class="cursor-pointer w-1/5 text-center rounded text-yellow-500 text-lg px-4 py-2 bg-gradient-to-r from-green-600 to-green-800">Valider</button>
       <button *ngIf="!formIsValid" class="cursor-not-allowed w-1/5 text-center rounded text-gray-950/50 text-lg px-4 py-2 bg-green-900/50" disabled>Valider</button>
     </div>

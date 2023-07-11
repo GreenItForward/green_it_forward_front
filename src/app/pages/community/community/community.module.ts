@@ -7,6 +7,7 @@ import {CommunityComponent} from "./community.component";
 import {PostDisplayModule} from "../../../components/post-display/post-display.module";
 import {UserDisplayModule} from "../../../components/user-display/user-display.module";
 import {SearchBarModule} from "../../../components/search-bar/search-bar.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [ CommunityComponent ],
@@ -14,6 +15,7 @@ import {SearchBarModule} from "../../../components/search-bar/search-bar.module"
     CommonModule,
     RouterModule,
     SharedModule,
+    FormsModule,
     SlickCarouselModule,
     PostDisplayModule,
     UserDisplayModule,

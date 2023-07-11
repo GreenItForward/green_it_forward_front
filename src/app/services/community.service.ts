@@ -59,8 +59,15 @@ export class CommunityService {
     return community
   }
 
+  async searchCommunities(searchText: string): Promise<Community[]> {
+    const communitites = await lastValueFrom(this.http.get<Community[]>(`${this.apiUrl}search/${searchText}`, this.options));
+    if (!communitites) {
+      throw new Error('Failed to find communitites');
+    }
+    return communitites
+  }
+
   async followCommunity(id: string): Promise<void> {
-    console.log("here : ",this.options)
     const community = await lastValueFrom(this.http.post<Community>(`${this.apiUrl}community/${id}/follow`, null, this.options));
     if (!community) {
       throw new Error('Failed to follow community');
@@ -68,7 +75,6 @@ export class CommunityService {
   }
 
   async unFollowCommunity(id: string): Promise<void> {
-    console.log("here : ",this.options)
     const community = await lastValueFrom(this.http.post<Community>(`${this.apiUrl}community/${id}/unfollow`, null, this.options));
     if (!community) {
       throw new Error('Failed to unfollow community');

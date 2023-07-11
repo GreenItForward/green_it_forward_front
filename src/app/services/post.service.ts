@@ -46,6 +46,14 @@ export class PostService {
     return post
   }
 
+  async searchPosts(searchText: string, communityId:number): Promise<Post[]> {
+    const posts = await lastValueFrom(this.http.post<Post[]>(`${this.apiUrl}search/${searchText}`,{communityId}, this.options));
+    if (!posts) {
+      throw new Error('Failed to find posts');
+    }
+    return posts
+  }
+
   async getPosts() : Promise<Post[]> {
     const posts = await lastValueFrom(this.http.get<Post[]>(`${this.apiUrl}all`, this.options));
     return posts ? posts : [];
