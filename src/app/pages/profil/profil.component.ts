@@ -24,6 +24,7 @@ export class ProfilComponent {
   currentUser: User;
   tempUser: User;
   error: string;
+  success: string;
   creationDate: string;
   activities: Post[] = [];
   nbMessages: number;
@@ -97,9 +98,6 @@ export class ProfilComponent {
         if (result.email === "") {
           this.error = "L'email ne peut pas être vide";
           return;
-        } else if (result.password === "") {
-          this.error = "Le mot de passe ne peut pas être vide";
-          return;
         } else if (result.password.length < 6) {
           this.error = "Le mot de passe doit contenir au moins 6 caractères";
           return;
@@ -109,6 +107,8 @@ export class ProfilComponent {
           this.error = "Les mots de passe ne sont pas identiques";
           return;
         }
+
+        this.success = "Votre mot de passe a bien été modifié";
 
         this.loading = true;
         await new Promise(resolve => setTimeout(resolve, 1000));

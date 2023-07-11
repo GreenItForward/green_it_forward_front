@@ -19,6 +19,7 @@
             </div>
           </div>
         </mat-card-header>
+        <p *ngIf="success" class="text-green-500 text-center">{{ success }}</p>
         <p *ngIf="error" class="text-red-500 text-center">{{ error }}</p>
         <mat-card-content class="flex flex-col items-center justify-center text-center">
           <h2 mat-card-title class="text-center">{{ currentUser.firstName }} {{ currentUser.lastName }}</h2>
