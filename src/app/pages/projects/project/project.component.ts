@@ -23,9 +23,6 @@ export class ProjectComponent {
     const data = this.activatedRoute.snapshot.data as RouteData;
     this.project = data.project;
 
-    console.log("here : ", this.project.startDate)
-    console.log("here : ", this.project.endDate)
-
     this.creationDate = this.dateService.formatRelativeTime(this.project.startDate, "Débuté depuis");
     this.endDate = this.dateService.formatRelativeTime(this.project.endDate, "Se termine dans");
  

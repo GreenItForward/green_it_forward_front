@@ -45,9 +45,25 @@ export class ProjectService {
         )
     );
 
+    return projects ? projects : [];
+  }
+
+  async createProject(newProject: Project): Promise<Project> {
+    let dataToSend = {
+      ...newProject,
+      startDate: newProject.startDate.toISOString(), // this should be an ISO 8601 string
+      endDate: newProject.endDate.toISOString() // this should be an ISO 8601 string   
+    };
 
     
-    return projects ? projects : [];
+
+
+
+    const project = await lastValueFrom(this.http.post<Project>(`${this.apiUrl}`, dataToSend, this.options));
+    if (!project) {
+      throw new Error('Failed to create project');
+    }
+    return project
   }
   
 }

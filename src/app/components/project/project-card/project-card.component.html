@@ -1,0 +1,41 @@
+<div class="flex justify-center items-center h-64 w-full">
+  <img
+    *ngIf="noImage" [src]="'./assets/' + project.imageUrl"
+    class="w-64 h-64 object-cover"
+    alt="{{ project.name }}"
+  />
+  <img
+    *ngIf="imageSrc" [src]="imageSrc"
+    class="w-64 h-64 object-cover"
+    alt="{{ project.name }}"
+  />
+</div>
+<div class="px-6 py-4">
+  <div class="text-center text-xl mb-2 text-white">
+    {{ project.name }}
+  </div>
+  <p class="text-base text-white text-center">
+    {{ project.description }}
+  </p>
+</div>
+<div class="px-6 pt-4 pb-2">
+  <span
+    class="inline-block bg-darkgreen-700 rounded-full px-3 py-1 text-sm text-white mr-2 mb-2"
+  >
+    {{ project.amountRaised }}€ / {{ project.totalAmount }}€
+  </span>
+</div>
+<div class="px-6 pt-4 pb-2">
+  <button
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    (click)="goToProject(project.id)"
+  >
+    En savoir plus
+  </button>
+  <button
+    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
+    (click)="payNow(project)"
+  >
+    Faire un dons
+  </button>
+</div>
