@@ -38,6 +38,7 @@ export class PaymentComponent implements OnInit {
   token: string | null = null;
   headers: HttpHeaders | null = null;
   options: {headers: HttpHeaders};
+  background: string;
 
   
 
@@ -58,6 +59,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
   this.token = this.commonService.getLocalStorageItem('token');
   this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
   this.options = { headers: this.headers };
+  this.background = '';
 }
 
   async ngOnInit() {    

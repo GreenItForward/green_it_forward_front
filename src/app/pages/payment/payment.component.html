@@ -1,20 +1,20 @@
 <div class="flex items-center justify-center h-screen bg-gray-100">
   <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-    <h1 class="text-3xl font-bold mb-4 text-indigo-500 text-center">Paiement</h1>
-    <h2 class="text-3xl font-bold mb-4 text-indigo-500 text-center">Don à {{ project?.name || "undefined" }}</h2>
+    <h1 class="text-3xl font-bold mb-4 text-green-600 text-center">Paiement</h1>
+    <h2 class="text-3xl font-bold mb-4 text-green-600 text-center">Don à {{ project?.name || "undefined" }}</h2>
 
     <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="space-y-6">
       <div>
-        <label class="block text-sm font-medium text-gray-700">Nom sur la carte</label>
+        <label class="block text-sm font-medium text-green-700">Nom sur la carte</label>
         <input formControlName="name" type="text" class="mt-1 block w-full border-gray-300 rounded-md" (input)="onChange($event)" />
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Montant (en euros)</label>
+        <label class="block text-sm font-medium text-green-700">Montant (en euros)</label>
         <input formControlName="amount" type="number" min="1" step="0.01" class="mt-1 block w-full border-gray-300 rounded-md" (input)="onChange($event)" />
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Numéro de carte, date d'expiration et CVC</label>
-        <div id="card-element" class="mt-1 block w-full border-gray-300 rounded-md"></div>
+        <label class="block text-sm font-medium text-green-700">Numéro de carte, date d'expiration et CVC</label>
+        <div id="card-element" class="mt-1 block w-full border-green-300 rounded-md"></div>
         <div id="card-errors" role="alert" class="mt-2 text-red-600"></div>
      </div>
       <div class="text-sm text-red-500" *ngIf="errorMessage">
@@ -23,7 +23,7 @@
       <div class="text-sm text-green-500" *ngIf="successMessage">
         {{ successMessage }}
       </div>
-      <button type="submit" [disabled]="paymentForm.invalid" class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Payer</button>
+      <button type="submit" [disabled]="paymentForm.invalid" class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-700 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Payer</button>
       <button *ngIf="successMessage" (click)="downloadInvoice()" class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Télécharger la facture</button>
     </form>
   </div>
