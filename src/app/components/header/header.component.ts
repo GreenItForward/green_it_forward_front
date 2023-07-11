@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authSub = this.userService.isLoggedIn$.subscribe(
       isAuthenticated => {
         this.isLoggedIn = isAuthenticated;
-        this.link = isAuthenticated ? "/profile" : "/auth";
+        this.link = isAuthenticated ? "/user/profile" : "/auth";
       }
     );
   }

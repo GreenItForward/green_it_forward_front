@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Location} from "@angular/common";
 import {CommonService} from "../../../services/common.service";
 import {Community} from "../../../interfaces/community.entity";
-import {Project} from "../../../models/project.model";
-import {User} from "../../../interfaces/user.entity";
 import {Post} from "../../../interfaces/post.entity";
 import {PostService} from "../../../services/post.service";
 import {UploadService} from "../../../services/upload.service";
@@ -65,7 +62,7 @@ export class CommunityComponent {
     const isUserAlreadyFollowed = this.community.followers.some((follower) => follower.email === me.email);
     this.communityNotFollowed = !isUserAlreadyFollowed;
 
-    this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate)
+    this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate, "")
   }
 
   async loadImage() {

@@ -38,7 +38,7 @@ export class PostComponent {
     });
 
     console.log("here : ", this.post.creationDate)
-    this.creationDate = this.dateService.formatRelativeTime(this.post.creationDate)
+    this.creationDate = this.dateService.formatRelativeTime(this.post.creationDate, "")
 
   }
 

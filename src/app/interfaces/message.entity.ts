@@ -1,5 +1,4 @@
-import {User} from "./user.entity";
-
+import { User } from './../models/user.model';
 export interface Message {
   id: string;
   text: string;

@@ -25,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProjectsModule } from './pages/projects/projects/projects.module';
 import { ProjectModule } from './pages/projects/project/project.module';
 import { ConfirmationModule } from './pages/confirmation/confirmation.module';
+import { ProfilModule } from './pages/profil/profil.module';
 import {CommunityComponent} from "./pages/community/community/community.component";
 import {CommunityModule} from "./pages/community/community/community.module";
 import {CommunitiesModule} from "./pages/community/communities/communities.module";
@@ -79,7 +80,8 @@ import {PostCreateModalModule} from "./components/post-create-modal/post-create-
     CommunityModule,
     CommunitiesModule,
     CommunityCardModule,
-    ConfirmationModule
+    ConfirmationModule,
+    ProfilModule
   ],
 
   providers: [],

@@ -1,13 +1,15 @@
-export class User {
-    constructor(
-        public id: number,
-        public firstName: string,
-        public lastName: string,
-        public email: string,
-        public password: string,
-        public role: string,
-        public imageUrl: string|null,
-        public createdAt: Date,
-        public updatedAt: Date|null,
-    ) {}
-}
+export interface User {
+    id: number;
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    role: string;
+    ipAddress: string | null;
+    isVerified: boolean
+    confirmationToken: string | null;
+    isBanned: boolean;
+    imageUrl: string | null;
+    firstLoginAt: Date;
+    lastLoginAt: Date | null;
+  }

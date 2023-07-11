@@ -1,0 +1,18 @@
+<div class="p-6">
+  <form [formGroup]="profileForm">
+    <label for="firstName" class="block text-green-900 text-sm font-bold mb-2">
+      Prénom
+    </label>
+    <input id="firstName" type="text" formControlName="firstName" class="w-full mb-4 p-2 border rounded">
+
+    <label for="lastName" class="block text-green-900 text-sm font-bold mb-2">
+      Nom
+    </label>
+    <input id="lastName" type="text" formControlName="lastName" class="w-full mb-4 p-2 border rounded">
+  </form>
+</div>
+
+<div class="p-6 border-t border-gray-200">
+  <button (click)="onCancel()" class="px-4 py-2 mr-2 text-white bg-red-500 rounded hover:bg-red-700">Annuler</button>
+  <button [mat-dialog-close]="profileForm.value" cdkFocusInitial class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-700">Enregistrer</button>
+</div>
