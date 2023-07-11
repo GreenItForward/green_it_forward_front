@@ -10,7 +10,7 @@
           <div *ngIf="!currentUser.imageUrl" class="flex justify-center">
             <img mat-card-image [src]="defaultImage" alt="User image" class="w-64 h-64 object-cover mx-auto hover:opacity-75 hover:cursor-pointer" (click)="imageUpload.click()">
           </div>
-          <input type="file" #imageUpload style="display: none;" (change)="onFileSelected($event)"/>
+          <input type="file" #imageUpload style="display: none;" (change)="onFileSelected($event)"  accept=".jpg, .jpeg, .png"/>
           <div *ngIf="loading" class="flex justify-center items-center">
             <div class="spinner">
                 <div class="bounce1"></div>

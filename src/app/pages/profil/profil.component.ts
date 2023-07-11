@@ -119,14 +119,19 @@ export class ProfilComponent {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       const file = target.files[0];
+      const extension = (file.name.split('.').pop() || '').toLowerCase();
+      if(extension !== 'jpg' && extension !== 'jpeg' && extension !== 'png'){
+        this.error = "Le fichier n'est pas un fichier image valide (jpg, jpeg, png uniquement).";
+        return;
+      }
       this.userService.updateImage(file);
       this.loading = true;
       await new Promise(resolve => setTimeout(resolve, 1000));
       this.loading = false;
       this.imageUpload.nativeElement.value = '';
       this.currentUser = await this.userService.getMe();
+      this.error = "";
     }
-
-  }
+}
 
 }
