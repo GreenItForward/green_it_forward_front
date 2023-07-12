@@ -1,0 +1,20 @@
+<div class="bg-green-700 text-white p-6 flex flex-col items-center">
+  <app-post-display *ngIf="type === 'post'" (click)="closeModal()" class="w-11/12" [post]="post"></app-post-display>
+  <app-community-card *ngIf="type === 'community'" (click)="closeModal()" class="w-11/12" [community]="community"></app-community-card>
+  <app-user-display *ngIf="type === 'follower'" (click)="closeModal()" class="w-11/12" [follower]="follower" [creator]="null"></app-user-display>
+  <div class="m-2">
+    Que voulez-vous faire avec cet élément ?
+  </div>
+  <div class="flex w-full justify-center items-center">
+    <div (click)="closeModal()" class="mr-2 cursor-pointer w-1/10 text-center rounded text-lg mr-2 px-4 py-2 bg-green-900">
+      Annuler
+    </div>
+    <div *ngIf="type !== 'follower'" (click)="action()" class="cursor-pointer w-1/10 text-center rounded text-lg mr-2 px-4 py-2 bg-green-900">
+      Supprimer
+    </div>
+    <div *ngIf="type === 'follower'" (click)="action()" class="cursor-pointer w-1/10 text-center rounded text-lg mr-2 px-4 py-2 bg-green-900">
+      Enlever
+    </div>
+  </div>
+</div>
+

@@ -38,6 +38,8 @@ import {SearchBarModule} from "./components/search-bar/search-bar.module";
 import {DisplayMessageModule} from "./components/display-message/display-message.module";
 import {CommunityFormModule} from "./pages/community/community-form/community-form.module";
 import {PostCreateModalModule} from "./components/post-create-modal/post-create-modal.module";
+import {EditCommunityModule} from "./pages/community/edit-community/edit-community.module";
+import {SelectionModalModule} from "./components/selection-modal/selection-modal.module";
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import {PostCreateModalModule} from "./components/post-create-modal/post-create-
     CommunityFormModule,
     PostModule,
     PostCreateModalModule,
+    EditCommunityModule,
+    SelectionModalModule,
     PostDisplayModule,
     UserDisplayModule,
     BrowserAnimationsModule,

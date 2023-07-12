@@ -10,7 +10,7 @@ import {User} from "../../interfaces/user.entity";
 })
 export class UserDisplayComponent {
   @Input() follower: User;
-  @Input() creator: User;
+  @Input() creator: User|null;
 
   constructor(protected commonService: CommonService) {}
 

@@ -15,9 +15,6 @@ import {DateService} from "../../../services/date.service";
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent {
-
-  @Input() community: Community
-
   post: Post
 
   newMessage:NewMessage = {text:"",post:null}
@@ -36,8 +33,6 @@ export class PostComponent {
       this.messages = messages;
       this.noMessages = this.messages.length === 0;
     });
-
-    console.log("here : ", this.post.creationDate)
     this.creationDate = this.dateService.formatRelativeTime(this.post.creationDate)
 
   }

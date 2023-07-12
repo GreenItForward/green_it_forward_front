@@ -37,6 +37,14 @@ export class PostService {
     return post;
   }
 
+  async deletePost(id: string | null): Promise<void> {
+    if (!id) {
+      throw new Error('Post not found');
+    }
+
+    await lastValueFrom(this.http.delete<Post>(`${this.apiUrl}delete/${id}`, this.options));
+  }
+
   async createPost(newPost: NewPost): Promise<Post> {
     console.log(newPost)
     const post = await lastValueFrom(this.http.post<Post>(`${this.apiUrl}`, newPost, this.options));

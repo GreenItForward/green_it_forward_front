@@ -59,6 +59,18 @@ export class CommunityService {
     return community
   }
 
+  async updateCommunity(communityId:string, newCommunity: NewCommunity): Promise<Community> {
+    const community = await lastValueFrom(this.http.patch<Community>(`${this.apiUrl}community/${communityId}`, newCommunity, this.options));
+    if (!community) {
+      throw new Error('Failed to update community');
+    }
+    return community
+  }
+
+  async deleteCommunity(communityId:string): Promise<void> {
+    await lastValueFrom(this.http.delete<void>(`${this.apiUrl}delete/${communityId}`, this.options));
+  }
+
   async searchCommunities(searchText: string): Promise<Community[]> {
     const communitites = await lastValueFrom(this.http.get<Community[]>(`${this.apiUrl}search/${searchText}`, this.options));
     if (!communitites) {
@@ -81,4 +93,10 @@ export class CommunityService {
     }
   }
 
+  async removeFollowerFromCommunity(userId: number | null, communityId: string): Promise<void> {
+    const community = await lastValueFrom(this.http.patch<Community>(`${this.apiUrl}removefollower`, {userId:userId, communityId:communityId}, this.options));
+    if (!community) {
+      throw new Error('Failed to unfollow community');
+    }
+  }
 }

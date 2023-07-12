@@ -26,7 +26,7 @@
     <div *ngIf="noMessages">Il n'y a aucun message</div>
     <br>
     <h1 class="text-yellow-400 underline mr-2">Envoyer une réponse</h1>
-    <form (ngSubmit)="submitForm()" class="w-full flex justify-between items-center">
+    <form if (ngSubmit)="submitForm()" class="w-full flex justify-between items-center">
       <input name="text" [(ngModel)]="newMessage.text" (change)="checkIfValid()" class="w-full mr-4 border-2 border-green-700 rounded p-2 bg-green-700" placeholder="Envoyer une réponse"/>
       <button *ngIf="!checkIfValid()" disabled class="cursor-not-allowed w-fit rounded p-2 bg-green-900"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#ebc621" d="M3 20v-6l8-2l-8-2V4l19 8l-19 8Z"/></svg></button>
       <button *ngIf="checkIfValid()" class="cursor-pointer w-fit rounded p-2 bg-green-900"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#ebc621" d="M3 20v-6l8-2l-8-2V4l19 8l-19 8Z"/></svg></button>
