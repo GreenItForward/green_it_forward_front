@@ -22,9 +22,7 @@ export class CreateProjectDialogComponent {
       'name': new FormControl(null, Validators.required),
       'description': new FormControl(null, Validators.required),
       'imageUrl': new FormControl(null), 
-      'amountRaised': new FormControl(null, Validators.required),
       'totalAmount': new FormControl(null, Validators.required),
-      'startDate': new FormControl(null, Validators.required),
       'endDate': new FormControl(null, Validators.required),
     });
   
@@ -36,17 +34,15 @@ export class CreateProjectDialogComponent {
       return;
     }
     
-    let startDate = new Date(this.createProjectForm.value.startDate);
     let endDate = new Date(this.createProjectForm.value.endDate);
 
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    if (isNaN(endDate.getTime())) {
       this.error = "Invalid date format";
       return;
     }
 
     let projectData = {
       ...this.createProjectForm.value,
-      startDate: startDate, // this should be a Date object, not a string
       endDate: endDate // this should be a Date object, not a string
     };
 

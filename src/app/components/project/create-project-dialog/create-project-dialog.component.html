@@ -12,11 +12,12 @@
             <div class="bounce3"></div>
         </div>
       </div>
+      <p class="text-sm text-gray-500">Veuillez choisir une image pour votre projet.</p>
       <input type="file" (change)="onFileSelected($event)" class="block w-full p-2 border border-gray-300 rounded" placeholder="Télécharger l'image" />
-      <input formControlName="amountRaised" type="number" class="block w-full p-2 border border-gray-300 rounded" placeholder="Montant levé" />
-      <input formControlName="totalAmount" type="number" class="block w-full p-2 border border-gray-300 rounded" placeholder="Montant total" />
-      <input formControlName="startDate" type="date" class="block w-full p-2 border border-gray-300 rounded" [value]="todayDate"/>
-      <input formControlName="endDate" type="date" class="block w-full p-2 border border-gray-300 rounded" placeholder="Date de fin" />
+      <label class="block text-sm font-bold mb-2">Informations financières</label>
+      <input formControlName="totalAmount" type="number" class="block w-full p-2 border border-gray-300 rounded" placeholder="Objectif en €" />
+      <p class="text-sm text-gray-500">Date de fin du projet</p>
+      <input formControlName="endDate" type="date" class="block w-full p-2 border border-gray-300 rounded" placeholder="Date de fin de collecte" />
       <p *ngIf="error" class="text-red-500">{{ error }}</p>
       <div class="flex justify-end">
         <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Créer</button>

@@ -51,13 +51,8 @@ export class ProjectService {
   async createProject(newProject: Project): Promise<Project> {
     let dataToSend = {
       ...newProject,
-      startDate: newProject.startDate.toISOString(), // this should be an ISO 8601 string
-      endDate: newProject.endDate.toISOString() // this should be an ISO 8601 string   
+      endDate: newProject.endDate.toISOString()
     };
-
-    
-
-
 
     const project = await lastValueFrom(this.http.post<Project>(`${this.apiUrl}`, dataToSend, this.options));
     if (!project) {
