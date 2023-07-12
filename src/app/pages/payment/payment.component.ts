@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-payment',
@@ -43,7 +44,8 @@ export class PaymentComponent implements OnInit {
   
 
 constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient, 
-  private route: ActivatedRoute, private projectService: ProjectService, private commonService: CommonService) {
+  private route: ActivatedRoute, private projectService: ProjectService, private commonService: CommonService,
+  private location: Location) {
   this.paymentForm = this.fb.group({ });
   this.cardOptions = { };
   this.elementsOptions = { };
@@ -227,6 +229,10 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       URL.revokeObjectURL(url);
     });
 
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }
