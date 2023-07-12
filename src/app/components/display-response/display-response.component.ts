@@ -3,7 +3,6 @@ import {ResponseEntity} from "../../interfaces/response.entity";
 import { User } from 'src/app/models/user.model';
 import {ResponseService} from "../../services/response.service";
 import {DateService} from "../../services/date.service";
-import {MessageService} from "../../services/message.service";
 
 @Component({
   selector: 'app-display-response',

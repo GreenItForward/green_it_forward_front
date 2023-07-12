@@ -97,10 +97,8 @@ export class UserService {
   }
 
 
-  async updateImage(image: File): Promise<User> {
-    const formData = new FormData();
-    formData.append('image', image);
-    return await lastValueFrom(this.http.put<User>(`${this.apiUrl}/edit-image`, formData, this.options));
+  async updateImage(imageUrl: string): Promise<User> {
+    return await lastValueFrom(this.http.put<User>(`${this.apiUrl}/edit-image`, {imageUrl:imageUrl}, this.options));
   }
 
 
@@ -144,6 +142,26 @@ export class UserService {
     }
   }
 
+  async getCommunitiesUser(): Promise<Community[]> {
+    const user = await this.getMe();
+    const communities = await this.communityService.getCommunitiesByUser(user);
+    return communities;
+  }
+
+  async getPostsUser(): Promise<Post[]> {
+    const posts = await this.postService.getPostsByUser();
+    return posts;
+  }
+
+  async getMessagesUser(): Promise<Message[]> {
+    const messages = await this.messageService.getMessagesByUser();
+    return messages;
+  }
+
+  async getResponsesUser(): Promise<ResponseEntity[]> {
+    const responses = await this.responseService.getResponsesByUser();
+    return responses;
+  }
 
 }
  

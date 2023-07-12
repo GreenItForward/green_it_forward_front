@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CommonService } from 'src/app/services/common.service';
 import { UserService } from 'src/app/services/user.service';
 import { LoginData, RegisterData } from 'src/app/interfaces/auth.interface';
+import { UploadService } from 'src/app/services/upload.service';
 
 @Component({
   selector: 'app-auth',
@@ -17,7 +18,8 @@ export class AuthComponent {
   success: string|null = null;
   selectedFile: File | null = null;  
 
-  constructor(private authService: AuthService, private commonService: CommonService, private userService: UserService) {}
+  constructor(private authService: AuthService, private commonService: CommonService, private userService: UserService,
+    private uploadService: UploadService) {}
 
   onSwitchMode() {
     this.error = null;
@@ -31,20 +33,19 @@ export class AuthComponent {
     }
   }
 
-  onSubmit(authForm: NgForm) {
+  async onSubmit(authForm: NgForm) {
     if (!authForm.valid) {
       console.log('Invalid form');
       return;
     }
-
-    
+  
     this.isLoading = true;
     if (this.isLoginMode) {
       const loginData: LoginData = {
         email: authForm.value.email,
         password: authForm.value.password,
       };
-
+  
       this.authService.login(loginData).subscribe(
         (response:any) => {
           this.isLoading = false;
@@ -59,51 +60,38 @@ export class AuthComponent {
         }
       );
     } else {
-      if(!this.selectedFile) {
-        const registerData: RegisterData = {
-          email: authForm.value.email,
-          password: authForm.value.password,
-          firstName: authForm.value.firstName,
-          lastName: authForm.value.lastName,
-        };
-
-        this.authService.register(registerData).subscribe(
-          (response:any) => {
-            this.isLoading = false;
-            this.success = "Votre compte a été créé avec succès. Veuillez vérifier votre boîte de réception pour confirmer votre compte.";
-          },
-          (errorMessage:any) => {
-            console.error('Register response: ', errorMessage);
-            this.isLoading = false;
-            this.error = errorMessage.error.message;
-          }
-        );
-      } else {
-        const registerImageData = new FormData();
-        registerImageData.append('email', authForm.value.email);
-        registerImageData.append('password', authForm.value.password);
-        registerImageData.append('firstName', authForm.value.firstName);
-        registerImageData.append('lastName', authForm.value.lastName);
+      let registerData: RegisterData = {
+        email: authForm.value.email,
+        password: authForm.value.password,
+        firstName: authForm.value.firstName,
+        lastName: authForm.value.lastName,
+        imageUrl: null
+      };
   
-        if(this.selectedFile) {
-          registerImageData.append('image', this.selectedFile, this.selectedFile.name);
+      if (this.selectedFile) {
+        try {
+          const imageName = await this.uploadService.uploadImage(this.selectedFile);
+          registerData.imageUrl = imageName;
+        } catch (error : any) {
+          this.error = error.error.message;
+          this.isLoading = false;
+          return; 
         }
-  
-        this.authService.registerImage(registerImageData).subscribe(
-          (response:any) => {
-            this.isLoading = false;
-            this.success = "Votre compte a été créé avec succès. Veuillez vérifier votre boîte de réception pour confirmer votre compte.";
-          },
-          (errorMessage:any) => {
-            console.error('Register response: ', errorMessage);
-            this.isLoading = false;
-            this.error = errorMessage.error.message;
-          }
-        );
       }
-      
+  
+      this.authService.register(registerData).subscribe(
+        (response:any) => {
+          this.isLoading = false;
+          this.success = "Votre compte a été créé avec succès. Veuillez vérifier votre boîte de réception pour confirmer votre compte.";
+        },
+        (errorMessage:any) => {
+          console.error('Register response: ', errorMessage);
+          this.isLoading = false;
+          this.error = errorMessage.error.message;
+        }
+      );
     }
-
+  
     authForm.reset();
     this.selectedFile = null;
   }

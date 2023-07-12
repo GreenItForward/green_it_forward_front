@@ -1,0 +1,26 @@
+<div class="p-5 bg-white rounded shadow-xl">
+    <h2 class="text-xl mb-4">Créer un projet</h2>
+    <form [formGroup]="createProjectForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <label class="block text-sm font-bold mb-2">Informations du projet</label>
+      <p class="text-sm text-gray-500">Veuillez remplir les informations suivantes pour créer un projet.</p>
+      <input formControlName="name" type="text" class="block w-full p-2 border border-gray-300 rounded" placeholder="Nom" />
+      <textarea formControlName="description" class="block w-full p-2 border border-gray-300 rounded" placeholder="Description"></textarea>
+      <div *ngIf="loading" class="flex justify-center items-center">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+      </div>
+      <p class="text-sm text-gray-500">Veuillez choisir une image pour votre projet.</p>
+      <input type="file" (change)="onFileSelected($event)" class="block w-full p-2 border border-gray-300 rounded" placeholder="Télécharger l'image" />
+      <label class="block text-sm font-bold mb-2">Informations financières</label>
+      <input formControlName="totalAmount" type="number" class="block w-full p-2 border border-gray-300 rounded" placeholder="Objectif en €" />
+      <p class="text-sm text-gray-500">Date de fin du projet</p>
+      <input formControlName="endDate" type="date" class="block w-full p-2 border border-gray-300 rounded" placeholder="Date de fin de collecte" />
+      <p *ngIf="error" class="text-red-500">{{ error }}</p>
+      <div class="flex justify-end">
+        <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Créer</button>
+      </div>
+    </form>
+  </div>

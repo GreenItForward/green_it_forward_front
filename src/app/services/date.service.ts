@@ -7,8 +7,15 @@ export class DateService {
   formatRelativeTime(date: Date | string | number, startWord: string): string {
     const now = new Date();
     const dateObj = new Date(date);
-    const diffInMilliseconds = now.getTime() - dateObj.getTime();
+    let diffInMilliseconds = dateObj.getTime() - now.getTime();
+  
+    const isFuture = diffInMilliseconds >= 0;
+    if (!isFuture) {
+      diffInMilliseconds = now.getTime() - dateObj.getTime();
+    }
+
     const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+
     if (!startWord) {
       startWord = 'Il y a';
     }

@@ -1,3 +1,5 @@
+import { User } from "./user.model";
+
 export class Project {
     constructor(
       public id: string,
@@ -8,6 +10,6 @@ export class Project {
       public totalAmount: number,
       public startDate: Date,
       public endDate: Date,
-      public createdBy: string,
+      public createdBy: User,
     ) {}
   }

@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import {Community} from "../../../interfaces/community.entity";
-import {ProjectService} from "../../../services/project.service";
-import {CommonService} from "../../../services/common.service";
-import {Router} from "@angular/router";
 import {Project} from "../../../models/project.model";
 import {CommunityService} from "../../../services/community.service";
 

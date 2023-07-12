@@ -26,19 +26,18 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/register`, userFormData);
   }
 
-  registerImage(userFormData: FormData) {
-    return this.http.post(`${this.apiUrl}/register-image`, userFormData);
-  }
-
   setUserData(responseData: String) {
     localStorage.setItem('userData', JSON.stringify(responseData));
   }
 
   async changePassword(passwordData: any) {
-    const user = await lastValueFrom(this.http.post(`${this.apiUrl}/change-password`, {password: passwordData.password}, this.options));
-    if (!user) {
-      throw new Error('Failed to change password');
+    let user;
+    try {
+     user = await lastValueFrom(this.http.post(`${this.apiUrl}/change-password`, {password: passwordData.password}, this.options));
+    } catch (error) {
+      throw new Error('Une erreur est survenue lors du changement de mot de passe');
     }
+
 
     return user;
   }
