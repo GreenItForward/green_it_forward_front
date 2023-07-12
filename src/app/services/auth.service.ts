@@ -26,10 +26,6 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/register`, userFormData);
   }
 
-  registerImage(userFormData: FormData) {
-    return this.http.post(`${this.apiUrl}/register-image`, userFormData);
-  }
-
   setUserData(responseData: String) {
     localStorage.setItem('userData', JSON.stringify(responseData));
   }

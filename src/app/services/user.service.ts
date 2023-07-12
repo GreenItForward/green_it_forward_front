@@ -97,10 +97,8 @@ export class UserService {
   }
 
 
-  async updateImage(image: File): Promise<User> {
-    const formData = new FormData();
-    formData.append('image', image);
-    return await lastValueFrom(this.http.put<User>(`${this.apiUrl}/edit-image`, formData, this.options));
+  async updateImage(imageUrl: string): Promise<User> {
+    return await lastValueFrom(this.http.put<User>(`${this.apiUrl}/edit-image`, {imageUrl:imageUrl}, this.options));
   }
 
 

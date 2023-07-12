@@ -75,7 +75,6 @@ export class CreateProjectDialogComponent {
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       this.uploadService.uploadImage(file).then(async imageName => {
-        console.log(imageName);
         this.createProjectForm.patchValue({
           imageUrl: imageName
         });

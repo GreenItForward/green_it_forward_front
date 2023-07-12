@@ -5,7 +5,7 @@
       <mat-card class="mb-4 flex flex-col items-center">
         <mat-card-header class="flex flex-col items-center mb-10">
           <div *ngIf="currentUser.imageUrl" class="flex justify-center">
-            <img mat-card-image [src]="'data:image/jpeg;base64,' + currentUser.imageUrl" alt="User image" class="w-64 h-64 object-cover mx-auto hover:opacity-75 hover:cursor-pointer" (click)="imageUpload.click()">
+            <img mat-card-image *ngIf="imageSrc" [src]="imageSrc" alt="User image" class="w-64 h-64 object-cover mx-auto hover:opacity-75 hover:cursor-pointer" (click)="imageUpload.click()">
           </div>
           <div *ngIf="!currentUser.imageUrl" class="flex justify-center">
             <img mat-card-image [src]="defaultImage" alt="User image" class="w-64 h-64 object-cover mx-auto hover:opacity-75 hover:cursor-pointer" (click)="imageUpload.click()">
