@@ -22,4 +22,10 @@ export class PaymentService {
         return payments ? payments : [];
     }
 
+    async getTotalDonations(): Promise<{name: string, value: number}[]> {
+        const response = await lastValueFrom(this.http.get<{[key: string]: number}>(`${this.apiUrl}/total-donations`, this.options));
+        const userData = Object.entries(response).map(([name, value]) => ({name, value}));
+        return userData;
+    }
+
 }
