@@ -142,6 +142,26 @@ export class UserService {
     }
   }
 
+  async getCommunitiesUser(): Promise<Community[]> {
+    const user = await this.getMe();
+    const communities = await this.communityService.getCommunitiesByUser(user);
+    return communities;
+  }
+
+  async getPostsUser(): Promise<Post[]> {
+    const posts = await this.postService.getPostsByUser();
+    return posts;
+  }
+
+  async getMessagesUser(): Promise<Message[]> {
+    const messages = await this.messageService.getMessagesByUser();
+    return messages;
+  }
+
+  async getResponsesUser(): Promise<ResponseEntity[]> {
+    const responses = await this.responseService.getResponsesByUser();
+    return responses;
+  }
 
 }
  

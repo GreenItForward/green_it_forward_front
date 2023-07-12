@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SettingProfileDialogComponent } from 'src/app/components/setting-profile-dialog/setting-profile-dialog.component';
+import { PaymentDisplayModule } from 'src/app/components/payment-display/payment-display.module';
 
 
 
@@ -29,7 +30,8 @@ import { SettingProfileDialogComponent } from 'src/app/components/setting-profil
     MatIconModule,
     MatDialogModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PaymentDisplayModule
   ]
 })
 export class ProfilModule { }

@@ -53,6 +53,10 @@
             <button mat-raised-button color="primary" [routerLink]="['/community']" class="text-green-500 font-bold hover:text-green-600 ">Aller dans l'onglet communauté</button>
         </div>
         <cdk-virtual-scroll-viewport itemSize="100" class="viewport">
+          <div *ngIf="activities.length === 0" class="flex justify-center items-center h-64">
+            <h3 class="text-center text-gray-500 align-middle">Aucun post</h3>
+          </div>
+
           <mat-card *cdkVirtualFor="let activity of activities" class="mb-6 example-item cursor-pointer" [routerLink]="['/post', activity.id]">
             <table>
               <tr>
@@ -72,8 +76,16 @@
             <hr class="mt-4" *ngIf="activity !== activities[activities.length - 1]">
           </mat-card>
         </cdk-virtual-scroll-viewport>
-
-
+    
+        <div class="flex justify-between items-center mt-10">
+          <h2 class="text-2xl">Mes Dons</h2>
+        </div>
+        <cdk-virtual-scroll-viewport itemSize="100" class="viewport">
+          <div *ngIf="payments.length === 0" class="flex justify-center items-center h-64">
+            <h3 class="text-center text-gray-500 align-middle">Aucun Dons</h3>
+          </div>
+          <app-payment-display *cdkVirtualFor="let payment of payments" [payment]="payment"></app-payment-display>
+        </cdk-virtual-scroll-viewport>
       </div>
   </div>
 <app-footer></app-footer>
