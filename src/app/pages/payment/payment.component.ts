@@ -113,10 +113,19 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
     let { name, amount } = this.paymentForm.value; 
 
     name = name.trim();
-    const paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount }, this.options));
+    let projectId = this.project?.id;
+
+    let paymentIntent;
+    try {
+      paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount, projectId }, this.options));
+    } catch (error : any) {
+      this.errorMessage = 'Une erreur inattendue est survenue lors de la création de l\'intention de paiement.';
+      return;
+    }
+    
     
     if (!this.card) {
-      console.error("Card not initialized");
+      this.errorMessage = "Une erreur est survenue lors du paiement";
       return;
     }
     if (paymentIntent && paymentIntent.clientSecret) {
