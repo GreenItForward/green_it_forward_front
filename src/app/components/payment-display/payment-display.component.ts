@@ -24,9 +24,6 @@ export class PaymentDisplayComponent implements OnInit {
   }
 
   async loadImage() {
-
-
-
     if (this.project.imageUrl !== '') {
       try {
         this.imageFile = await this.uploadService.getImage(this.project.imageUrl);
