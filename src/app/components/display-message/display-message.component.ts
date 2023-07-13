@@ -30,8 +30,9 @@ export class DisplayMessageComponent {
       this.author = message.user;
     });
 
-    this.creationDate = this.dateService.formatRelativeTime(this.message.creationDate, "");
-    this.responses = await this.responseService.getResponsesByMessage(this.message.id);
+    this.creationDate = this.dateService.formatRelativeTime(this.message.creationDate)
+
+    this.responses = await this.responseService.getResponsesByMessage(this.message.id)
   }
 
   submitForm(){
@@ -39,7 +40,6 @@ export class DisplayMessageComponent {
       this.newResponse.text = this.newResponse.text.trim()
       this.newResponse.message = this.message
       this.responseService.createResponse(this.newResponse).then(r => {
-        console.log(r)
         location.reload();
       })
     }

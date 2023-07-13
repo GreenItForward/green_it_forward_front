@@ -2,21 +2,23 @@ import { Component } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CommonService} from "../../../services/common.service";
 import {Community} from "../../../interfaces/community.entity";
+import {User} from "../../../interfaces/user.entity";
 import {Post} from "../../../interfaces/post.entity";
 import {PostService} from "../../../services/post.service";
 import {UploadService} from "../../../services/upload.service";
 import {CommunityService} from "../../../services/community.service";
-import { PostCreateModalComponent } from '../../../components/post-create-modal/post-create-modal.component';
 import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../../../services/user.service";
 import {DateService} from "../../../services/date.service";
+import {NewCommunity} from "../../../interfaces/new-community.entity";
+import {SelectionModalComponent} from "../../../components/selection-modal/selection-modal.component";
 
 @Component({
   selector: 'app-community',
-  templateUrl: './community.component.html',
-  styleUrls: ['./community.component.scss']
+  templateUrl: './edit-community.component.html',
+  styleUrls: ['./edit-community.component.scss']
 })
-export class CommunityComponent {
+export class EditCommunityComponent {
 
   community: Community
   noFollowers: boolean
@@ -33,23 +35,20 @@ export class CommunityComponent {
   searchText:string = ""
   searchUser:string = ""
 
+  newCommunity:NewCommunity = {name:"",description:"",imgUrl:"",followers:[]}
+  file: File | null;
+  formIsValid:boolean = false
+  isLoading:boolean = false
+  communities:Community[] = []
+  errorMessages:string[] = []
+  isCreator:boolean = false
+
   constructor(private dateService:DateService, private userService:UserService, public dialog: MatDialog, private activatedRoute: ActivatedRoute, protected commonService: CommonService,private communityService:CommunityService, private postService:PostService, private uploadService:UploadService) {}
-
-  openModal(): void {
-    const dialogRef = this.dialog.open(PostCreateModalComponent, {
-      width: '70%',
-      data: { community:this.community }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // Logique à exécuter après la fermeture de la modale
-      // result contient les données renvoyées par la modale si nécessaire
-    });
-  }
 
   async ngOnInit(): Promise<void> {
     const data = this.activatedRoute.snapshot.data as RouteData;
     this.community = data.community;
+    this.newCommunity = data.community;
     this.noFollowers = this.community.followers.length === 0;
     this.followers = this.community.followers
     this.baseFollowers = this.community.followers
@@ -70,9 +69,7 @@ export class CommunityComponent {
     const isUserAlreadyFollowed = this.community.followers.some((follower) => follower.email === me.email);
     this.communityNotFollowed = !isUserAlreadyFollowed;
 
-    if(me.email === this.community.user.email){
-      this.commonService.navigate(`/community/${this.community.id}`);
-    }
+    if(me.email === this.community.user.email) this.isCreator = true
 
     this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate)
   }
@@ -122,8 +119,76 @@ export class CommunityComponent {
     }
   }
 
-  goToEditCommunity(communityId: string) {
-    this.commonService.navigate(`/editcommunity/${communityId}`);
+  async submitForm(){
+    if (await this.checkIfValid()) {
+      this.isLoading = true
+
+      this.communityService.updateCommunity(this.community.id, this.newCommunity).then(community => {
+        this.isLoading = false
+        location.reload();
+      })
+    }
+  }
+
+  async checkIfValid(): Promise<boolean> {
+    this.isLoading = true
+    this.errorMessages = []
+    if (this.newCommunity.name.trim() === "") {
+      this.errorMessages.push("Le nom est vide")
+    }
+
+    if (this.newCommunity.description.trim() === "") {
+      this.errorMessages.push("La description est vide")
+    }
+
+    return await this.communityService.getCommunities().then(async communities => {
+      this.communities = communities;
+
+      const isNameUsed = this.communities.some(community => community.name.toLowerCase() === this.newCommunity.name.toLowerCase());
+
+      this.isLoading = false
+      if (isNameUsed && this.newCommunity.name.toLowerCase() !== this.community.name.toLowerCase()) {
+        this.formIsValid = false
+        this.errorMessages.push("Le nom est déjà utilisé")
+        return false
+      } else {
+
+        if (this.newCommunity.name.trim() === "") {
+          this.formIsValid = false
+          return false
+        }
+
+        if (this.newCommunity.description.trim() === "") {
+          this.formIsValid = false
+          return false
+        }
+
+        this.formIsValid = true;
+        return true
+      }
+    })
+  }
+
+  openModal(type:string, post:Post|null, follower:User|null): void {
+    const dialogRef = this.dialog.open(SelectionModalComponent, {
+      width: '50%',
+      data: {
+        type:type,
+        post:post,
+        community:this.community,
+        follower: follower
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Logique à exécuter après la fermeture de la modale
+      // result contient les données renvoyées par la modale si nécessaire
+    });
+  }
+
+
+  goToCommunity(communityId: string) {
+    this.commonService.navigate(`/community/${communityId}`);
   }
 }
 

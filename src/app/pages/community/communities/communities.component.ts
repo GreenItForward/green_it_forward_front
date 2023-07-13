@@ -10,6 +10,8 @@ import {CommunityService} from "../../../services/community.service";
 })
 export class CommunitiesComponent {
   communities: Community[] = [];
+  baseCommunities: Community[] = []
+  searchText:string = ""
 
   constructor(private communitiesService: CommunityService) {}
 
@@ -17,7 +19,17 @@ export class CommunitiesComponent {
   ngOnInit() {
     this.communitiesService.getCommunities().then(communities => {
       this.communities = communities;
+      this.baseCommunities = communities;
     });
 
+  }
+
+  async searchCommunities() {
+    if(this.searchText.trim() !== ""){
+      this.communities = await this.communitiesService.searchCommunities(this.searchText)
+    }
+    else{
+      this.communities = this.baseCommunities
+    }
   }
 }

@@ -34,13 +34,28 @@ export class PostService {
     return post;
   }
 
+  async deletePost(id: string | null): Promise<void> {
+    if (!id) {
+      throw new Error('Post not found');
+    }
+
+    await lastValueFrom(this.http.delete<Post>(`${this.apiUrl}delete/${id}`, this.options));
+  }
+
   async createPost(newPost: NewPost): Promise<Post> {
-    console.log(newPost)
     const post = await lastValueFrom(this.http.post<Post>(`${this.apiUrl}`, newPost, this.options));
     if (!post) {
       throw new Error('Failed to create post');
     }
     return post
+  }
+
+  async searchPosts(searchText: string, communityId:number): Promise<Post[]> {
+    const posts = await lastValueFrom(this.http.post<Post[]>(`${this.apiUrl}search/${searchText}`,{communityId}, this.options));
+    if (!posts) {
+      throw new Error('Failed to find posts');
+    }
+    return posts
   }
 
   async getPosts() : Promise<Post[]> {

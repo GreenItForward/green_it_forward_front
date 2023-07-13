@@ -15,6 +15,7 @@ import {CommunityResolver} from "./services/community-resolver.service";
 import {PostComponent} from "./pages/community/post/post.component";
 import {PostResolver} from "./services/post-resolver.service";
 import {CommunityFormComponent} from "./pages/community/community-form/community-form.component";
+import {EditCommunityComponent} from "./pages/community/edit-community/edit-community.component";
 import { ProfilComponent } from './pages/profil/profil.component';
 
 const routes : Routes = [
@@ -54,6 +55,11 @@ const routes : Routes = [
   {
     path: 'community/:id',
     component: CommunityComponent,
+    resolve: { community: CommunityResolver },
+  },
+  {
+    path: 'editcommunity/:id',
+    component: EditCommunityComponent,
     resolve: { community: CommunityResolver },
   },
   {

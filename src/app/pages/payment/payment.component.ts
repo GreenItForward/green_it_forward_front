@@ -41,7 +41,6 @@ export class PaymentComponent implements OnInit {
   options: {headers: HttpHeaders};
   background: string;
 
-  
 
 constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient, 
   private route: ActivatedRoute, private projectService: ProjectService, private commonService: CommonService,
@@ -50,7 +49,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
   this.cardOptions = { };
   this.elementsOptions = { };
   this.errorMessage = '';
-  this.successMessage = ''; 
+  this.successMessage = '';
   this.paidAmount = null;
   this.paidAt = null;
   this.paidBy = null;
@@ -64,7 +63,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
   this.background = '';
 }
 
-  async ngOnInit() {    
+  async ngOnInit() {
     this.paymentForm = new FormGroup({
       name: new FormControl('', Validators.required),
       amount: new FormControl(10, [Validators.required, Validators.min(1)]),
@@ -96,7 +95,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       this.card.on('change', this.cardHandler.bind(this));
     });
 
-    const routeId = this.route.snapshot.paramMap.get('id'); 
+    const routeId = this.route.snapshot.paramMap.get('id');
     try {
       this.project = await this.projectService.getProject(routeId);
     } catch (error) {
@@ -112,7 +111,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       return;
     }
 
-    let { name, amount } = this.paymentForm.value; 
+    let { name, amount } = this.paymentForm.value;
 
     name = name.trim();
     let projectId = this.project?.id;
@@ -135,7 +134,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
         payment_method: {
           card: this.card,
           billing_details: {
-            name, 
+            name,
           },
         },
       }).subscribe(async ({ error, paymentIntent: updatedPaymentIntent }) => {
@@ -146,32 +145,28 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
           this.paidAmount = amount;
           this.paidAt = moment().format('DD/MM/YYYY à HH:mm:ss');
           this.paidBy = name;
-  
+
           const paymentMethodId = updatedPaymentIntent.payment_method as string;
           const headers = {
             'Authorization': `Bearer ${this.token}`,
             'Content-Type': 'application/json'
           };
-          
-          this.http.get<any>(`${environment.apiUrl}/payments/payment-method/${paymentMethodId}`, { headers }).subscribe(paymentMethod => {          
+
+          this.http.get<any>(`${environment.apiUrl}/payments/payment-method/${paymentMethodId}`, { headers }).subscribe(paymentMethod => {
             this.last4 = paymentMethod.last4;
             this.name = paymentMethod.name;
             this.postalCode = paymentMethod.address.postal_code;
             this.brandCard = paymentMethod.brand;
-          
-            console.log(`Last4: ${this.last4}, Name: ${this.name}, Postal code: ${this.postalCode}`);
+
           });
 
           this.http.get<any>(`${environment.apiUrl}/payments/payment-intent/${updatedPaymentIntent.id}`, { headers }).subscribe(paymentIntent => {
             this.amount = paymentIntent.amount;
             this.status = paymentIntent.status;
             this.currency = paymentIntent.currency;
-          
-            console.log(`Amount: ${this.amount}, Status: ${this.status}, Currency: ${this.currency}`);
           });
-          
-          console.log(`Payment intent status: ${updatedPaymentIntent.status}`);
-          
+
+
 
         } else {
           this.errorMessage = updatedPaymentIntent.status;

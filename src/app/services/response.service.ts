@@ -35,7 +35,6 @@ export class ResponseService {
   }
 
   async createResponse(newResponse: NewResponse): Promise<ResponseEntity> {
-    console.log(newResponse)
     const response = await lastValueFrom(this.http.post<ResponseEntity>(`${this.apiUrl}`, newResponse, this.options));
     if (!response) {
       throw new Error('Failed to create response');

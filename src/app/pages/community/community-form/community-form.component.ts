@@ -41,7 +41,6 @@ export class CommunityFormComponent {
       this.isLoading = true
 
       this.communityService.createCommunity(this.newCommunity).then(community => {
-        console.log(community)
         this.isLoading = false
         this.commonService.navigate(`/community/${community.id}`);
       })

@@ -1,7 +1,7 @@
 <div class="bg-gradient-to-r from-green-600 to-green-800 h-fit w-full bg-no-repeat bg-cover bg-center">
   <app-header></app-header>
   <app-navbar></app-navbar>
-  <div *ngIf="!isLoading" class="w-11/12 m-auto mt-10 mb-10 flex flex-col items-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10">
+  <div class="w-11/12 m-auto mt-10 mb-10 flex flex-col items-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10">
     <h1>Créer votre propre communauté au sein de GreenItForward !</h1>
     <form class="w-11/12 mt-4 flex flex-col items-center" (ngSubmit)="beforeSubmit()">
       <div *ngIf="errorMessages.length != 0" class="p-2 border-2 mb-4 border-red-700 rounded text-red-700">
@@ -16,10 +16,10 @@
       <div class="mb-2 w-2/5 p-2">
         Bannière : <input type="file" name="file" (change)="onFileChange($event)">
       </div>
-      <button *ngIf="formIsValid" class="w-1/5 p-2 mt-4 text-white bg-green-700 rounded text-lg text-center cursor-pointer" type="submit">
+      <button *ngIf="formIsValid && !isLoading" class="w-1/5 p-2 mt-4 text-white bg-green-700 rounded text-lg text-center cursor-pointer" type="submit">
         Valider
       </button>
-      <button *ngIf="!formIsValid" class="w-1/5 p-2 mt-4 text-green-300 bg-green-700/50 rounded text-lg text-center cursor-not-allowed" disabled>
+      <button *ngIf="!formIsValid || isLoading" class="w-1/5 p-2 mt-4 text-green-300 bg-green-700/50 rounded text-lg text-center cursor-not-allowed" disabled>
         Valider
       </button>
     </form>
