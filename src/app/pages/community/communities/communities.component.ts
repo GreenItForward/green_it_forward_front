@@ -30,7 +30,6 @@ export class CommunitiesComponent {
   async searchCommunities() {
     if(this.searchText.trim() !== ""){
       this.communities = await this.communitiesService.searchCommunities(this.searchText)
-      console.log(this.communities)
     }
     else{
       this.communities = this.baseCommunities

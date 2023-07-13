@@ -26,7 +26,6 @@ export class PostCreateModalComponent {
 
   ngOnInit(){
     if(this.data) this.newPost.community = this.data.community
-    console.log(this.data.community)
   }
 
   closeModal(): void{
@@ -38,7 +37,6 @@ export class PostCreateModalComponent {
       this.isLoading = true
 
       this.postService.createPost(this.newPost).then(post => {
-        console.log(post)
         this.isLoading = false
         this.closeModal()
         this.commonService.navigate(`/post/${post.id}`);

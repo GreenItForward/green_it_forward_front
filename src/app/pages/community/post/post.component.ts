@@ -42,7 +42,6 @@ export class PostComponent {
       this.newMessage.text = this.newMessage.text.trim()
       this.newMessage.post = this.post
       this.messageService.createMessage(this.newMessage).then(r => {
-        console.log(r)
         location.reload();
       })
     }

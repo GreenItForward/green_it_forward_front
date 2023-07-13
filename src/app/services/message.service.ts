@@ -38,7 +38,6 @@ export class MessageService {
   }
 
   async createMessage(newMessage: NewMessage): Promise<Message> {
-    console.log(newMessage)
     const message = await lastValueFrom(this.http.post<Message>(`${this.apiUrl}`, newMessage, this.options));
     if (!message) {
       throw new Error('Failed to create post');

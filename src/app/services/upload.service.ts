@@ -34,7 +34,6 @@ export class UploadService {
   async getImage(imageName: string): Promise<File> {
     const imageBlob = await lastValueFrom(this.http.get(`${this.apiUrl}${imageName}`, { responseType: 'blob', ...this.options }));
     const imageFile = new File([imageBlob], imageName);
-    console.log(imageFile)
     if (!imageFile) {
       throw new Error('Failed to upload');
     }

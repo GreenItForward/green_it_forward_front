@@ -33,7 +33,6 @@ export class DisplayMessageComponent {
     this.creationDate = this.dateService.formatRelativeTime(this.message.creationDate)
 
     this.responses = await this.responseService.getResponsesByMessage(this.message.id)
-    console.log(this.responses)
   }
 
   submitForm(){
@@ -41,7 +40,6 @@ export class DisplayMessageComponent {
       this.newResponse.text = this.newResponse.text.trim()
       this.newResponse.message = this.message
       this.responseService.createResponse(this.newResponse).then(r => {
-        console.log(r)
         location.reload();
       })
     }

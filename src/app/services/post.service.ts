@@ -46,7 +46,6 @@ export class PostService {
   }
 
   async createPost(newPost: NewPost): Promise<Post> {
-    console.log(newPost)
     const post = await lastValueFrom(this.http.post<Post>(`${this.apiUrl}`, newPost, this.options));
     if (!post) {
       throw new Error('Failed to create post');

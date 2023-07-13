@@ -45,21 +45,18 @@ export class SelectionModalComponent {
 
   deleteCommunity(){
     this.communityService.deleteCommunity(this.community.id).then(r => {
-      console.log(r)
       this.commonService.navigate(`/community`);
     })
   }
 
   deletePost(){
     this.postService.deletePost(this.post.id).then(r => {
-      console.log(r)
       location.reload();
     })
   }
 
   removeUser(){
     this.communityService.removeFollowerFromCommunity(this.follower.id,this.community.id).then(r => {
-      console.log(r)
       location.reload();
     })
   }

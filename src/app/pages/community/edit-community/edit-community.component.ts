@@ -56,7 +56,6 @@ export class EditCommunityComponent {
     this.postService.getPostsByCommunity(this.community.id).then(posts => {
       this.posts = posts;
       this.basePosts = posts
-      console.log(posts)
       this.noPosts = this.posts.length === 0;
     });
 
@@ -89,14 +88,12 @@ export class EditCommunityComponent {
 
   followCommunity(){
     this.communityService.followCommunity(this.community.id).then(r => {
-      console.log(r)
       location.reload();
     })
   }
 
   unFollowCommunity(){
     this.communityService.unFollowCommunity(this.community.id).then(r => {
-      console.log(r)
       location.reload();
     })
   }
@@ -104,7 +101,6 @@ export class EditCommunityComponent {
   async searchPosts() {
     if(this.searchText.trim() !== ""){
       this.posts = await this.postService.searchPosts(this.searchText,parseInt(this.community.id))
-      console.log(this.posts)
     }
     else{
       this.posts = this.basePosts
@@ -128,7 +124,6 @@ export class EditCommunityComponent {
       this.isLoading = true
 
       this.communityService.updateCommunity(this.community.id, this.newCommunity).then(community => {
-        console.log(community)
         this.isLoading = false
         location.reload();
       })
