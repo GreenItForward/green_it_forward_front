@@ -2,6 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { StatsService } from 'src/app/services/stats.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
   selector: 'app-stats',
@@ -11,10 +12,13 @@ import { ChangeDetectorRef } from '@angular/core';
 export class StatsComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions!: Highcharts.Options;
+  donationOptions!: Highcharts.Options;
 
   userData: { name: string, value: number }[] = [];
+  donationData: { name: string, value: number }[] = [];
 
-  constructor(private statsService: StatsService, private changeDetectorRef: ChangeDetectorRef, private zone: NgZone) { }
+  constructor(private statsService: StatsService, private changeDetectorRef: ChangeDetectorRef, 
+    private zone: NgZone, private paymentService : PaymentService) { }
   async ngOnInit() : Promise<void> {
     try {
       const year = new Date().getFullYear();
@@ -50,6 +54,39 @@ export class StatsComponent implements OnInit {
       console.error(error);
     }
 
+    try {
+      const dataDonation = await this.paymentService.getTotalDonations();
+      this.zone.run(() => {
+        const data = [...dataDonation];
+        this.donationOptions = {
+          chart: {
+            type: 'column'
+          },
+          title: {
+            text: 'Statistiques des dons'
+          },
+          xAxis: {
+            categories: data.map(u => u.name),
+            crosshair: true
+          },
+          yAxis: {
+            min: 0,
+            title: {
+              text: 'Values'
+            }
+          },
+          series: [{
+            type: 'column',
+            name: 'Dons',
+            data: data.map(u => u.value),
+            color: '#047857'
+          }]
+        };
+      });
+      
 
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
