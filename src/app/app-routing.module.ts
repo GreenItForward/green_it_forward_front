@@ -16,6 +16,7 @@ import {PostComponent} from "./pages/community/post/post.component";
 import {PostResolver} from "./services/post-resolver.service";
 import {CommunityFormComponent} from "./pages/community/community-form/community-form.component";
 import {EditCommunityComponent} from "./pages/community/edit-community/edit-community.component";
+import { ProfilComponent } from './pages/profil/profil.component';
 
 const routes : Routes = [
   {
@@ -82,6 +83,12 @@ const routes : Routes = [
     path: 'auth/confirm',
     component: ConfirmationComponent
   },
+  /* USER ROUTES */
+  {
+    path: 'user/profile',
+    component: ProfilComponent
+  },
+  /* ADMIN ROUTES */
   {
     path: 'admin',
     loadChildren: () => import('./pages/admin/admin-routing.module').then(m => m.AdminRoutingModule)

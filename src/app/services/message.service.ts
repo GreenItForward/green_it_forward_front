@@ -55,5 +55,10 @@ export class MessageService {
     return messages ? messages : [];
   }
 
+  async getMessagesByUser() : Promise<Message[]> {
+    const messages = await lastValueFrom(this.http.get<Message[]>(`${this.apiUrl}user`, this.options));
+    return messages ? messages : [];
+  }
+
 
 }

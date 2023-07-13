@@ -30,7 +30,6 @@ export class CommunityFormComponent {
     if(this.file !== undefined && this.file !== null){
       this.uploadService.uploadImage(this.file).then(async imageName => {
         this.newCommunity.imgUrl = imageName
-
         await this.submitForm()
       })
     }

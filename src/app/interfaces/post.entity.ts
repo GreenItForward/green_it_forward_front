@@ -1,4 +1,4 @@
-import {User} from "./user.entity";
+import { User } from './../models/user.model';
 import {Message} from "./message.entity";
 import {Community} from "./community.entity";
 

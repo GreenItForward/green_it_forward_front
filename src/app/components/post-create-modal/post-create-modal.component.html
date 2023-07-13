@@ -8,8 +8,8 @@
         </div>
       </ng-container>
     </div>
-    <input name="subject" [(ngModel)]="newPost.subject" (change)="checkIfValid()" type="text" class="w-3/4 p-2 text-black rounded mb-2" placeholder="sujet du post...">
-    <textarea name="text" [(ngModel)]="newPost.text" (change)="checkIfValid()" class="w-3/4 p-2 text-black rounded mb-2" placeholder="text du post..."></textarea>
+    <input name="subject" [(ngModel)]="newPost.subject" (change)="checkIfValid()" type="text" class="w-3/4 p-2 text-black rounded mb-2" placeholder="Sujet du post...">
+    <textarea name="text" [(ngModel)]="newPost.text" (change)="checkIfValid()" class="w-3/4 p-2 text-black rounded mb-2" placeholder="Contenu du post..."></textarea>
     <div class="w-full mt-2 flex justify-center">
       <div (click)="closeModal()" class="cursor-pointer w-1/5 text-center rounded text-lg mr-2 px-4 py-2 bg-green-900">Annuler</div>
       <button *ngIf="formIsValid" class="cursor-pointer w-1/5 text-center rounded text-yellow-500 text-lg px-4 py-2 bg-gradient-to-r from-green-600 to-green-800">Valider</button>
@@ -23,4 +23,3 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#ebc621" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity=".5"/><path fill="#ebc621" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate"/></path></svg>
   </div>
 </form>
-

@@ -1,7 +1,12 @@
 <div class="mb-2 cursor-pointer rounded flex justify-between items-center py-2 px-4 bg-gradient-to-r from-green-900/10 to-green-900/30 hover:bg-green-900/20">
   <div class="flex items-center">
-    <img [src]="'./assets/' + follower.imageUrl" height="30px" width="30px" class="object-cover rounded-full">
-    <div *ngIf="creator && follower.id === creator.id" class="text-sm text-gray-950/20 italic ml-6">Admin</div>
+
+    <img class="h-40 m-4 object-cover" *ngIf="noImage" [src]="'./assets/' + follower.imageUrl">
+    <img *ngIf="imageSrc" [src]="imageSrc"
+     class="object-cover rounded-full h-20 w-20 mr-2" alt="User Image">
+
+    <div *ngIf="follower.id === creator.id" class="text-sm text-gray-950/20 italic ml-6 px-2 inline-flex text-xs leading-5 
+    font-semibold rounded-full bg-green-100 text-green-800">Créateur</div>
   </div>
   <div>{{follower.firstName}} {{follower.lastName}}</div>
 </div>

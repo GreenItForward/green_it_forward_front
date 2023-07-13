@@ -1,10 +1,11 @@
+import { UserService } from 'src/app/services/user.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
 import {lastValueFrom} from 'rxjs';
 import {CommonService} from './common.service';
 import {Community} from "../interfaces/community.entity";
-import {User} from "../models/user.model";
+import { User } from '../models/user.model';
 import {NewCommunity} from "../interfaces/new-community.entity";
 
 @Injectable({
@@ -27,7 +28,7 @@ export class CommunityService {
       throw new Error('Community not found');
     }
 
-    const community = await lastValueFrom(this.http.get<Community>(`${this.apiUrl}community/${id}`, this.options));
+    const community : Community= await lastValueFrom(this.http.get<Community>(`${this.apiUrl}community/${id}`, this.options));
     if (!community) {
       throw new Error('Community not found');
     }
@@ -99,4 +100,9 @@ export class CommunityService {
       throw new Error('Failed to unfollow community');
     }
   }
+  async getCommunitiesByUser(user: User): Promise<Community[]> {
+    const communities = await lastValueFrom(this.http.get<Community[]>(`${this.apiUrl}user/${user.id}/communities`, this.options));
+    return communities ? communities : [];
+  }
+
 }

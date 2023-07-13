@@ -3,11 +3,6 @@ import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
 import {lastValueFrom} from 'rxjs';
 import {CommonService} from './common.service';
-import {User} from "../models/user.model";
-import {Post} from "../interfaces/post.entity";
-import {Message} from "../interfaces/message.entity";
-import {NewPost} from "../interfaces/new-post.entity";
-import {NewMessage} from "../interfaces/new-message.entity";
 import {ResponseEntity} from "../interfaces/response.entity";
 import {NewResponse} from "../interfaces/new-response.entity";
 
@@ -54,6 +49,12 @@ export class ResponseService {
 
   async getResponsesByMessage(messageId: string) : Promise<ResponseEntity[]> {
     const responses = await lastValueFrom(this.http.get<ResponseEntity[]>(`${this.apiUrl}message/${messageId}`, this.options));
+    return responses ? responses : [];
+  }
+
+
+  async getResponsesByUser() : Promise<ResponseEntity[]> {
+    const responses = await lastValueFrom(this.http.get<ResponseEntity[]>(`${this.apiUrl}user`, this.options));
     return responses ? responses : [];
   }
 

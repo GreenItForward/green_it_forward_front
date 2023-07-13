@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-payment',
@@ -38,11 +39,12 @@ export class PaymentComponent implements OnInit {
   token: string | null = null;
   headers: HttpHeaders | null = null;
   options: {headers: HttpHeaders};
+  background: string;
 
 
-
-constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient,
-  private route: ActivatedRoute, private projectService: ProjectService, private commonService: CommonService) {
+constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient, 
+  private route: ActivatedRoute, private projectService: ProjectService, private commonService: CommonService,
+  private location: Location) {
   this.paymentForm = this.fb.group({ });
   this.cardOptions = { };
   this.elementsOptions = { };
@@ -58,6 +60,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
   this.token = this.commonService.getLocalStorageItem('token');
   this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
   this.options = { headers: this.headers };
+  this.background = '';
 }
 
   async ngOnInit() {
@@ -111,10 +114,19 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
     let { name, amount } = this.paymentForm.value;
 
     name = name.trim();
-    const paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount }, this.options));
+    let projectId = this.project?.id;
 
+    let paymentIntent;
+    try {
+      paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount, projectId }, this.options));
+    } catch (error : any) {
+      this.errorMessage = 'Une erreur inattendue est survenue lors de la création de l\'intention de paiement.';
+      return;
+    }
+    
+    
     if (!this.card) {
-      console.error("Card not initialized");
+      this.errorMessage = "Une erreur est survenue lors du paiement";
       return;
     }
     if (paymentIntent && paymentIntent.clientSecret) {
@@ -212,6 +224,10 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       URL.revokeObjectURL(url);
     });
 
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }
