@@ -68,11 +68,13 @@ export class HomeComponent implements OnInit {
   
 
   onDiscoverProjects() {
-    if (this.userService.isLoggedIn$) {
-      this.router.navigate(['/projects']);
-    }else {
-      this.commonService.navigate('/login');
-    }
+    this.userService.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
+      if (isLoggedIn) {
+        this.router.navigate(['/projects']);
+      }else {
+      this.commonService.navigate('/auth');
+      }
+    });
   }
 
   async initProjectsAndStats() {
