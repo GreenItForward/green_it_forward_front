@@ -18,13 +18,11 @@ export class ProjectsComponent implements OnInit {
     imageFile:File
     imageSrc: string;
     noImage:boolean = true
+    searchText:string = ""
+    baseProjects: Project[] = [];
 
     constructor(private projectService: ProjectService, private commonService:CommonService, private router: Router,
       public dialog: MatDialog, private uploadService:UploadService) { }
-
-
-
-
 
     async ngOnInit() {
       this.projectService.getProjects().then(projects => {
@@ -35,6 +33,8 @@ export class ProjectsComponent implements OnInit {
             project.imageUrl = 'background.jpeg';
           }
         });
+        this.baseProjects = this.projects;
+
       });
 
     }
@@ -63,6 +63,14 @@ export class ProjectsComponent implements OnInit {
         } catch (error) {
           console.error('Failed to load image:', error);
         }
+      }
+    }
+
+    async searchProjects(){
+      if(this.searchText.trim() !== ""){
+        this.projects = await this.projectService.searchPosts(this.searchText)
+      }else{
+        this.projects = this.baseProjects
       }
     }
 }
