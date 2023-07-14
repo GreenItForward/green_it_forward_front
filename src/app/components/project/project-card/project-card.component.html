@@ -25,6 +25,19 @@
     {{ project.amountRaised }}€ / {{ project.totalAmount }}€
   </span>
 </div>
+<div class="px-6 pt-4 pb-2 text-center">
+  <span
+    class="inline-block bg-green-700 rounded-full px-3 py-1 text-sm text-white mr-2 mb-2"
+    *ngIf="showDonateButton"
+  >
+    En cours
+  </span>
+  <span
+    class="inline-block bg-red-700 rounded-full px-3 py-1 text-sm text-white mr-2 mb-2"
+    *ngIf="!showDonateButton"
+  >
+    Terminé
+  </span>
 <div class="px-6 pt-4 pb-2">
   <button
     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -34,7 +47,7 @@
   </button>
   <button
     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
-    (click)="payNow(project)"
+    (click)="payNow(project)" *ngIf="showDonateButton"
   >
     Faire un dons
   </button>

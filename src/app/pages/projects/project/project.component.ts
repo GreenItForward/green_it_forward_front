@@ -18,7 +18,9 @@ export class ProjectComponent {
   imageFile: File;
   imageSrc: string;
   noImage: boolean = true;
-
+  showDonateButton: boolean;
+  today: Date = new Date();
+  
 
   constructor(private activatedRoute: ActivatedRoute, private location: Location, protected commonService: CommonService, 
     protected dateService: DateService, private uploadService: UploadService) {}
@@ -32,8 +34,13 @@ export class ProjectComponent {
     }
 
     this.creationDate = this.dateService.formatRelativeTime(this.project.startDate, "Débuté depuis");
-    this.endDate = this.dateService.formatRelativeTime(this.project.endDate, "Se termine dans");
- 
+    this.showDonateButton = this.project.endDate > this.today;
+
+    if (!this.showDonateButton) {
+      this.endDate = this.dateService.formatRelativeTime(this.project.endDate, "S'est terminé depuis");
+    } else {
+      this.endDate = this.dateService.formatRelativeTime(this.project.endDate, "Se termine dans");
+    }
 
   }
 

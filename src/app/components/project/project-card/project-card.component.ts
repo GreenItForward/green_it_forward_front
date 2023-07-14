@@ -13,15 +13,19 @@ export class ProjectCardComponent {
   noImage:boolean = true
   imageFile:File
   imageSrc: string;
+  today: Date = new Date();
+  showDonateButton: boolean;
 
   constructor(protected commonService: CommonService, private uploadService:UploadService) {}
 
   async ngOnInit() {
     await this.loadImage();
-
     if (!this.project.imageUrl) {
       this.project.imageUrl = 'background.jpeg';
     }
+
+    this.showDonateButton = this.project.endDate > this.today;
+
   }
 
   async loadImage() {

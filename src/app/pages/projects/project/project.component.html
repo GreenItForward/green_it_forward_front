@@ -28,7 +28,7 @@
               <span class="text-red-500 text-lg"> {{ endDate }}</span>
           </div>
 
-          <button class="mt-4 bg-darkgreen-800 hover:bg-darkgreen-900 text-green-600 font-bold py-2 px-4 rounded-lg hover:text-green-400 border border-green-600 hover:border-green-400" (click)="payNow(project)">Faire un don pour ce projet</button>
+          <button class="mt-4 bg-darkgreen-800 hover:bg-darkgreen-900 text-green-600 font-bold py-2 px-4 rounded-lg hover:text-green-400 border border-green-600 hover:border-green-400" (click)="payNow(project)" *ngIf="showDonateButton">Faire un don pour ce projet</button>
         </div>
       </div>
       <div class="w-full text-right mt-4 md:mt-0">
