@@ -85,4 +85,8 @@ export class CreateProjectDialogComponent {
       this.loading = false;
     }
   }
+
+  closeModal() {
+    this.dialogRef.close();
+  }
 }
