@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CommonService} from "../../../services/common.service";
 import {Community} from "../../../interfaces/community.entity";
-import {User} from "../../../interfaces/user.entity";
+import { User } from 'src/app/models/user.model';
 import {Post} from "../../../interfaces/post.entity";
 import {PostService} from "../../../services/post.service";
 import {UploadService} from "../../../services/upload.service";
@@ -71,8 +71,8 @@ export class EditCommunityComponent {
 
     if(me.email === this.community.user.email) this.isCreator = true
 
-    this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate)
-  }
+    this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate, "");
+  } 
 
   async loadImage() {
     if (this.community.imgUrl !== '') {

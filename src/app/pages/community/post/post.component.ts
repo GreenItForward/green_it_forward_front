@@ -33,7 +33,7 @@ export class PostComponent {
       this.messages = messages;
       this.noMessages = this.messages.length === 0;
     });
-    this.creationDate = this.dateService.formatRelativeTime(this.post.creationDate)
+    this.creationDate = this.dateService.formatRelativeTime(this.post.creationDate, "");
 
   }
 

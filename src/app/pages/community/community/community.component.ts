@@ -10,6 +10,7 @@ import { PostCreateModalComponent } from '../../../components/post-create-modal/
 import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../../../services/user.service";
 import {DateService} from "../../../services/date.service";
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-community',
@@ -74,7 +75,7 @@ export class CommunityComponent {
       this.commonService.navigate(`/community/${this.community.id}`);
     }
 
-    this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate)
+    this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate, "");
   }
 
   async loadImage() {

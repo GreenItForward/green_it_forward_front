@@ -30,7 +30,7 @@ export class DisplayMessageComponent {
       this.author = message.user;
     });
 
-    this.creationDate = this.dateService.formatRelativeTime(this.message.creationDate)
+    this.creationDate = this.dateService.formatRelativeTime(this.message.creationDate, "");
 
     this.responses = await this.responseService.getResponsesByMessage(this.message.id)
   }

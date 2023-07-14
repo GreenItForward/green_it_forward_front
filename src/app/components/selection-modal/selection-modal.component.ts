@@ -1,12 +1,11 @@
-import {Component, Inject, Input} from '@angular/core';
+import { User } from 'src/app/models/user.model';
+import {Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {CommonService} from "../../services/common.service";
 import {PostService} from "../../services/post.service";
 import {Community} from "../../interfaces/community.entity";
 import {Post} from "../../interfaces/post.entity";
-import {User} from "../../interfaces/user.entity";
 import {CommunityService} from "../../services/community.service";
-import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-post-create-modal',

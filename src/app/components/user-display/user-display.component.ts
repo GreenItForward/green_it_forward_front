@@ -10,7 +10,7 @@ import { UploadService } from 'src/app/services/upload.service';
 })
 export class UserDisplayComponent {
   @Input() follower: User;
-  @Input() creator: User;
+  @Input() creator: User | null;
   noImage:boolean = true
   imageFile:File
   imageSrc: string;
