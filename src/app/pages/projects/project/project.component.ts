@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { CommonService } from 'src/app/services/common.service';
 import { DateService } from 'src/app/services/date.service';
 import { UploadService } from 'src/app/services/upload.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-project',
@@ -34,7 +35,7 @@ export class ProjectComponent {
     }
 
     this.creationDate = this.dateService.formatRelativeTime(this.project.startDate, "Débuté depuis");
-    this.showDonateButton = this.project.endDate > this.today;
+    this.showDonateButton = moment(this.project.endDate).isAfter(this.today);
 
     if (!this.showDonateButton) {
       this.endDate = this.dateService.formatRelativeTime(this.project.endDate, "S'est terminé depuis");

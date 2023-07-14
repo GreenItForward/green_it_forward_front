@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Project} from "../../../models/project.model";
 import { CommonService } from 'src/app/services/common.service';
 import { UploadService } from 'src/app/services/upload.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-project-card',
@@ -24,8 +25,7 @@ export class ProjectCardComponent {
       this.project.imageUrl = 'background.jpeg';
     }
 
-    this.showDonateButton = this.project.endDate > this.today;
-
+    this.showDonateButton = moment(this.project.endDate).isAfter(this.today);
   }
 
   async loadImage() {

@@ -30,7 +30,6 @@ export class ConfirmationComponent implements OnInit {
         },
         error => {
           this.commonService.navigateToErrorPage(`Désolé, ce lien n'est pas valide, ${error.error.message}`);
-
         }
       );
     }

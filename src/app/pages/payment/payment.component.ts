@@ -104,6 +104,11 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       return;
     }
 
+    if(this.project.endDate && moment(this.project.endDate).isBefore(moment())) {
+      this.errorMessage = "Ce projet est terminé.";
+      this.commonService.navigateToErrorPage("Ce projet est terminé, vous ne pouvez plus faire de don pour ce projet.");
+    }
+
   }
 
   async onSubmit() {
