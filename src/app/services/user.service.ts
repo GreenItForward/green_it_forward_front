@@ -13,6 +13,7 @@ import { Community } from '../interfaces/community.entity';
 import { Post } from '../interfaces/post.entity';
 import { Message } from '../interfaces/message.entity';
 import { ResponseEntity } from '../interfaces/response.entity';
+import {RoleEnum} from "../enums/role.enum";
 
 @Injectable({
   providedIn: 'root'
@@ -71,7 +72,7 @@ export class UserService {
       return false;
     }
     const response: any = await this.getRole();
-    return response.role === 'ADMINISTRATEUR';
+    return response.role === RoleEnum.ADMINISTRATEUR;
   }
 
   async getMe(): Promise<User> {
@@ -88,11 +89,11 @@ export class UserService {
 
   async updateUser(user: User): Promise<User> {
     const response = await this.http.put<User>(`${this.apiUrl}/edit`, user, this.options).toPromise();
-  
+
     if (!response) {
       throw new Error('Server response was undefined');
     }
-  
+
     return response;
   }
 
@@ -115,25 +116,25 @@ export class UserService {
         const dateB = b.creationDate instanceof Date ? b.creationDate : new Date(b.creationDate);
         return dateB.getTime() - dateA.getTime();
       });
-    
+
       posts = posts.sort((a, b) => {
         const dateA = a.creationDate instanceof Date ? a.creationDate : new Date(a.creationDate);
         const dateB = b.creationDate instanceof Date ? b.creationDate : new Date(b.creationDate);
         return dateB.getTime() - dateA.getTime();
       });
-    
+
       messages = messages.sort((a, b) => {
         const dateA = a.creationDate instanceof Date ? a.creationDate : new Date(a.creationDate);
         const dateB = b.creationDate instanceof Date ? b.creationDate : new Date(b.creationDate);
         return dateB.getTime() - dateA.getTime();
       });
-    
+
       responses = responses.sort((a, b) => {
         const dateA = a.creationDate instanceof Date ? a.creationDate : new Date(a.creationDate);
         const dateB = b.creationDate instanceof Date ? b.creationDate : new Date(b.creationDate);
         return dateB.getTime() - dateA.getTime();
       });
-  
+
     return {
       communities: communities,
       posts: posts,
@@ -162,6 +163,4 @@ export class UserService {
     const responses = await this.responseService.getResponsesByUser();
     return responses;
   }
-
 }
- 
