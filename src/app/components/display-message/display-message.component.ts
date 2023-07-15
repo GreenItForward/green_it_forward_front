@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, HostListener, Input} from '@angular/core';
 import {Message} from "../../interfaces/message.entity";
 import {ActivatedRoute} from "@angular/router";
 import {CommonService} from "../../services/common.service";
@@ -9,6 +9,9 @@ import {ResponseEntity} from "../../interfaces/response.entity";
 import {ResponseService} from "../../services/response.service";
 import {NewMessage} from "../../interfaces/new-message.entity";
 import {NewResponse} from "../../interfaces/new-response.entity";
+import {RoleEnum} from "../../enums/role.enum";
+import {UserService} from "../../services/user.service";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-display-message',
@@ -22,8 +25,10 @@ export class DisplayMessageComponent {
   newResponse:NewResponse = {text:"",message:null}
   responses:ResponseEntity[]
   creationDate:string
+  isDropdownOpen:boolean = false;
 
-  constructor(private responseService:ResponseService, private dateService:DateService, private messageService: MessageService) {}
+  constructor(private responseService:ResponseService, private dateService:DateService, private messageService: MessageService,
+              private elementRef: ElementRef, public userService: UserService) {}
 
   async ngOnInit(): Promise<void> {
     this.messageService.getMessage(this.message.id).then(message => {
@@ -47,5 +52,21 @@ export class DisplayMessageComponent {
 
   checkIfValid():boolean{
     return !(!this.newResponse.text.trim() || this.newResponse.text.trim() === "");
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.isDropdownOpen = false;
+    }
+  }
+
+  async deleteMessage(){
+    await this.messageService.deleteMessage(this.message.id);
+    location.reload();
   }
 }

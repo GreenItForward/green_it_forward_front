@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck();
       }
     );
-
   }
 
   ngOnDestroy(): void {
