@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CommonService} from "../../../services/common.service";
 import {Community} from "../../../interfaces/community.entity";
-import { User } from 'src/app/models/user.model';
+import {User} from "../../../interfaces/user.entity";
 import {Post} from "../../../interfaces/post.entity";
 import {PostService} from "../../../services/post.service";
 import {UploadService} from "../../../services/upload.service";
@@ -70,9 +70,10 @@ export class EditCommunityComponent {
     this.communityNotFollowed = !isUserAlreadyFollowed;
 
     if(me.email === this.community.user.email) this.isCreator = true
+    if(!this.isCreator) this.commonService.navigate(`/community/${this.community.id}`);
 
-    this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate, "");
-  } 
+    this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate)
+  }
 
   async loadImage() {
     if (this.community.imgUrl !== '') {
