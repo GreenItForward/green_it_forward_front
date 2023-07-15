@@ -60,5 +60,13 @@ export class ProjectService {
     }
     return project
   }
+
+  async searchPosts(searchText: string): Promise<Project[]> {
+    const projects = await lastValueFrom(this.http.get<Project[]>(`${this.apiUrl}/search/${searchText}`, this.options));
+    if (!projects) {
+      throw new Error('Failed to find communitites');
+    }
+    return projects
+  }
   
 }
