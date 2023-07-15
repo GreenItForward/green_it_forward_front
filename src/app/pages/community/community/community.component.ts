@@ -33,6 +33,7 @@ export class CommunityComponent {
   baseFollowers: User[] = []
   searchText:string = ""
   searchUser:string = ""
+  isCreator:boolean = false
 
   constructor(private dateService:DateService, private userService:UserService, public dialog: MatDialog, private activatedRoute: ActivatedRoute, protected commonService: CommonService,private communityService:CommunityService, private postService:PostService, private uploadService:UploadService) {}
 
@@ -71,9 +72,7 @@ export class CommunityComponent {
     const isUserAlreadyFollowed = this.community.followers.some((follower) => follower.email === me.email);
     this.communityNotFollowed = !isUserAlreadyFollowed;
 
-    if(me.email === this.community.user.email){
-      this.commonService.navigate(`/community/${this.community.id}`);
-    }
+    if(me.email === this.community.user.email) this.isCreator = true
 
     this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate, "");
   }

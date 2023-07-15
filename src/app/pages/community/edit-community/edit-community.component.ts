@@ -70,9 +70,10 @@ export class EditCommunityComponent {
     this.communityNotFollowed = !isUserAlreadyFollowed;
 
     if(me.email === this.community.user.email) this.isCreator = true
+    if(!this.isCreator) this.commonService.navigate(`/community/${this.community.id}`);
 
     this.creationDate = this.dateService.formatRelativeTime(this.community.creationDate, "");
-  } 
+  }
 
   async loadImage() {
     if (this.community.imgUrl !== '') {
