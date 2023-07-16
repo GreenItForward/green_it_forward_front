@@ -50,7 +50,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
   this.cardOptions = { };
   this.elementsOptions = { };
   this.errorMessage = '';
-  this.successMessage = '';
+  this.successMessage = ''; 
   this.paidAmount = null;
   this.paidAt = null;
   this.paidBy = null;
@@ -229,7 +229,9 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
         date: this.paidAt ? this.paidAt : moment().format('DD/MM/YYYY à HH:mm:ss'),
         last4: this.last4 ? this.last4 : '',
         brand: this.brandCard ? this.brandCard : '',
+        project: this.project ? this.project.name : '',
       },
+
       responseType: 'blob',
     }
   ).subscribe((blob: Blob) => {
