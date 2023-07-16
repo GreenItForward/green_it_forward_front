@@ -4,14 +4,12 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DateService } from 'src/app/services/date.service';
-import { Message } from 'src/app/interfaces/message.entity';
-import { ResponseEntity } from 'src/app/interfaces/response.entity';
-import { Community } from 'src/app/interfaces/community.entity';
 import { Post } from 'src/app/interfaces/post.entity';
 import { SettingProfileDialogComponent } from 'src/app/components/setting-profile-dialog/setting-profile-dialog.component';
 import { UploadService } from 'src/app/services/upload.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { Payment } from 'src/app/models/payment.model';
+import { InvoiceService } from 'src/app/services/invoice.service';
 
 export interface Activity {
   posts ?: Post[];
@@ -47,24 +45,47 @@ export class ProfilComponent {
   
   constructor(private userService: UserService,
     public dialog: MatDialog, public dateService: DateService, 
-    private uploadService: UploadService, private paymentService: PaymentService) {}
+    private uploadService: UploadService, private paymentService: PaymentService,
+    private invoiceService: InvoiceService) { }
   
 
   async ngOnInit(): Promise<void> {
     this.currentUser = await this.userService.getMe();
     await this.loadImage();
     this.creationDate = this.dateService.formatRelativeTime(this.currentUser.firstLoginAt, "depuis");
-    const posts = (await this.userService.getPostsUser());
-    const messages = (await this.userService.getMessagesUser());
-    const responses = (await this.userService.getResponsesUser());
-    const communities = (await this.userService.getCommunitiesUser());
+    const [posts, messages, responses, communities] = await Promise.all([
+      this.userService.getPostsUser().catch(error => {
+        console.error('Erreur lors de la récupération des posts de l\'utilisateur', error);
+        return [];
+      }),
+      
+      this.userService.getMessagesUser().catch(error => {
+        console.error('Erreur lors de la récupération des messages de l\'utilisateur', error);
+        return [];
+      }),
+
+      this.userService.getResponsesUser().catch(error => {
+        console.error('Erreur lors de la récupération des réponses de l\'utilisateur', error);
+        return [];
+      }),
+
+      this.userService.getCommunitiesUser().catch(error => {
+        console.error('Erreur lors de la récupération des communautés de l\'utilisateur', error);
+        return [];
+      }),
+
+    ]);
+  
 
     this.nbMessages = messages.length;
     this.nbResponses = responses.length;
     this.nbCommunities = communities.length;
 
     this.activities = posts;
-    this.payments = await this.paymentService.getPaymentsIntentByUser();
+    this.payments = await this.paymentService.getPaymentsIntentByUser().catch(error => {
+      console.error('Erreur lors de la récupération des paiements de l\'utilisateur', error);
+      return [];
+    });
   }
 
   openEditDialog(): void {
@@ -169,17 +190,17 @@ export class ProfilComponent {
   }
 
 
-async loadImage() {
-  if (this.currentUser.imageUrl) {
-    try {
-      console.log(this.currentUser.imageUrl);
-      this.imageFile = await this.uploadService.getImage(this.currentUser.imageUrl);
-      this.imageSrc = URL.createObjectURL(this.imageFile);
-      this.noImage = false
-    } catch (error) {
-      console.error('Failed to load image:', error);
+  async loadImage() {
+    if (this.currentUser.imageUrl) {
+      try {
+        console.log(this.currentUser.imageUrl);
+        this.imageFile = await this.uploadService.getImage(this.currentUser.imageUrl);
+        this.imageSrc = URL.createObjectURL(this.imageFile);
+        this.noImage = false
+      } catch (error) {
+        console.error('Failed to load image:', error);
+      }
     }
   }
-}
 
 }

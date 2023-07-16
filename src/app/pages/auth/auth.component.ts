@@ -17,6 +17,7 @@ export class AuthComponent {
   error: string|null = null;
   success: string|null = null;
   selectedFile: File | null = null;  
+  isForgotPassword = false;
 
   constructor(private authService: AuthService, private commonService: CommonService, private userService: UserService,
     private uploadService: UploadService) {}
@@ -24,7 +25,14 @@ export class AuthComponent {
   onSwitchMode() {
     this.error = null;
     this.success = null;
+    this.isForgotPassword = false;
     this.isLoginMode = !this.isLoginMode;
+  }
+
+  onForgotPassword() {
+    this.error = null;
+    this.success = null;
+    this.isForgotPassword = !this.isForgotPassword;
   }
   
   onFileSelect(event: any) {
@@ -34,6 +42,11 @@ export class AuthComponent {
   }
 
   async onSubmit(authForm: NgForm) {
+    if (this.isForgotPassword) {
+      this.onForgotPasswordSubmit(authForm);
+      return;
+    }
+
     if (!authForm.valid) {
       console.log('Invalid form');
       return;
@@ -95,5 +108,38 @@ export class AuthComponent {
     authForm.reset();
     this.selectedFile = null;
   }
+
+  async onForgotPasswordSubmit(authForm: NgForm) {
+    if (!authForm.valid) {
+      console.log('Invalid form');
+      return;
+    }
+  
+    this.isLoading = true;
+    const email = authForm.value.email;
+
+    try {
+      this.authService.forgotPassword(email)
+    } catch (error : any) {
+      this.error = error.error.message;
+      this.isLoading = false;
+      return;
+    }
+
+    this.isLoading = false;
+    this.success = "Un email a été envoyé à votre adresse email. Veuillez vérifier votre boîte de réception pour réinitialiser votre mot de passe.";
+
+
+
+    authForm.reset();
+
+ 
+  }
+
+  switchForgotPasswordMode() {
+    this.isForgotPassword = !this.isForgotPassword;
+    this.isLoginMode = !this.isForgotPassword; 
+  }
+  
 }
 

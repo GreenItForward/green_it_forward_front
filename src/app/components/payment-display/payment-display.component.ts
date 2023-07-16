@@ -1,3 +1,4 @@
+import { InvoiceService } from 'src/app/services/invoice.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { Payment } from 'src/app/models/payment.model';
 import { Project } from 'src/app/models/project.model';
@@ -16,7 +17,8 @@ export class PaymentDisplayComponent implements OnInit {
   imageSrc: string;
   project : Project;
 
-  constructor(private uploadService:UploadService, private projectService:ProjectService) { }
+  constructor(private uploadService:UploadService, private projectService:ProjectService,
+    protected invoiceService:InvoiceService) { }
 
   async ngOnInit() {
     this.project = await this.projectService.getProject(this.payment.projectId);
@@ -33,6 +35,10 @@ export class PaymentDisplayComponent implements OnInit {
         console.error('Failed to load image:', error);
       }
     }
+  }
+
+  async downloadReceipt() {
+    this.invoiceService.generatePdf(this.payment);
   }
 
 

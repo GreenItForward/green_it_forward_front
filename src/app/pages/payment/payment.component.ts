@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
 import { Location } from '@angular/common';
+import { Payment } from 'src/app/models/payment.model';
 
 @Component({
   selector: 'app-payment',
@@ -49,7 +50,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
   this.cardOptions = { };
   this.elementsOptions = { };
   this.errorMessage = '';
-  this.successMessage = '';
+  this.successMessage = ''; 
   this.paidAmount = null;
   this.paidAt = null;
   this.paidBy = null;
@@ -123,6 +124,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
 
     let paymentIntent;
     try {
+      console.log("amount", amount);
       paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount, projectId }, this.options));
     } catch (error : any) {
       this.errorMessage = 'Une erreur inattendue est survenue lors de la création de l\'intention de paiement.';
@@ -157,26 +159,37 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
             'Content-Type': 'application/json'
           };
 
-          this.http.get<any>(`${environment.apiUrl}/payments/payment-method/${paymentMethodId}`, { headers }).subscribe(paymentMethod => {
-            this.last4 = paymentMethod.last4;
-            this.name = paymentMethod.name;
-            this.postalCode = paymentMethod.address.postal_code;
-            this.brandCard = paymentMethod.brand;
-
+          const paymentMethodRequest = this.http.get<any>(`${environment.apiUrl}/payments/payment-method/${paymentMethodId}`, { headers }).toPromise();
+          const paymentIntentRequest = this.http.get<any>(`${environment.apiUrl}/payments/payment-intent/${updatedPaymentIntent.id}`, { headers }).toPromise();
+      
+          Promise.all([paymentMethodRequest, paymentIntentRequest]).then(([paymentMethod, paymentIntent]) => {
+              this.last4 = paymentMethod.last4;
+              this.name = paymentMethod.name;
+              this.postalCode = paymentMethod.address.postal_code;
+              this.brandCard = paymentMethod.brand;
+              this.amount = paymentIntent.amount;
+              this.status = paymentIntent.status;
+              this.currency = paymentIntent.currency;
+          
+              console.log("updatedPaymentIntent", this.last4, this.name, this.postalCode, this.brandCard, this.amount, this.status, this.currency);
+              this.http.post<any>(`${environment.apiUrl}/payments/payment-method`, { 
+                  paymentIntent: updatedPaymentIntent.id,
+                  last4: this.last4,
+                  name: this.name,
+                  brand: this.brandCard,
+                  amount: this.amount,
+                  status: this.status,
+                  currency: this.currency
+              }, { headers }).subscribe(paymentMethod => {
+                  console.log("paymentMethod", paymentMethod);
+              });
+          }).catch(error => {
+              console.error("Error fetching payment details:", error);
           });
-
-          this.http.get<any>(`${environment.apiUrl}/payments/payment-intent/${updatedPaymentIntent.id}`, { headers }).subscribe(paymentIntent => {
-            this.amount = paymentIntent.amount;
-            this.status = paymentIntent.status;
-            this.currency = paymentIntent.currency;
-          });
-
-
-
-        } else {
-          this.errorMessage = updatedPaymentIntent.status;
         }
       });
+
+        
     } else {
       console.error("Payment intent not initialized");
     }
@@ -208,7 +221,9 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       return;
     }
 
-    this.http.get(`${environment.apiUrl}/invoice/create-payment-intent/${this.name}/${amount}`, {
+    this.http.post(`${environment.apiUrl}/invoice/generate-pdf/${this.name}/${amount}`, 
+    { project: this.project }, 
+    {
       ...this.options,
       params: {
         date: this.paidAt ? this.paidAt : moment().format('DD/MM/YYYY à HH:mm:ss'),
@@ -218,17 +233,18 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       },
 
       responseType: 'blob',
-    }).subscribe(blob => {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'recu_wwf_' + moment().format('DD_MM_YYYY') + '.pdf';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    });
-
+    }
+  ).subscribe((blob: Blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `recu_don_${this.project?.id}_${this.paidAt}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+  
   }
 
   goBack(): void {

@@ -14,30 +14,52 @@ import { UploadService } from 'src/app/services/upload.service';
 })
 export class ProjectsComponent implements OnInit {
     projectName: string = '';
-    projects: Project[]; 
+    projects: Project[] = []; 
     imageFile:File
     imageSrc: string;
     noImage:boolean = true
     searchText:string = ""
     baseProjects: Project[] = [];
+    filter: string = "En cours"; 
 
     constructor(private projectService: ProjectService, private commonService:CommonService, private router: Router,
       public dialog: MatDialog, private uploadService:UploadService) { }
 
-    async ngOnInit() {
-      this.projectService.getProjects().then(projects => {
-        this.projects = projects;
+      async ngOnInit() {
+        await this.loadProjects();
+      }
+
+      async loadProjects() {
+        switch (this.filter) {
+          case "En cours":
+            this.projects = await this.projectService.getOngoingProjects();
+            break;
+          case "Terminé":
+            this.projects = await this.projectService.getFinishedProjects();
+            break;
+          default:
+            this.projects = await this.projectService.getProjects();
+            break;
+        }
+  
         this.projects.forEach(async project => {
           await this.loadImage(project);
           if (!project.imageUrl) {
             project.imageUrl = 'background.jpeg';
           }
         });
+  
         this.baseProjects = this.projects;
+      }
+  
 
-      });
-
-    }
+      changeFilter(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.filter = target.value;
+        this.loadProjects();
+      }
+      
+    
 
     payNow(project: Project) {
       this.commonService.navigate(`/payment/${project.id}`);
