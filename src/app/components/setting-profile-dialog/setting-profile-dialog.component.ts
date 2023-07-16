@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/user.model";
 
 @Component({
   selector: 'app-setting-profile-dialog',
@@ -10,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SettingProfileDialogComponent {
   isEdit: boolean = false;
+  blockedUsers: User[];
 
   profileForm = new FormGroup({
     email: new FormControl({ value: this.data.email, disabled: true }, Validators.required),
@@ -20,8 +23,12 @@ export class SettingProfileDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<SettingProfileDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private authService: AuthService
+    private authService: AuthService, private userService: UserService
   ) {}
+
+  async ngOnInit(): Promise<void> {
+    this.blockedUsers = await this.userService.getBlockedUsers();
+  }
 
   onCancel(): void {
     this.dialogRef.close();
@@ -38,5 +45,10 @@ export class SettingProfileDialogComponent {
     }else {
       console.log("Invalid form");
     }
+  }
+
+  async unblockUser(id: number) {
+    await this.userService.unblockUser(id);
+    this.blockedUsers = await this.userService.getBlockedUsers();
   }
 }

@@ -3,6 +3,29 @@
   <div class="flex justify-between mb-2 bg-white text-black p-2 rounded w-fit">
     <p class="m-auto">{{message.text}}</p>
     <div class="text-gray-500/70 text-xs ml-6 self-end">{{creationDate}}</div>
+    <div class="relative inline-block">
+      <button class="flex items-center justify-center rounded-full hover:bg-gray-200 w-4 h-4" (click)="toggleDropdown()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#000000">
+          <path d="M12 16a2 2 0 110-4a2 2 0 010 4ZM12 6a2 2 0 110-4a2 2 0 010 4ZM12 26a2 2 0 110-4a2 2 0 010 4Z" />
+        </svg>
+      </button>
+      <div class="absolute right-0 mt-2 w-48 bg-white rounded shadow-md z-10" [ngClass]="{'hidden': !isDropdownOpen}">
+        <ul class="py-2">
+          <li *ngIf="this.me.email !== this.author.email" class="px-4 py-2 hover:bg-gray-200">
+            <a (click)="this.blockUser()" class="block text-gray-800">Bloquer</a>
+          </li>
+          <li *ngIf="this.me.email === this.author.email || (this.userService.isAdmin$ | async)" class="px-4 py-2 hover:bg-gray-200">
+            <a (click)="this.deleteMessage()" class="block text-gray-800">Supprimer</a>
+          </li>
+          <li *ngIf="this.author.role !== RoleEnum.BANNIS && (this.userService.isAdmin$ | async)" class="px-4 py-2 hover:bg-gray-200">
+            <a (click)="this.ban()" class="block text-gray-800 cursor-pointer">Bannir</a>
+          </li>
+          <li *ngIf="this.author.role === RoleEnum.BANNIS && (this.userService.isAdmin$ | async)" class="px-4 py-2 hover:bg-gray-200">
+            <a (click)="this.unban()" class="block text-gray-800 cursor-pointer">Débannir</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
   <div>
     <ng-container *ngFor="let response of responses">

@@ -1,9 +1,7 @@
-import {Component, Input} from '@angular/core';
-import {Community} from "../../../interfaces/community.entity";
+import {Component} from '@angular/core';
 import {Post} from "../../../interfaces/post.entity";
 import {ActivatedRoute} from "@angular/router";
 import {CommonService} from "../../../services/common.service";
-import {PostService} from "../../../services/post.service";
 import {Message} from "../../../interfaces/message.entity";
 import {MessageService} from "../../../services/message.service";
 import {NewMessage} from "../../../interfaces/new-message.entity";
@@ -53,8 +51,6 @@ export class PostComponent {
 
 }
 
-
 interface RouteData {
   post: Post;
 }
-
