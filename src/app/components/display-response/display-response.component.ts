@@ -17,6 +17,7 @@ export class DisplayResponseComponent implements OnInit, OnDestroy {
   @Input() response:ResponseEntity
 
   author:User;
+  me:User;
   creationDate:string
   isDropdownOpen:boolean = false;
   protected readonly RoleEnum = RoleEnum;
@@ -29,6 +30,8 @@ export class DisplayResponseComponent implements OnInit, OnDestroy {
     this.responseService.getResponse(this.response.id).then(response => {
       this.author = response.user
     });
+
+    this.me = await this.userService.getMe();
 
     this.creationDate = this.dateService.formatRelativeTime(this.response.creationDate, "");
   }

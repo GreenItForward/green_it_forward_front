@@ -19,6 +19,7 @@ import {AdminService} from "../../services/admin.service";
 export class DisplayMessageComponent implements OnInit, OnDestroy {
  @Input() message:Message
   author:User;
+  me:User;
 
   newResponse:NewResponse = {text:"",message:null}
   responses:ResponseEntity[]
@@ -34,6 +35,8 @@ export class DisplayMessageComponent implements OnInit, OnDestroy {
     this.messageService.getMessage(this.message.id).then(message => {
       this.author = message.user;
     });
+
+    this.me = await this.userService.getMe();
 
     this.creationDate = this.dateService.formatRelativeTime(this.message.creationDate, "");
 
