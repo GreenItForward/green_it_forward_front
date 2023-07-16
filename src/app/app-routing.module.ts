@@ -5,7 +5,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AuthComponent } from './pages/auth/auth.component';
-import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ProjectComponent } from './pages/projects/project/project.component';
 import { ProjectResolver } from './services/project-resolver.service';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
@@ -76,13 +76,15 @@ const routes : Routes = [
     component: PaymentComponent
   },
   {
-    path: 'reset-pwd',
-    component: ResetPwdComponent
+    path: 'auth/reset-password/confirm',
+    component: ResetPasswordComponent
   },
   {
     path: 'auth/confirm',
     component: ConfirmationComponent
   },
+
+  
   /* USER ROUTES */
   {
     path: 'user/profile',

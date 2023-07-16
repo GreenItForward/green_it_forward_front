@@ -36,16 +36,16 @@ export class InvoiceService {
       },
       responseType: 'blob',
     }
-  ).subscribe((blob: Blob) => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `recu_don_${project?.id}_${moment(payment.date).format('YYYYMMDDHHmmss')}.pdf`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  });
+    ).subscribe((blob: Blob) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `recu_don_${project?.id}_${moment(payment.date).format('YYYYMMDDHHmmss')}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
    }
 
 
