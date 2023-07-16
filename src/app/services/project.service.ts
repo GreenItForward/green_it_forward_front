@@ -48,6 +48,37 @@ export class ProjectService {
     return projects ? projects : [];
   }
 
+  async getOngoingProjects() {
+  const projects = await lastValueFrom(this.http.get<Project[]>(`${this.apiUrl}/ongoing`, this.options)
+    .pipe(
+      map((projects: Project[]) => projects.map(project => {
+        project.startDate = new Date(project.startDate);
+        project.endDate = new Date(project.endDate);
+        return project;
+      }
+      ))
+    )
+  );
+
+    return projects ? projects : [];
+  }
+
+  async getFinishedProjects() {
+    const projects = await lastValueFrom(this.http.get<Project[]>(`${this.apiUrl}/finished`, this.options)
+      .pipe(
+        map((projects: Project[]) => projects.map(project => {
+          project.startDate = new Date(project.startDate);
+          project.endDate = new Date(project.endDate);
+          return project;
+        }
+        ))
+      )
+    );
+
+    return projects ? projects : [];
+  }
+
+
   async createProject(newProject: Project): Promise<Project> {
     let dataToSend = {
       ...newProject,
