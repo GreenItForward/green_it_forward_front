@@ -17,6 +17,16 @@
       Confirmer le mot de passe
     </label>
     <input id="confirmPassword" type="password" formControlName="confirmPassword" class="w-full mb-4 p-2 border rounded" *ngIf="isEdit" minlength="6" maxlength="50">
+
+    <label for="email" class="block text-green-900 text-sm font-bold mb-2 mt-4">
+      Utilisateurs bloqués
+    </label>
+    <div *ngFor="let blocked of blockedUsers">
+      <div class="flex items-center">
+        <span class="ml-2 text-gray-700">{{blocked.email}}</span>
+        <button (click)="unblockUser(blocked.id)" class="px-4 py-2 ml-2 text-white bg-red-500 rounded hover:bg-red-700">Débloquer</button>
+      </div>
+    </div>
   </form>
 </div>
 

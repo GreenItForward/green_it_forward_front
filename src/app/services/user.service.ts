@@ -148,6 +148,14 @@ export class UserService {
     return await lastValueFrom(this.http.post<User>(`${this.apiUrl}/block/${idToBlock}`, {}, this.options));
   }
 
+  async unblockUser(idToUnblock: number): Promise<User> {
+    return await lastValueFrom(this.http.post<User>(`${this.apiUrl}/unblock/${idToUnblock}`, {}, this.options));
+  }
+
+  async getBlockedUsers(): Promise<User[]> {
+    return await lastValueFrom(this.http.get<User[]>(`${this.apiUrl}/block`, this.options));
+  }
+
   async getUserById(id: number): Promise<User> {
     return await lastValueFrom(this.http.get<User>(`${this.apiUrl}/${id}`, this.options));
   }
