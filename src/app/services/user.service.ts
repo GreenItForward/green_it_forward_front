@@ -13,6 +13,7 @@ import { Community } from '../interfaces/community.entity';
 import { Post } from '../interfaces/post.entity';
 import { Message } from '../interfaces/message.entity';
 import { ResponseEntity } from '../interfaces/response.entity';
+import {RoleEnum} from "../enums/role.enum";
 
 @Injectable({
   providedIn: 'root'
@@ -71,7 +72,7 @@ export class UserService {
       return false;
     }
     const response: any = await this.getRole();
-    return response.role === 'ADMINISTRATEUR';
+    return response.role === RoleEnum.ADMINISTRATEUR;
   }
 
   async getMe(): Promise<User> {
@@ -88,11 +89,11 @@ export class UserService {
 
   async updateUser(user: User): Promise<User> {
     const response = await this.http.put<User>(`${this.apiUrl}/edit`, user, this.options).toPromise();
-  
+
     if (!response) {
       throw new Error('Server response was undefined');
     }
-  
+
     return response;
   }
 
@@ -115,25 +116,25 @@ export class UserService {
         const dateB = b.creationDate instanceof Date ? b.creationDate : new Date(b.creationDate);
         return dateB.getTime() - dateA.getTime();
       });
-    
+
       posts = posts.sort((a, b) => {
         const dateA = a.creationDate instanceof Date ? a.creationDate : new Date(a.creationDate);
         const dateB = b.creationDate instanceof Date ? b.creationDate : new Date(b.creationDate);
         return dateB.getTime() - dateA.getTime();
       });
-    
+
       messages = messages.sort((a, b) => {
         const dateA = a.creationDate instanceof Date ? a.creationDate : new Date(a.creationDate);
         const dateB = b.creationDate instanceof Date ? b.creationDate : new Date(b.creationDate);
         return dateB.getTime() - dateA.getTime();
       });
-    
+
       responses = responses.sort((a, b) => {
         const dateA = a.creationDate instanceof Date ? a.creationDate : new Date(a.creationDate);
         const dateB = b.creationDate instanceof Date ? b.creationDate : new Date(b.creationDate);
         return dateB.getTime() - dateA.getTime();
       });
-  
+
     return {
       communities: communities,
       posts: posts,
@@ -142,26 +143,37 @@ export class UserService {
     }
   }
 
+  async blockUser(idToBlock: number): Promise<User> {
+    console.log(`${this.apiUrl}/block/${idToBlock}`)
+    return await lastValueFrom(this.http.post<User>(`${this.apiUrl}/block/${idToBlock}`, {}, this.options));
+  }
+
+  async unblockUser(idToUnblock: number): Promise<User> {
+    return await lastValueFrom(this.http.post<User>(`${this.apiUrl}/unblock/${idToUnblock}`, {}, this.options));
+  }
+
+  async getBlockedUsers(): Promise<User[]> {
+    return await lastValueFrom(this.http.get<User[]>(`${this.apiUrl}/block`, this.options));
+  }
+
+  async getUserById(id: number): Promise<User> {
+    return await lastValueFrom(this.http.get<User>(`${this.apiUrl}/${id}`, this.options));
+  }
+
   async getCommunitiesUser(): Promise<Community[]> {
     const user = await this.getMe();
-    const communities = await this.communityService.getCommunitiesByUser(user);
-    return communities;
+    return await this.communityService.getCommunitiesByUser(user);
   }
 
   async getPostsUser(): Promise<Post[]> {
-    const posts = await this.postService.getPostsByUser();
-    return posts;
+    return await this.postService.getPostsByUser();
   }
 
   async getMessagesUser(): Promise<Message[]> {
-    const messages = await this.messageService.getMessagesByUser();
-    return messages;
+    return await this.messageService.getMessagesByUser();
   }
 
   async getResponsesUser(): Promise<ResponseEntity[]> {
-    const responses = await this.responseService.getResponsesByUser();
-    return responses;
+    return await this.responseService.getResponsesByUser();
   }
-
 }
- 

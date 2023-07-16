@@ -52,11 +52,13 @@ export class ResponseService {
     return responses ? responses : [];
   }
 
-
   async getResponsesByUser() : Promise<ResponseEntity[]> {
     const responses = await lastValueFrom(this.http.get<ResponseEntity[]>(`${this.apiUrl}user`, this.options));
     return responses ? responses : [];
   }
 
-
+  async deleteResponse(id: string) : Promise<boolean> {
+    const response = await lastValueFrom(this.http.delete<boolean>(`${this.apiUrl}${id}`, this.options));
+    return response ? response : false;
+  }
 }

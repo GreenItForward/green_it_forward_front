@@ -60,5 +60,7 @@ export class MessageService {
     return messages ? messages : [];
   }
 
-
+  async deleteMessage(id: string) : Promise<void> {
+    await lastValueFrom(this.http.delete<void>(`${this.apiUrl}${id}`, this.options));
+  }
 }
