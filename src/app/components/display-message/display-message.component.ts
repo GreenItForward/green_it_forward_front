@@ -63,6 +63,11 @@ export class DisplayMessageComponent implements OnInit, OnDestroy {
     }
   }
 
+  async blockUser(){
+    await this.userService.blockUser(this.author.id);
+    location.reload();
+  }
+
   async deleteMessage(){
     await this.messageService.deleteMessage(this.message.id);
     location.reload();
