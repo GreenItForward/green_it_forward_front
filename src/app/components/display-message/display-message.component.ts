@@ -1,17 +1,12 @@
 import {Component, ElementRef, HostListener, Input} from '@angular/core';
 import {Message} from "../../interfaces/message.entity";
-import {ActivatedRoute} from "@angular/router";
-import {CommonService} from "../../services/common.service";
 import {MessageService} from "../../services/message.service";
 import { User } from 'src/app/models/user.model';
 import {DateService} from "../../services/date.service";
 import {ResponseEntity} from "../../interfaces/response.entity";
 import {ResponseService} from "../../services/response.service";
-import {NewMessage} from "../../interfaces/new-message.entity";
 import {NewResponse} from "../../interfaces/new-response.entity";
-import {RoleEnum} from "../../enums/role.enum";
 import {UserService} from "../../services/user.service";
-import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-display-message',
