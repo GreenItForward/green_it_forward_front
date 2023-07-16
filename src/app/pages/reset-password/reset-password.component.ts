@@ -1,9 +1,10 @@
-import { User } from './../../models/user.model';
+ import { User } from './../../models/user.model';
 import { ConfirmationService } from './../../services/confirmation.service';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -15,8 +16,8 @@ export class ResetPasswordComponent {
   error: string|null = null;
   success: string|null = null;
   token: string | null = null;
-
-  constructor(private authService: AuthService, private route: ActivatedRoute, protected confirmationService: ConfirmationService) {
+  email: string | null = null;
+  constructor(private authService: AuthService, private route: ActivatedRoute, protected confirmationService: ConfirmationService, private commonService: CommonService) {
   }
 
   async ngOnInit() {
@@ -26,23 +27,8 @@ export class ResetPasswordComponent {
       return;
     }
 
-
-    const user: User = await this.confirmationService.confirm(this.token).toPromise() as User;
-    if (!user) {
-      this.error = "Impossible de modifier votre mot de passe.";
-      return;
-    }
-
-    try {
-      this.token = await this.authService.getLoginToken(user);
-    } catch (error : any) {
-      this.error = error.message;
-    }
-
-    if (!this.token) {
-      this.error = "Impossible de modifier votre mot de passe.";
-      return;
-    }
+    const response = await this.authService.getEmailFromTokenConfirmation(this.token);
+    this.email = response.email;
   }
 
   async onSubmit(form: NgForm) {
@@ -56,19 +42,25 @@ export class ResetPasswordComponent {
       this.error = "Les mots de passe ne correspondent pas.";
       return;
     }
-    
+
     const passwordData = {
+      email: this.email,
       password: form.value.password,
+      token: this.token
     };
 
     try {
-      await this.authService.changePassword(passwordData, this.token);
+      await this.authService.resetForgotPassword(passwordData);
       this.success = "Votre mot de passe a été modifié avec succès.";
     } catch (error : any) {
-      this.error = error.error.message;
+      this.error = error.message;
     }
 
     this.isLoading = false;
     form.reset();
+  }
+
+  redirectToLogin() {
+    this.commonService.navigate('/auth');
   }
 }
