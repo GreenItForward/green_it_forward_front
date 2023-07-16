@@ -92,6 +92,21 @@ export class ProjectService {
     return project
   }
 
+
+  async updateProject(project: Project): Promise<Project> {
+    console.log(project);
+    let dataToSend = {
+      ...project,
+      endDate: new Date(project.endDate).toISOString()
+    };
+
+    const updatedProject = await lastValueFrom(this.http.put<Project>(`${this.apiUrl}/${project.id}`, dataToSend, this.options));
+    if (!updatedProject) {
+      throw new Error('Failed to update project');
+    }
+    return updatedProject
+  }
+
   async searchPosts(searchText: string): Promise<Project[]> {
     const projects = await lastValueFrom(this.http.get<Project[]>(`${this.apiUrl}/search/${searchText}`, this.options));
     if (!projects) {
