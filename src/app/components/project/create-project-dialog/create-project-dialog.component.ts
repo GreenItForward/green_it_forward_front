@@ -43,7 +43,7 @@ export class CreateProjectDialogComponent {
 
     let projectData = {
       ...this.createProjectForm.value,
-      endDate: endDate // this should be a Date object, not a string
+      endDate: endDate 
     };
 
 

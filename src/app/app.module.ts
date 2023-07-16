@@ -1,3 +1,4 @@
+import { ResetPasswordModule } from './pages/reset-password/reset-password.module';
 import { NotFoundModule } from './pages/not-found/not-found.module';
 import { MatButtonModule } from '@angular/material/button';
 import { NgModule } from '@angular/core';
@@ -20,7 +21,6 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { AdminModule } from './pages/admin/admin.module';
 import { PaymentModule } from './pages/payment/payment.module';
 import { AuthModule } from './pages/auth/auth.module';
-import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProjectsModule } from './pages/projects/projects/projects.module';
 import { ProjectModule } from './pages/projects/project/project.module';
@@ -43,7 +43,6 @@ import {SelectionModalModule} from "./components/selection-modal/selection-modal
 @NgModule({
   declarations: [
     AppComponent,
-    ResetPwdComponent
   ],
   imports: [
     BrowserModule,
@@ -80,10 +79,11 @@ import {SelectionModalModule} from "./components/selection-modal/selection-modal
     SlickCarouselModule,
     ReactiveFormsModule,
     CommunityModule,
-    CommunitiesModule,
+    CommunitiesModule, 
     CommunityCardModule,
     ConfirmationModule,
-    ProfilModule
+    ProfilModule,
+    ResetPasswordModule,
   ],
 
   providers: [],

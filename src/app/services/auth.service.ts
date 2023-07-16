@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { LoginData, RegisterData } from '../interfaces/auth.interface';
 import { CommonService } from './common.service';
+import { User } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -26,19 +27,79 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/register`, userFormData);
   }
 
-  setUserData(responseData: String) {
+  setUserData(responseData: string) {
     localStorage.setItem('userData', JSON.stringify(responseData));
   }
 
   async changePassword(passwordData: any) {
     let user;
     try {
-     user = await lastValueFrom(this.http.post(`${this.apiUrl}/change-password`, {password: passwordData.password}, this.options));
+      user = await lastValueFrom(this.http.post(`${this.apiUrl}/change-password`, { password: passwordData.password }, this.options));
     } catch (error) {
       throw new Error('Une erreur est survenue lors du changement de mot de passe');
     }
 
+    return user;
+  }
+
+  async forgotPassword(email: string) {
+    let response;
+    try {
+      response = await lastValueFrom(this.http.post(`${this.apiUrl}/forgot-password`, {email}));
+    } catch (error) {
+      throw new Error('Une erreur est survenue lors de la réinitialisation du mot de passe');
+    }
+ 
+    return response;
+  }
+
+  async getLoginToken(user: User): Promise<string> {
+      let response: LoginResponse;
+      try {
+        response = await lastValueFrom(this.http.post<LoginResponse>(`${this.apiUrl}/login-token`, {user}));
+      } catch (error) {
+        throw new Error('Une erreur est survenue lors de la réinitialisation du mot de passe');
+      }
+
+      if(response && response.token) {
+          return response.token;
+      } else {
+          throw new Error('Token not found in response');
+      }
+  }
+
+  async resetForgotPassword(passwordData: any) {
+    let user;
+    try {
+      user = await lastValueFrom(this.http.post(`${this.apiUrl}/reset-forgot-password`, {
+        email: passwordData.email,
+        password: passwordData.password,
+        token: passwordData.token
+      }, this.options));
+    } catch (error: any) {
+      throw new Error('Une erreur est survenue lors du changement de mot de passe :'+ error.error.message);
+    }
 
     return user;
   }
+
+  async getEmailFromTokenConfirmation(token: string) : Promise<EmailFromTokenResponse> {
+    let response;
+    try {
+      response = await lastValueFrom(this.http.post(`${this.apiUrl}/email-from-token`, {token}));
+    } catch (error) {
+      throw new Error('Une erreur est survenue lors de la confirmation de l\'email');
+    }
+ 
+    return response as EmailFromTokenResponse;
+  }
+
+}
+
+interface LoginResponse {
+  token: string;
+}
+
+interface EmailFromTokenResponse {
+  email: string;
 }

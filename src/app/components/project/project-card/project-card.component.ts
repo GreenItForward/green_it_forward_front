@@ -3,6 +3,8 @@ import {Project} from "../../../models/project.model";
 import { CommonService } from 'src/app/services/common.service';
 import { UploadService } from 'src/app/services/upload.service';
 import * as moment from 'moment';
+import { ProjectService } from 'src/app/services/project.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-project-card',
@@ -16,8 +18,9 @@ export class ProjectCardComponent {
   imageSrc: string;
   today: Date = new Date();
   showDonateButton: boolean;
-
-  constructor(protected commonService: CommonService, private uploadService:UploadService) {}
+  error: string;
+  isOwner: boolean;
+  constructor(protected commonService: CommonService, private uploadService:UploadService) { }
 
   async ngOnInit() {
     await this.loadImage();
@@ -47,4 +50,6 @@ export class ProjectCardComponent {
   payNow(project: Project) {
     this.commonService.navigate(`/payment/${project.id}`);
   }
+
+
 }
