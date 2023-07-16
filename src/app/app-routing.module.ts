@@ -3,16 +3,20 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { PaymentComponent } from './pages/payment/payment.component';
-import { AdminComponent } from './pages/admin/dashboard/dashboard.component';
-import { GestionComponent } from './pages/admin/gestion/gestion.component';
-import { StatsComponent } from './pages/admin/stats/stats.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AuthComponent } from './pages/auth/auth.component';
-import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ProjectComponent } from './pages/projects/project/project.component';
 import { ProjectResolver } from './services/project-resolver.service';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
-
+import {CommunityComponent} from "./pages/community/community/community.component";
+import {CommunitiesComponent} from "./pages/community/communities/communities.component";
+import {CommunityResolver} from "./services/community-resolver.service";
+import {PostComponent} from "./pages/community/post/post.component";
+import {PostResolver} from "./services/post-resolver.service";
+import {CommunityFormComponent} from "./pages/community/community-form/community-form.component";
+import {EditCommunityComponent} from "./pages/community/edit-community/edit-community.component";
+import { ProfilComponent } from './pages/profil/profil.component';
 
 const routes : Routes = [
   {
@@ -42,7 +46,26 @@ const routes : Routes = [
   },
   {
     path: 'community',
-    component: HomeComponent
+    component: CommunitiesComponent
+  },
+  {
+    path: 'community/create',
+    component: CommunityFormComponent
+  },
+  {
+    path: 'community/:id',
+    component: CommunityComponent,
+    resolve: { community: CommunityResolver },
+  },
+  {
+    path: 'editcommunity/:id',
+    component: EditCommunityComponent,
+    resolve: { community: CommunityResolver },
+  },
+  {
+    path: 'post/:id',
+    component: PostComponent,
+    resolve: { post: PostResolver },
   },
   {
     path: 'profil',
@@ -53,13 +76,21 @@ const routes : Routes = [
     component: PaymentComponent
   },
   {
-    path: 'reset-pwd',
-    component: ResetPwdComponent
+    path: 'auth/reset-password/confirm',
+    component: ResetPasswordComponent
   },
   {
     path: 'auth/confirm',
     component: ConfirmationComponent
   },
+
+  
+  /* USER ROUTES */
+  {
+    path: 'user/profile',
+    component: ProfilComponent
+  },
+  /* ADMIN ROUTES */
   {
     path: 'admin',
     loadChildren: () => import('./pages/admin/admin-routing.module').then(m => m.AdminRoutingModule)

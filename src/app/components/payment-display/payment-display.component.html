@@ -1,0 +1,59 @@
+<div class="bg-white shadow overflow-hidden sm:rounded-lg grid grid-cols-3 gap-4">
+    <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+        <a [routerLink]="'/project/' + payment.projectId">
+            <img *ngIf="!noImage" [src]="imageSrc" alt="Project image" class="h-50 w-full object-cover">
+          </a>
+    </div>
+    <div class="col-span-2">
+      <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Paiement ID: {{payment.paymentIntent}}
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:p-0">
+        <dl class="sm:divide-y sm:divide-gray-200">
+          <div class="px-4 py-5 sm:px-6 grid grid-cols-3 gap-4">
+            <dt class="text-sm font-medium text-gray-500">
+              Projet:
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{project.name}}
+            </dd>
+          </div>
+          <div class="px-4 py-5 sm:px-6 grid grid-cols-3 gap-4">
+            <dt class="text-sm font-medium text-gray-500">
+              Montant:
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{payment.amount}} {{payment.currency}}
+            </dd>
+          </div>
+          <div class="px-4 py-5 sm:px-6 grid grid-cols-3 gap-4">
+            <dt class="text-sm font-medium text-gray-500">
+              Télécharger le recu:
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <a (click)="downloadReceipt()" class="text-blue-500 hover:text-blue-800 cursor-pointer">Télécharger</a>
+            </dd>
+          </div>
+          <div class="px-4 py-5 sm:px-6 grid grid-cols-3 gap-4">
+            <dt class="text-sm font-medium text-gray-500">
+              Status:
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{payment.status}}
+            </dd>
+          </div>
+          <div class="px-4 py-5 sm:px-6 grid grid-cols-3 gap-4">
+            <dt class="text-sm font-medium text-gray-500">
+              Date:
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{payment.date | date:'short'}}
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+  

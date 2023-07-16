@@ -1,18 +1,28 @@
+<div class="flex flex-col min-h-screen">
+
+<app-header></app-header>
 <app-navbar></app-navbar>
 
-<div class="container mx-auto px-4 py-5">
+<div class="container mx-auto px-4 py-5 flex-grow mt-10">
   <div class="w-full max-w-xs mx-auto">
     <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" class="bg-darkgreen-500 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-      <div *ngIf="!isLoginMode" class="mb-4">
+      <div *ngIf="!isLoginMode && !isForgotPassword" class="mb-4">
+        <label class="block text-green-900 text-sm font-bold mb-2" for="image">
+          Photo de profil
+        </label>
+        <input *ngIf="!isLoginMode && !isForgotPassword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="image" type="file" (change)="onFileSelect($event)" ngModel name="image">
+      </div>
+      <div *ngIf="!isLoginMode && !isForgotPassword" class="mb-4">
         <label class="block text-green-900 text-sm font-bold mb-2" for="firstName">
-          First Name
+          Prénom
         </label>
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                id="firstName" type="text" placeholder="First Name" ngModel name="firstName" required>
       </div>
-      <div *ngIf="!isLoginMode" class="mb-4">
+      <div *ngIf="!isLoginMode && !isForgotPassword" class="mb-4">
         <label class="block text-green-900 text-sm font-bold mb-2" for="lastName">
-          Last Name
+          Nom
         </label>
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                id="lastName" type="text" placeholder="Last Name" ngModel name="lastName" required>
@@ -24,9 +34,9 @@
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                id="email" type="email" placeholder="Email" ngModel name="email" required>
       </div>
-      <div class="mb-6">
+      <div *ngIf="!isForgotPassword" class="mb-6">
         <label class="block text-green-900 text-sm font-bold mb-2" for="password">
-          Password
+          Mot de passe
         </label>
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                id="password" type="password" placeholder="******************" ngModel name="password" required>
@@ -41,17 +51,24 @@
       <div *ngIf="error" class="mb-4">
         <p class="text-red-500 text-xs italic">{{error}}</p>
       </div>
+      <div *ngIf="success" class="mb-4">
+        <p class="text-green-500 text-xs italic">{{success}}</p>
+      </div>
       <div class="flex items-center justify-between">
         <button class="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         type="submit" [disabled]="isLoading">
-        {{isLoginMode ? 'Log In' : 'Register'}}
+          {{isLoginMode ? 'Se connecter' : isForgotPassword ? 'Envoyer un mail de récupération' : "S'inscrire"}}
         </button>
         <button class="inline-block align-baseline font-bold text-sm text-green-900 hover:text-green-600" type="button" (click)="onSwitchMode()">
-        Switch to {{isLoginMode ? 'Register' : 'Log In'}}
+        Page d{{isLoginMode ? "'inscription" : 'e connexion'}}
         </button>
       </div>
+      <a class="inline-block align-baseline font-bold text-sm text-green-900 hover:text-green-600 cursor-pointer mt-4" (click)="switchForgotPasswordMode()">
+        Mot de passe oublié ?
+      </a>
     </form>
   </div>
 </div>
 
 <app-footer></app-footer>
+</div>

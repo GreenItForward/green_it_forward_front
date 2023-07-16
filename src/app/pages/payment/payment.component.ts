@@ -10,6 +10,8 @@ import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
+import { Location } from '@angular/common';
+import { Payment } from 'src/app/models/payment.model';
 
 @Component({
   selector: 'app-payment',
@@ -38,11 +40,12 @@ export class PaymentComponent implements OnInit {
   token: string | null = null;
   headers: HttpHeaders | null = null;
   options: {headers: HttpHeaders};
+  background: string;
 
-  
 
 constructor(private fb: FormBuilder, private stripeService: StripeService, private http: HttpClient, 
-  private route: ActivatedRoute, private projectService: ProjectService, private commonService: CommonService) {
+  private route: ActivatedRoute, private projectService: ProjectService, private commonService: CommonService,
+  private location: Location) {
   this.paymentForm = this.fb.group({ });
   this.cardOptions = { };
   this.elementsOptions = { };
@@ -58,9 +61,10 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
   this.token = this.commonService.getLocalStorageItem('token');
   this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
   this.options = { headers: this.headers };
+  this.background = '';
 }
 
-  async ngOnInit() {    
+  async ngOnInit() {
     this.paymentForm = new FormGroup({
       name: new FormControl('', Validators.required),
       amount: new FormControl(10, [Validators.required, Validators.min(1)]),
@@ -92,13 +96,18 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       this.card.on('change', this.cardHandler.bind(this));
     });
 
-    const routeId = this.route.snapshot.paramMap.get('id'); 
+    const routeId = this.route.snapshot.paramMap.get('id');
     try {
       this.project = await this.projectService.getProject(routeId);
     } catch (error) {
       this.errorMessage = error instanceof Error ? error.message : "An unexpected error occurred.";
       this.commonService.navigate("/not-found");
       return;
+    }
+
+    if(this.project.endDate && moment(this.project.endDate).isBefore(moment())) {
+      this.errorMessage = "Ce projet est terminé.";
+      this.commonService.navigateToErrorPage("Ce projet est terminé, vous ne pouvez plus faire de don pour ce projet.");
     }
 
   }
@@ -108,13 +117,23 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       return;
     }
 
-    let { name, amount } = this.paymentForm.value; 
+    let { name, amount } = this.paymentForm.value;
+
     name = name.trim();
-    const paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount }, this.options));
-  
+    let projectId = this.project?.id;
+
+    let paymentIntent;
+    try {
+      console.log("amount", amount);
+      paymentIntent = await lastValueFrom(this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/payments/create-payment-intent`, { amount, projectId }, this.options));
+    } catch (error : any) {
+      this.errorMessage = 'Une erreur inattendue est survenue lors de la création de l\'intention de paiement.';
+      return;
+    }
+    
     
     if (!this.card) {
-      console.error("Card not initialized");
+      this.errorMessage = "Une erreur est survenue lors du paiement";
       return;
     }
     if (paymentIntent && paymentIntent.clientSecret) {
@@ -122,7 +141,7 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
         payment_method: {
           card: this.card,
           billing_details: {
-            name, 
+            name,
           },
         },
       }).subscribe(async ({ error, paymentIntent: updatedPaymentIntent }) => {
@@ -133,37 +152,44 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
           this.paidAmount = amount;
           this.paidAt = moment().format('DD/MM/YYYY à HH:mm:ss');
           this.paidBy = name;
-  
+
           const paymentMethodId = updatedPaymentIntent.payment_method as string;
           const headers = {
             'Authorization': `Bearer ${this.token}`,
             'Content-Type': 'application/json'
           };
-          
-          this.http.get<any>(`${environment.apiUrl}/payments/payment-method/${paymentMethodId}`, { headers }).subscribe(paymentMethod => {          
-            this.last4 = paymentMethod.last4;
-            this.name = paymentMethod.name;
-            this.postalCode = paymentMethod.address.postal_code;
-            this.brandCard = paymentMethod.brand;
-          
-            console.log(`Last4: ${this.last4}, Name: ${this.name}, Postal code: ${this.postalCode}`);
-          });
 
-          this.http.get<any>(`${environment.apiUrl}/payments/payment-intent/${updatedPaymentIntent.id}`, { headers }).subscribe(paymentIntent => {
-            this.amount = paymentIntent.amount;
-            this.status = paymentIntent.status;
-            this.currency = paymentIntent.currency;
+          const paymentMethodRequest = this.http.get<any>(`${environment.apiUrl}/payments/payment-method/${paymentMethodId}`, { headers }).toPromise();
+          const paymentIntentRequest = this.http.get<any>(`${environment.apiUrl}/payments/payment-intent/${updatedPaymentIntent.id}`, { headers }).toPromise();
+      
+          Promise.all([paymentMethodRequest, paymentIntentRequest]).then(([paymentMethod, paymentIntent]) => {
+              this.last4 = paymentMethod.last4;
+              this.name = paymentMethod.name;
+              this.postalCode = paymentMethod.address.postal_code;
+              this.brandCard = paymentMethod.brand;
+              this.amount = paymentIntent.amount;
+              this.status = paymentIntent.status;
+              this.currency = paymentIntent.currency;
           
-            console.log(`Amount: ${this.amount}, Status: ${this.status}, Currency: ${this.currency}`);
+              console.log("updatedPaymentIntent", this.last4, this.name, this.postalCode, this.brandCard, this.amount, this.status, this.currency);
+              this.http.post<any>(`${environment.apiUrl}/payments/payment-method`, { 
+                  paymentIntent: updatedPaymentIntent.id,
+                  last4: this.last4,
+                  name: this.name,
+                  brand: this.brandCard,
+                  amount: this.amount,
+                  status: this.status,
+                  currency: this.currency
+              }, { headers }).subscribe(paymentMethod => {
+                  console.log("paymentMethod", paymentMethod);
+              });
+          }).catch(error => {
+              console.error("Error fetching payment details:", error);
           });
-          
-          console.log(`Payment intent status: ${updatedPaymentIntent.status}`);
-          
-
-        } else {
-          this.errorMessage = updatedPaymentIntent.status;
         }
       });
+
+        
     } else {
       console.error("Payment intent not initialized");
     }
@@ -195,7 +221,9 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       return;
     }
 
-    this.http.get(`${environment.apiUrl}/invoice/${this.name}/${amount}`, {
+    this.http.post(`${environment.apiUrl}/invoice/generate-pdf/${this.name}/${amount}`, 
+    { project: this.project }, 
+    {
       ...this.options,
       params: {
         date: this.paidAt ? this.paidAt : moment().format('DD/MM/YYYY à HH:mm:ss'),
@@ -205,17 +233,22 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
       },
 
       responseType: 'blob',
-    }).subscribe(blob => {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'recu_wwf_' + moment().format('DD_MM_YYYY') + '.pdf';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    });
+    }
+  ).subscribe((blob: Blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `recu_don_${this.project?.id}_${this.paidAt}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+  
+  }
 
+  goBack(): void {
+    this.location.back();
   }
 
 }

@@ -1,27 +1,65 @@
 # GreenItForwardFront
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
+Avec GreenItForwardFront, vous pouvez contribuer à des projets et communautés durables. Vous pouvez également en créer et gérer les votres. Une interface admin est aussi disponible pour administrer les utilisateurs, voir des stats sur les données et plus encore.
 
-## Development server
+## Prérequis
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- [GreenItForwardBack](https://github.com/GreenItForward/green_it_forward_back/)
+- [Node.js](https://nodejs.org/en/)
+- [Angular CLI]( https://cli.angular.io/)
+  
+## Fonctionnalités
 
-## Code scaffolding
+- Page d'accueil affichant les informations
+- Connexion/inscription pour les projects et les communautés
+- Connexion en tant qu'admin pour accèder l'interface admin 
+- Création de projets et dons à un projet
+- Édition d'un projet par le proprietaire
+- Création, suivi, et gestion des communautés (posts, discussions)
+- Administration des utilisateurs (rôles, bannissement, etc.)
+- Statistiques sur les données et les utilisateurs
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Technologies Utilisées
+
+- [Angular](https://angular.io/)
+- [Stripe](https://stripe.com/)
+- [Font Awesome](https://fontawesome.com/)
+- [Highcharts](https://www.highcharts.com/)
+- [jQuery](https://jquery.com/)
+- [Moment](https://momentjs.com/)
+
+## Installer les dépendances
+
+```sh
+npm install
+```
+
+## Lancer le serveur de développement
+
+```sh
+npm run start
+```
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```sh
+npm run build
+```
 
-## Running unit tests
+## Lancer les tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```sh
+npm run test
+```
 
-## Running end-to-end tests
+## Lancer les tests de bout en bout
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```sh
+npm run watch
+```
 
-## Further help
+## Contributeurs
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- James ABIB
+- Ronan KIELT
+- Charles CRETOIS

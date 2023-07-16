@@ -1,3 +1,4 @@
+import { ResetPasswordModule } from './pages/reset-password/reset-password.module';
 import { NotFoundModule } from './pages/not-found/not-found.module';
 import { MatButtonModule } from '@angular/material/button';
 import { NgModule } from '@angular/core';
@@ -16,25 +17,47 @@ import { MatInputModule } from '@angular/material/input';
 import { HomeModule } from './pages/home/home.module';
 import { SharedModule } from './shared.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import {MatExpansionModule} from "@angular/material/expansion";
+import { MatExpansionModule } from "@angular/material/expansion";
 import { AdminModule } from './pages/admin/admin.module';
 import { PaymentModule } from './pages/payment/payment.module';
 import { AuthModule } from './pages/auth/auth.module';
-import { ResetPwdComponent } from './pages/reset-pwd/reset-pwd.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProjectsModule } from './pages/projects/projects/projects.module';
 import { ProjectModule } from './pages/projects/project/project.module';
 import { ConfirmationModule } from './pages/confirmation/confirmation.module';
+import { ProfilModule } from './pages/profil/profil.module';
+import {CommunityModule} from "./pages/community/community/community.module";
+import {CommunitiesModule} from "./pages/community/communities/communities.module";
+import {CommunityCardModule} from "./components/community-card/community-card.module";
+import { CommonModule } from '@angular/common';
+import {PostModule} from "./pages/community/post/post.module";
+import {PostDisplayModule} from "./components/post-display/post-display.module";
+import {UserDisplayModule} from "./components/user-display/user-display.module";
+import {SearchBarModule} from "./components/search-bar/search-bar.module";
+import {DisplayMessageModule} from "./components/display-message/display-message.module";
+import {CommunityFormModule} from "./pages/community/community-form/community-form.module";
+import {PostCreateModalModule} from "./components/post-create-modal/post-create-modal.module";
+import {EditCommunityModule} from "./pages/community/edit-community/edit-community.module";
+import {SelectionModalModule} from "./components/selection-modal/selection-modal.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    ResetPwdComponent
   ],
   imports: [
     BrowserModule,
     SharedModule,
     AppRoutingModule,
+    CommonModule,
+    SearchBarModule,
+    DisplayMessageModule,
+    CommunityFormModule,
+    PostModule,
+    PostCreateModalModule,
+    EditCommunityModule,
+    SelectionModalModule,
+    PostDisplayModule,
+    UserDisplayModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -55,7 +78,12 @@ import { ConfirmationModule } from './pages/confirmation/confirmation.module';
     AuthModule,
     SlickCarouselModule,
     ReactiveFormsModule,
-    ConfirmationModule
+    CommunityModule,
+    CommunitiesModule, 
+    CommunityCardModule,
+    ConfirmationModule,
+    ProfilModule,
+    ResetPasswordModule,
   ],
 
   providers: [],

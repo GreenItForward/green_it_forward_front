@@ -1,50 +1,37 @@
+<div class="bg-gradient-to-r from-green-600 to-green-800 bg-top w-full bg-no-repeat bg-cover bg-center pb-10">
 <app-header></app-header>
 <app-navbar></app-navbar>
 
-<div class="container mx-auto px-4 py-5">
+<div class="container mx-auto px-4 py-5 w-11/12 m-auto mt-10 flex flex-col items-center bg-gray-950/60 rounded shadow-2xl shadow-zinc-950 text-white p-10 ">
+  <h1>Tout les projets :</h1>
+  <form (ngSubmit)="searchProjects()" class="w-full flex justify-between items-center">
+    <input name="text" placeholder="Rechercher un projet..."  [(ngModel)]="searchText" (change)="searchProjects()" class="w-full mr-4 border-2 border-green-900 rounded p-2 bg-green-700"/>
+    <button class="cursor-pointer w-fit rounded p-2 bg-green-900">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path fill="#ebc621" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5q0-2.725 1.888-4.612T9.5 3q2.725 0 4.612 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3l-1.4 1.4ZM9.5 14q1.875 0 3.188-1.313T14 9.5q0-1.875-1.313-3.188T9.5 5Q7.625 5 6.312 6.313T5 9.5q0 1.875 1.313 3.188T9.5 14Z"/>
+      </svg>
+    </button>
+  </form>
+  <div class="flex items-center w-fit bg-green-700 rounded p-2 cursor-pointer mb-6 hover:bg-green-600 m-10"  (click)="openDialog()">
+    <div class="mr-2">Créer un projet</div>
+    <div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#ebc621" d="M11 19v-6H5v-2h6V5h2v6h6v2h-6v6h-2Z"/></svg></div>
+  </div>
+  <div>
+    <select [(ngModel)]="filter" (change)="changeFilter($event)" class="w-full md:w-auto bg-green-700 text-white rounded p-2 cursor-pointer hover:bg-green-600 border-2 border-green-900">
+      <option value="Tous">Tous</option>
+      <option value="En cours">En cours</option>
+      <option value="Terminé">Terminé</option>
+    </select>
+  </div>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     <div
       *ngFor="let project of projects"
-      class="flex flex-col items-center rounded overflow-hidden shadow-lg bg-darkgreen-500 text-white"
+      class="flex flex-col justify-center items-center bg-green-900 hover:bg-green-800 rounded p-8 cursor-pointer text-white"
+      (click)="goToProject(project.id)"
     >
-      <div class="flex justify-center items-center h-64 w-full">
-        <img
-          [src]="project.imageUrl"
-          class="w-64 h-64 object-cover"
-          alt="{{ project.name }}"
-        />
-      </div>
-      <div class="px-6 py-4">
-        <div class="font-bold text-black text-center text-xl mb-2">
-          {{ project.name }}
-        </div>
-        <p class="text-base text-black text-center">
-          {{ project.description }}
-        </p>
-      </div>
-      <div class="px-6 pt-4 pb-2">
-        <span
-          class="inline-block bg-darkgreen-700 rounded-full px-3 py-1 text-sm font-semibold text-black mr-2 mb-2"
-        >
-          {{ project.amountRaised }}€ / {{ project.totalAmount }}€
-        </span>
-      </div>
-      <div class="px-6 pt-4 pb-2">
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          (click)="goToProject(project.id)"
-        >
-          En savoir plus
-        </button>
-        <button
-          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
-          (click)="payNow(project)"
-        >
-          Faire un dons
-        </button>
-      </div>
+      <app-project-card [project]="project"></app-project-card>
     </div>
   </div>
 </div>
-
+</div>
 <app-footer></app-footer>
