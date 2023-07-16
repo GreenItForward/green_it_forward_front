@@ -34,7 +34,7 @@ export class AuthService {
   async changePassword(passwordData: any) {
     let user;
     try {
-      user = await lastValueFrom(this.http.post(`${this.apiUrl}/change-password`, this.options));
+      user = await lastValueFrom(this.http.post(`${this.apiUrl}/change-password`, { password: passwordData.password }, this.options));
     } catch (error) {
       throw new Error('Une erreur est survenue lors du changement de mot de passe');
     }
