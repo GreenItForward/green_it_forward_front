@@ -144,7 +144,8 @@ export class UserService {
   }
 
   async blockUser(idToBlock: number): Promise<User> {
-    return await lastValueFrom(this.http.post<User>(`${this.apiUrl}/block/${idToBlock}`, this.options));
+    console.log(`${this.apiUrl}/block/${idToBlock}`)
+    return await lastValueFrom(this.http.post<User>(`${this.apiUrl}/block/${idToBlock}`, {}, this.options));
   }
 
   async getUserById(id: number): Promise<User> {

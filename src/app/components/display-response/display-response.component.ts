@@ -26,8 +26,13 @@ export class DisplayResponseComponent implements OnInit, OnDestroy {
               public userService: UserService, private adminService: AdminService) {}
 
   async ngOnInit(): Promise<void> {
-    this.author = await this.userService.getUserById(this.response.authorId)
     this.me = await this.userService.getMe();
+    if(this.response.authorId === this.me.id){
+      this.author = this.me;
+    }
+    else{
+      this.author = await this.userService.getUserById(this.response.authorId)
+    }
     this.creationDate = this.dateService.formatRelativeTime(this.response.creationDate, "");
   }
 
