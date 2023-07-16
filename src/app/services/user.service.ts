@@ -143,6 +143,14 @@ export class UserService {
     }
   }
 
+  async blockUser(idToBlock: number): Promise<User> {
+    return await lastValueFrom(this.http.post<User>(`${this.apiUrl}/block/${idToBlock}`, this.options));
+  }
+
+  async getUserById(id: number): Promise<User> {
+    return await lastValueFrom(this.http.get<User>(`${this.apiUrl}/${id}`, this.options));
+  }
+
   async getCommunitiesUser(): Promise<Community[]> {
     const user = await this.getMe();
     return await this.communityService.getCommunitiesByUser(user);

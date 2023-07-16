@@ -17,7 +17,7 @@ import {AdminService} from "../../services/admin.service";
   styleUrls: ['./display-message.component.scss']
 })
 export class DisplayMessageComponent implements OnInit, OnDestroy {
- @Input() message:Message
+  @Input() message:Message
   author:User;
   me:User;
 

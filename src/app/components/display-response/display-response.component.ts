@@ -15,7 +15,6 @@ import {Subscription} from "rxjs";
 })
 export class DisplayResponseComponent implements OnInit, OnDestroy {
   @Input() response:ResponseEntity
-
   author:User;
   me:User;
   creationDate:string
@@ -27,12 +26,8 @@ export class DisplayResponseComponent implements OnInit, OnDestroy {
               public userService: UserService, private adminService: AdminService) {}
 
   async ngOnInit(): Promise<void> {
-    this.responseService.getResponse(this.response.id).then(response => {
-      this.author = response.user
-    });
-
+    this.author = await this.userService.getUserById(this.response.authorId)
     this.me = await this.userService.getMe();
-
     this.creationDate = this.dateService.formatRelativeTime(this.response.creationDate, "");
   }
 
@@ -45,6 +40,11 @@ export class DisplayResponseComponent implements OnInit, OnDestroy {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.isDropdownOpen = false;
     }
+  }
+
+  async blockUser(){
+    await this.userService.blockUser(this.author.id);
+    location.reload();
   }
 
   async deleteResponse(){

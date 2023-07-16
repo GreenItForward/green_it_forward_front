@@ -11,7 +11,7 @@
     <div class="absolute right-0 mt-2 w-48 bg-white rounded shadow-md z-10" [ngClass]="{'hidden': !isDropdownOpen}">
       <ul class="py-2">
         <li *ngIf="this.me.email !== this.author.email" class="px-4 py-2 hover:bg-gray-200">
-          <a class="block text-gray-800 cursor-pointer">Bloquer</a>
+          <a (click)="this.blockUser()" class="block text-gray-800 cursor-pointer">Bloquer</a>
         </li>
         <li *ngIf="this.me.email === this.author.email || (this.userService.isAdmin$ | async)" class="px-4 py-2 hover:bg-gray-200">
           <a (click)="this.deleteResponse()" class="block text-gray-800 cursor-pointer">Supprimer</a>
