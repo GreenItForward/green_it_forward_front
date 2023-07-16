@@ -32,14 +32,9 @@ export class DisplayMessageComponent implements OnInit, OnDestroy {
               private elementRef: ElementRef, public userService: UserService, private adminService: AdminService) {}
 
   async ngOnInit(): Promise<void> {
-    this.messageService.getMessage(this.message.id).then(message => {
-      this.author = message.user;
-    });
-
+    this.author = await this.userService.getUserById(this.message.authorId)
     this.me = await this.userService.getMe();
-
     this.creationDate = this.dateService.formatRelativeTime(this.message.creationDate, "");
-
     this.responses = await this.responseService.getResponsesByMessage(this.message.id)
   }
 
