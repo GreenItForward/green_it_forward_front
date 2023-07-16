@@ -11,13 +11,16 @@
     <div class="absolute right-0 mt-2 w-48 bg-white rounded shadow-md z-10" [ngClass]="{'hidden': !isDropdownOpen}">
       <ul class="py-2">
         <li class="px-4 py-2 hover:bg-gray-200">
-          <a class="block text-gray-800">Bloquer</a>
+          <a class="block text-gray-800 cursor-pointer">Bloquer</a>
         </li>
         <li *ngIf="this.userService.isAdmin$ | async" class="px-4 py-2 hover:bg-gray-200">
-          <a (click)="this.deleteResponse()" class="block text-gray-800">Supprimer</a>
+          <a (click)="this.deleteResponse()" class="block text-gray-800 cursor-pointer">Supprimer</a>
         </li>
-        <li *ngIf="this.userService.isAdmin$ | async" class="px-4 py-2 hover:bg-gray-200">
-          <a class="block text-gray-800">Bannir</a>
+        <li *ngIf="this.author.role !== RoleEnum.BANNIS && (this.userService.isAdmin$ | async)" class="px-4 py-2 hover:bg-gray-200">
+          <a (click)="this.ban()" class="block text-gray-800 cursor-pointer">Bannir</a>
+        </li>
+        <li *ngIf="this.author.role === RoleEnum.BANNIS && (this.userService.isAdmin$ | async)" class="px-4 py-2 hover:bg-gray-200">
+          <a (click)="this.unban()" class="block text-gray-800 cursor-pointer">Débannir</a>
         </li>
       </ul>
     </div>
