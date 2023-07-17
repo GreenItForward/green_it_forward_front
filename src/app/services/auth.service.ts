@@ -86,7 +86,7 @@ export class AuthService {
   async getEmailFromTokenConfirmation(token: string) : Promise<EmailFromTokenResponse> {
     let response;
     try {
-      response = await lastValueFrom(this.http.post(`${this.apiUrl}/email-from-token`, {token}));
+      response = await lastValueFrom(this.http.post(`${this.apiUrl}/email-from-token`, {token:token}));
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la confirmation de l\'email');
     }
