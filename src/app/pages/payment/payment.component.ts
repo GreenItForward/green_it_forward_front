@@ -210,43 +210,6 @@ constructor(private fb: FormBuilder, private stripeService: StripeService, priva
     this.successMessage = '';
   }
 
-
-  downloadInvoice() {
-    const amount = this.amount ? this.amount / 100 : 0;
-
-    if (this.paidAmount !== amount || this.name !== this.paidBy) {
-      console.error("Payment not done");
-      this.errorMessage = "Paiement non effectué";
-      this.successMessage = '';
-      return;
-    }
-
-    this.http.post(`${environment.apiUrl}/invoice/generate-pdf/${this.name}/${amount}`, 
-    { project: this.project }, 
-    {
-      ...this.options,
-      params: {
-        date: this.paidAt ? this.paidAt : moment().format('DD/MM/YYYY à HH:mm:ss'),
-        last4: this.last4 ? this.last4 : '',
-        brand: this.brandCard ? this.brandCard : '',
-        project: this.project ? this.project.name : '',
-      },
-
-      responseType: 'blob',
-    }
-  ).subscribe((blob: Blob) => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `recu_don_${this.project?.id}_${this.paidAt}.pdf`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  });
-  
-  }
-
   goBack(): void {
     this.location.back();
   }
