@@ -61,7 +61,12 @@ export class CommunityService {
   }
 
   async updateCommunity(communityId:string, newCommunity: NewCommunity): Promise<Community> {
-    const community = await lastValueFrom(this.http.patch<Community>(`${this.apiUrl}community/${communityId}`, newCommunity, this.options));
+    console.log(newCommunity)
+    const communityBody = {
+        name: newCommunity.name,
+        description: newCommunity.description,
+    }
+    const community = await lastValueFrom(this.http.patch<Community>(`${this.apiUrl}community/${communityId}`, communityBody, this.options));
     if (!community) {
       throw new Error('Failed to update community');
     }
