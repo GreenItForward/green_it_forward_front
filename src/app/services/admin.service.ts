@@ -44,4 +44,13 @@ export class AdminService {
       role
     }, this.options);
   }
+
+  async sendMail(email:string, name:string, subject:string,message:string) {
+    return this.http.post(`${environment.apiUrl}/mail/send/mail`, {
+      email: email,
+      name: name,
+      subject: subject,
+      message: message
+    }, this.options);
+  }
 }
