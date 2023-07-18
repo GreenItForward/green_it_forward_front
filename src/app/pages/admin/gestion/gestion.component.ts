@@ -3,7 +3,7 @@ import {User} from "../../../models/user.model";
 import {AdminService} from "../../../services/admin.service";
 import {UserService} from "../../../services/user.service";
 import {Subscription} from "rxjs";
-
+import {AuthService} from "../../../services/auth.service"
 @Component({
   selector: 'app-gestion',
   templateUrl: './gestion.component.html',
@@ -16,7 +16,8 @@ export class GestionComponent implements OnInit, OnDestroy {
   currentUser: User | null = null;
   private subscription: Subscription = new Subscription();
 
-  constructor(protected adminService: AdminService, protected userService: UserService) {}
+  constructor(protected adminService: AdminService, protected userService: UserService,
+    protected authService: AuthService) {}
 
   async ngOnInit() {
     this.users = await this.adminService.getUsers();
@@ -66,5 +67,14 @@ export class GestionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  onRenitialisePassword(email:string) {
+    try {
+      this.authService.forgotPassword(email)
+    } catch (error : any) {
+      this.errorMessage = error.error.message;
+      return;
+    }
   }
 }
